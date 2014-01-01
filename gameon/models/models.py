@@ -7,32 +7,6 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import ndb
 from google.appengine.api import users
 
-EASY = 2
-MEDIUM = 3
-HARD = 4
-DIFFICULTIES = set([EASY, MEDIUM, HARD])
-
-UNLOCKED_MEDIUM = 1
-UNLOCKED_HARD = 2
-ACHEIVEMENTS = set([UNLOCKED_MEDIUM, UNLOCKED_HARD])
-
-class Level(object):
-
-    difficulty = []
-    formula = []
-
-    def __init__(self, difficulty, formula = 'x0+x1==x2'):
-        '''
-        difficulty array of (x,y) pairs
-        '''
-        self.difficulty = difficulty
-        self.formula = formula
-        if formula == 'x0+x1=x2':
-            self.formulas = [
-                'x2-x1',
-                'x2-x0',
-                'x1+x2',
-            ]
 
 class User(ndb.Model):
     id = ndb.StringProperty(required=True)
@@ -69,30 +43,17 @@ class User(ndb.Model):
     def byToken(self, token):
         return self.query(self.access_token == token).get()
 
-class Preferences(ndb.Model):
-    time = ndb.DateTimeProperty(auto_now_add=True)
-    name = ndb.TextProperty()
-    user = ndb.KeyProperty(kind=User)
-    score = ndb.IntegerProperty(default=0)
-    difficulty = ndb.IntegerProperty(default=2)
-    timedMode = ndb.IntegerProperty(default=0)
-
 class Score(ndb.Model):
     time = ndb.DateTimeProperty(auto_now_add=True)
-    name = ndb.TextProperty()
-    user = ndb.KeyProperty(kind=User)
     score = ndb.IntegerProperty(default=0)
-    difficulty = ndb.IntegerProperty(default=2)
-    timedMode = ndb.IntegerProperty(default=0)
+    game_mode = ndb.IntegerProperty(default=0)
 
 class HighScore(ndb.Model):
     '''
     users high scores, only one per difficulty
     '''
-    user = ndb.KeyProperty(kind=User)
     score = ndb.IntegerProperty(default=0)
-    difficulty = ndb.IntegerProperty(default=2)
-    timedMode = ndb.IntegerProperty(default=0)
+    game_mode = ndb.IntegerProperty(default=0)
 
     @classmethod
     def getHighScores(cls, user):

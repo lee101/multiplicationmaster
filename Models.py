@@ -7,6 +7,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import ndb
 from google.appengine.api import users
 
+
 EASY = 2
 MEDIUM = 3
 HARD = 4
@@ -18,15 +19,22 @@ ACHEIVEMENTS = set([UNLOCKED_MEDIUM, UNLOCKED_HARD])
 
 class Level(object):
 
-    blocked_spaces = []
-    locked_spaces = []
+    difficulty = []
+    formula = []
+    number = []
 
-    def __init__(self, blocked_spaces, locked_spaces =[]):
+    def __init__(self, difficulty, formula = 'x0+x1==x2'):
         '''
-        blocked_spaces array of (x,y) pairs
+        difficulty array of (x,y) pairs
         '''
-        self.blocked_spaces = blocked_spaces
-        self.locked_spaces = locked_spaces
+        self.difficulty = difficulty
+        self.formula = formula
+        if formula == 'x0+x1=x2':
+            self.formulas = [
+                'x2-x1',
+                'x2-x0',
+                'x1+x2',
+            ]
         
 LEVELS = [
     Level([], [(4,0), (4,1), (4,2), (4,3)]),
