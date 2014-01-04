@@ -69,7 +69,7 @@ handlers:
   http_headers:
     Vary: Accept-Encoding
 - url: /gameon/*
-  script: gameon/gameon.app
+  script: gameon.gameon.app
 - url: .*
   script: main.app
 

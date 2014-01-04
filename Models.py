@@ -8,14 +8,11 @@ from google.appengine.ext import ndb
 from google.appengine.api import users
 
 
-EASY = 2
-MEDIUM = 3
-HARD = 4
-DIFFICULTIES = set([EASY, MEDIUM, HARD])
-
-UNLOCKED_MEDIUM = 1
-UNLOCKED_HARD = 2
-ACHEIVEMENTS = set([UNLOCKED_MEDIUM, UNLOCKED_HARD])
+EASY = 1
+MEDIUM = 2
+HARD = 3
+EXPERT = 4
+DIFFICULTIES = set([EASY, MEDIUM, HARD, EXPERT])
 
 class Level(object):
 

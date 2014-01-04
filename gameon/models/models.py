@@ -6,58 +6,18 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import ndb
 from google.appengine.api import users
+from operator import attrgetter
 
-
-class User(ndb.Model):
-    id = ndb.StringProperty(required=True)
-    cookie_user = ndb.IntegerProperty()
-    name = ndb.StringProperty()
-    email = ndb.StringProperty()
-
-    gold = ndb.IntegerProperty()
-    muted = ndb.IntegerProperty()
-    difficulty = ndb.IntegerProperty()
-    volume = ndb.FloatProperty()
-    levels_unlocked = ndb.IntegerProperty(default=0)
-
-    created = ndb.DateTimeProperty(auto_now_add=True)
-    updated = ndb.DateTimeProperty(auto_now=True)
-
-    profile_url = ndb.StringProperty()
-    access_token = ndb.StringProperty()
-
-    # related objects
-    scores = ndb.StructuredProperty(Score, repeated=True)
-    highscores = ndb.StructuredProperty(HighScore, repeated=True)
-    achievements = ndb.StructuredProperty(Achievement, repeated=True)
-
-    @classmethod
-    def byId(self, id):
-        return self.query(self.id == id).get()
-    @classmethod
-    def buyFor(self,userid):
-        dbuser = User.byId(userid)
-        dbuser.gold = 1
-        dbuser.put()
-    @classmethod
-    def byToken(self, token):
-        return self.query(self.access_token == token).get()
 
 class Score(ndb.Model):
     time = ndb.DateTimeProperty(auto_now_add=True)
     score = ndb.IntegerProperty(default=0)
     game_mode = ndb.IntegerProperty(default=0)
 
-class HighScore(ndb.Model):
-    '''
-    users high scores, only one per difficulty
-    '''
-    score = ndb.IntegerProperty(default=0)
-    game_mode = ndb.IntegerProperty(default=0)
 
-    @classmethod
-    def getHighScores(cls, user):
-        return cls.query(cls.user == user.key).order(cls.difficulty, cls.score).fetch_async(10)
+class HighScore(ndb.Model):
+    game_mode = ndb.IntegerProperty(default=0)
+    score = ndb.IntegerProperty(default=0)
 
     @classmethod
     def updateHighScoreFor(cls, user, score, difficulty, timedMode):
@@ -67,7 +27,7 @@ class HighScore(ndb.Model):
         hs = cls.query(cls.user == user.key,
                        cls.difficulty == difficulty,
                        cls.timedMode == timedMode).order(-cls.score).fetch(1)
-        if len(hs)>0 and hs[0].score < score:
+        if len(hs) > 0 and hs[0].score < score:
             hs = HighScore()
             hs.user = user.key
             hs.score = score
@@ -85,24 +45,68 @@ class HighScore(ndb.Model):
             return True
         return False
 
-    #title = ndb.StringProperty(required=True)
 
 class Achievement(ndb.Model):
-    '''
-    provides a many to many relationship between achievments and users
-    '''
     time = ndb.DateTimeProperty(auto_now_add=True)
     type = ndb.IntegerProperty()
 
+
+class User(ndb.Model):
+    id = ndb.StringProperty(required=True)
+    cookie_user = ndb.IntegerProperty()
+    name = ndb.StringProperty()
+    email = ndb.StringProperty()
+
+    gold = ndb.IntegerProperty()
+
+    muted = ndb.IntegerProperty()
+    volume = ndb.FloatProperty()
+
+    levels_unlocked = ndb.IntegerProperty(default=0)
+    difficulties_unlocked = ndb.IntegerProperty(default=0)
+
+    created = ndb.DateTimeProperty(auto_now_add=True)
+    updated = ndb.DateTimeProperty(auto_now=True)
+
+    profile_url = ndb.StringProperty()
+    access_token = ndb.StringProperty()
+
+    scores = ndb.StructuredProperty(Score, repeated=True)
+    high_scores = ndb.StructuredProperty(HighScore, repeated=True)
+    achievements = ndb.StructuredProperty(Achievement, repeated=True)
+
     @classmethod
-    def getUserAchievements(cls, user):
-        '''
-        user a User object
-        '''
-        achievements = cls.query(cls.user == user.key).fetch_async(10)#.all()?
-        # if len(achievements) == 0:
-        #     achievements = Acheivement.all().filter("cookie_user = ?", self.current_user["id"]).fetch(len(ACHEIVEMENTS))
-        return achievements;
+    def byId(self, id):
+        return self.query(self.id == id).get()
+
+    @classmethod
+    def buyFor(self, userid):
+        dbuser = User.byId(userid)
+        dbuser.gold = 1
+        dbuser.put()
+
+    @classmethod
+    def byToken(self, token):
+        return self.query(self.access_token == token).get()
+
+    def getHighScores(self):
+        return sorted(self.high_scores, key=attrgetter('game_mode', 'score'))
+
+    def updateHighScore(self, game_mode, score):
+        scores = filter(lambda hs: hs.game_mode == game_mode, self.high_scores)
+        if len(scores) == 0:
+            hs = HighScore(game_mode=game_mode, score=score)
+            self.high_scores.append(hs)
+            self.put()
+            return True
+        scores = sorted(scores, key= lambda s: -s.score)
+        if scores[0].score < score:
+            hs = HighScore(game_mode=game_mode, score=score)
+            self.high_scores.append(hs)
+            self.put()
+            return True
+        return False
+
 
 class Postback(ndb.Model):
     jwtPostback = ndb.TextProperty()
