@@ -168,9 +168,6 @@ class BaseHandler(webapp2.RequestHandler):
         request_info.update({'name': 'Word Smashing Gold', 'price': '0.97'})
         token_1 = jwt.encode(jwt_info, SELLER_SECRET)
 
-        # create JWT for second item
-        # request_info.update({'name': 'Golden Gate Bridge Poster', 'price': '25.00'})
-        # token_2 = jwt.encode(jwt_info, SELLER_SECRET)
 
         template_values = {
             'jwt': token_1,
@@ -190,9 +187,6 @@ class BaseHandler(webapp2.RequestHandler):
             'num_levels': len(LEVELS)
         }
         template_values.update(extraParams)
-        #logging.error(highscores)
-
-        #self.response.set_cookie('wsuser', , max_age = 15724800)
 
         template = JINJA_ENVIRONMENT.get_template(view_name)
         self.response.write(template.render(template_values))
@@ -200,37 +194,27 @@ class BaseHandler(webapp2.RequestHandler):
 class GetUserHandler(BaseHandler):
     def get(self):
         currentUser = self.current_user
-        return json.dumps(user)
+        return json.dumps(currentUser)
         
 class ScoresHandler(BaseHandler):
     def get(self):
         userscore = Score()
         userscore.score = int(self.request.get('score'))
-        userscore.difficulty = int(self.request.get('difficulty'))
-        userscore.timedMode = int(self.request.get('timedMode'))
-
-        if userscore.difficulty not in DIFFICULTIES:
-            raise Exception("unknown difficulty: " + userscore.difficulty)
+        userscore.game_mode = int(self.request.get('game_mode'))
 
         currentUser = self.current_user
-        if currentUser:
-            userscore.user = currentUser.key
-        userscore.put()
-        HighScore.updateHighScoreFor(currentUser, userscore.score, userscore.difficulty, userscore.timedMode)
+        currentUser.updateScores(userscore)
 
         self.response.out.write('success')
+
+
 class AchievementsHandler(BaseHandler):
     def get(self):
-        acheive = Achievement()
-        acheive.type = int(self.request.get('achievement'))
-        if acheive.type not in ACHEIVEMENTS:
-            raise Exception("unknown achievement: " + acheive.type)
+        achieve = Achievement()
+        achieve.type = int(self.request.get('achievement'))
         currentUser = self.current_user
-        if currentUser:
-
-            acheive.user = currentUser.key
-        acheive.put()
-        #graph = facebook.GraphAPI(self.current_user['access_token'])
+        currentUser.achievements.append(achieve)
+        currentUser.put()
         self.response.out.write('success')
 
 class IsGoldHandler(BaseHandler):
@@ -345,7 +329,7 @@ class PostbackHandler(BaseHandler):
 
 app = ndb.toplevel(webapp2.WSGIApplication([
     ('/getuser', GetUserHandler),
-    ('/scores', ScoresHandler),
+    ('/savescore', ScoresHandler),
     ('/achievements', AchievementsHandler),
     ('/logout', LogoutHandler),
     ('/postback', PostbackHandler),

@@ -19,32 +19,6 @@ class HighScore(ndb.Model):
     game_mode = ndb.IntegerProperty(default=0)
     score = ndb.IntegerProperty(default=0)
 
-    @classmethod
-    def updateHighScoreFor(cls, user, score, difficulty, timedMode):
-        '''
-        updates users highscore returns true if it is there high score false otherwise
-        '''
-        hs = cls.query(cls.user == user.key,
-                       cls.difficulty == difficulty,
-                       cls.timedMode == timedMode).order(-cls.score).fetch(1)
-        if len(hs) > 0 and hs[0].score < score:
-            hs = HighScore()
-            hs.user = user.key
-            hs.score = score
-            hs.difficulty = difficulty
-            hs.timedMode = timedMode
-            hs.put()
-            return True
-        if len(hs) == 0:
-            hs = HighScore()
-            hs.user = user.key
-            hs.score = score
-            hs.difficulty = difficulty
-            hs.timedMode = timedMode
-            hs.put()
-            return True
-        return False
-
 
 class Achievement(ndb.Model):
     time = ndb.DateTimeProperty(auto_now_add=True)
@@ -92,20 +66,19 @@ class User(ndb.Model):
     def getHighScores(self):
         return sorted(self.high_scores, key=attrgetter('game_mode', 'score'))
 
-    def updateHighScore(self, game_mode, score):
-        scores = filter(lambda hs: hs.game_mode == game_mode, self.high_scores)
+    def updateScores(self, score):
+        self.scores.append(score)
+        scores = filter(lambda hs: hs.game_mode == score.game_mode, self.high_scores)
         if len(scores) == 0:
-            hs = HighScore(game_mode=game_mode, score=score)
+            hs = HighScore(game_mode=score.game_mode, score=score.score)
             self.high_scores.append(hs)
             self.put()
-            return True
+            return
         scores = sorted(scores, key= lambda s: -s.score)
         if scores[0].score < score:
-            hs = HighScore(game_mode=game_mode, score=score)
+            hs = HighScore(game_mode=score.game_mode, score=score.score)
             self.high_scores.append(hs)
-            self.put()
-            return True
-        return False
+        self.put()
 
 
 class Postback(ndb.Model):

@@ -8,10 +8,11 @@ var gameon = function() {
     })();
 
     this.getUser = function(callback) {
-        if(this.user) {
-            callback(user);
+        if(self.user) {
+            callback(self.user);
         }
         else {
+
             $.ajax({
                 "url":  "/gameon/getuser",
                 "data": {},
@@ -28,35 +29,6 @@ var gameon = function() {
         }
     }
 
-function changeDifficulty(newDifficulty){
-    modal.close();
-    newGame();
-    difficulty = newDifficulty;
-    var difficultyText = "Medium";
-    if(difficulty == EASY){
-        difficultyText = "Easy";
-    }
-    else if(difficulty == HARD){
-        difficultyText = "Hard";
-    }
-
-    $.ajax( {
-        "url":  "/savedifficulty",
-        "data": {"difficulty": difficulty},
-        "success": function (text) {
-
-        },
-        "type": "GET",
-        "cache": false,
-        "error": function (xhr, error, thrown) {
-            if ( error == "parsererror" ) {
-            }
-        }
-    } );
-
-    $('#changedifficultybutton').text('Difficulty: ' + difficultyText);
-}
-	
     self.clock = function(gameOver, newGame, startTime) {
         var self = this;
         if(!startTime) {
@@ -85,21 +57,21 @@ function changeDifficulty(newDifficulty){
 
         }
 
-        self.getTime() {
+        self.getTime = function() {
         	return self._formattedTime;
         }
-        self.setTime(seconds) {
+        self.setTime = function(seconds) {
         	self.time = seconds;
         	self._updateFormattedTime();
         }
         self.time = self.setTime(self.startTime);
 
         self._updateFormattedTime = function() {
-            var seperator = ':';
+            var separator = ':';
             if (self.time%60 <= 9) {
-                seperator = ':0'
+                separator = ':0'
             }
-            self._formattedTime = Math.floor(self.time/60) + seperator + self.time%60;
+            self._formattedTime = Math.floor(self.time/60) + separator + self.time%60;
         }
 
         setInterval(function() {

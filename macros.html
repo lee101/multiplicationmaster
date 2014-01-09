@@ -46,13 +46,13 @@
 
 {% macro headers(ws, highscores, achievements, level) -%}
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
-    <link rel="apple-touch-icon" href="/img/word-smashing-icon-iphone.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="/img/word-smashing-icon-ipad.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="/img/word-smashing-icon-iphone-retina.png" />
-    <link rel="apple-touch-icon" sizes="144x144" href="/img/word-smashing-icon-ipad-retina.png" />
-    <link rel="stylesheet" rel="stylesheet" href="/css/social-likes.css"/>
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.css"/>
-    <link type="text/css" rel="stylesheet" href="/css/style.css"/>
+    <link rel="apple-touch-icon" href="/static/img/word-smashing-icon-iphone.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/img/word-smashing-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/img/word-smashing-icon-iphone-retina.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/img/word-smashing-icon-ipad-retina.png" />
+    <link rel="stylesheet" rel="stylesheet" href="/static/css/social-likes.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
     <!--[if lte IE 7]><link rel="stylesheet" href="css/ie7.css" type="text/css" /><![endif]-->
     <!--[if IE 8]><link rel="stylesheet" href="/css/ie8.css" type="text/css" /><![endif]-->
     <link type="text/css" href="/jplayerskin/jplayer.pink.flag.css" rel="stylesheet" />
@@ -168,18 +168,18 @@ function loginmodal(){
 }
     </script>
 
-    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.blockUI.js"></script>
-    <script type="text/javascript" src="/js/wordutils.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="/static/js/wordutils.js"></script>
     {% if 'multiplayer' in url %}
-      <script type="text/javascript" src="/js/game-with-friends.js"></script>
+      <script type="text/javascript" src="/static/js/game-with-friends.js"></script>
     {% else %}
-      <script type="text/javascript" src="/js/game.js"></script>
+      <script type="text/javascript" src="/static/js/game.js"></script>
     {% endif %}
 
-    <script src="/js/social-likes.min.js"></script>
+    <script src="/static/js/social-likes.min.js"></script>
 
-    <script type="text/javascript" src="/js/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.jplayer.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#jquery_jplayer_1").jPlayer({
@@ -554,7 +554,7 @@ FB.getLoginStatus(function(ret) {
 {%- endmacro %}
 
 {%- macro paypalbuyform() %}
-<script id="paypalbuyform" src="/js/paypal-button.min.js?merchant=P43U2BDEMJJXL" 
+<script id="paypalbuyform" src="/static/js/paypal-button.min.js?merchant=P43U2BDEMJJXL"
     data-button="buynow" 
     data-name="Word Smashing" 
     data-quantity="1" 
@@ -630,7 +630,7 @@ FB.getLoginStatus(function(ret) {
 
         <span>© 2013 <a class="footer__link" href="http://www.addictingwordgames.com" title="Addicting Word Games" target="_blank">Addicting Word Games</a></span>
         <a href="http://www.facebook.com/WordSmashing" title="Word Smashing on Facebook" target="_blank">
-            <img src="/img/facebook.jpg" alt="Word Smashing on Facebook" width="144px" height="44px">
+            <img src="/static/img/facebook.jpg" alt="Word Smashing on Facebook" width="144px" height="44px">
         </a>
         <div class="g-plus" data-href="//plus.google.com/116949277834973226564" data-rel="publisher"></div>
 

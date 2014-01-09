@@ -75,7 +75,7 @@
         <div id="main">
         	<div id="logo">
                 <a href="http://www.wordsmashing.com" title="Word Smashing Word Puzzle Game" target="_blank">
-                  <img src="/img/wordsmashing_logo.png" alt="Word Smashing" title="Word Smashing" width="250" height="184"/>
+                  <img src="/static/img/wordsmashing_logo.png" alt="Word Smashing" title="Word Smashing" width="250" height="184"/>
                 </a>
   		      <div id="login">
                 {{ macros.loginoutbutton() }}
@@ -90,8 +90,8 @@
                     {{ macros.buyLink() }}
                 {% else %}
                 <p id="mustsignin" class="lead">Login with your gold account to play!</br>
-                <a style="margin:10px;" href="{{ glogin_url }}" title="Login With Google"><img src="/img/google-icon-64.png" alt="Google Login"/></a>
-                <a href="#" onclick="fb_login();return false;" title="Login With Facebook"><img src="/img/facebook-icon-64.png" alt="Facebook Login"/></a></p>
+                <a style="margin:10px;" href="{{ glogin_url }}" title="Login With Google"><img src="/static/img/google-icon-64.png" alt="Google Login"/></a>
+                <a href="#" onclick="fb_login();return false;" title="Login With Facebook"><img src="/static/img/facebook-icon-64.png" alt="Facebook Login"/></a></p>
                 {% endif %}
                 <table id="gametable" border="1" style="display:none">
             {% endif %}
