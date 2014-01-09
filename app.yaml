@@ -10,30 +10,6 @@ handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
-- url: /css
-  static_dir: css
-  http_headers:
-    Vary: Accept-Encoding
-- url: /js
-  static_dir: js
-  http_headers:
-    Vary: Accept-Encoding
-- url: /jplayerskin
-  static_dir: jplayerskin
-  http_headers:
-    Vary: Accept-Encoding
-- url: /music
-  static_dir: music
-  http_headers:
-    Vary: Accept-Encoding
-- url: /img
-  static_dir: img
-  http_headers:
-    Vary: Accept-Encoding
-- url: /bootstrap/*
-  static_dir: bootstrap
-  http_headers:
-    Vary: Accept-Encoding
 - url: /channel.html
   static_files: channel.html
   upload: channel.html
@@ -86,10 +62,10 @@ automatic_scaling:
 pagespeed:
 
   url_blacklist:
-  - http://www.wordsmashing.com/music/*
-  - http://www.wordsmashing.com/sitemap
-  - http://www.wordsmashing.com/manifest.webapp
-  - https://wordsmashing.appspot.com/buy
+  - /music/*
+  - /sitemap
+  - /manifest.webapp
+  - /buy
   # enabled_rewriters:
   # - CollapseWhitespace
   # - CombineHeads
