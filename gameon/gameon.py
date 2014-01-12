@@ -2,7 +2,7 @@
 
 from Models import *
 from google.appengine.api import users
-from ws import ws
+from gameon_utils import GameOnUtils
 import os
 import webapp2
 import facebook
@@ -11,9 +11,7 @@ import utils
 import jinja2
 
 from paypal import IPNHandler
-
 import json
-import time
 import jwt
 
 # application-specific imports
@@ -141,60 +139,21 @@ class BaseHandler(webapp2.RequestHandler):
         """
         return self.session_store.get_session()
 
-    def render(self, view_name, extraParams = {}):
-
-        # achievements = Acheivement.all().filter("user = ?", self.current_user["id"]).fetch(len(ACHEIVEMENTS))
-        # if len(achievements) == 0:
-        #     achievements = Acheivement.all().filter("cookie_user = ?", self.current_user["id"]).fetch(len(ACHEIVEMENTS))
-        currentUser = self.current_user
-        achievements = Achievement.getUserAchievements(currentUser)
-        highscores = HighScore.getHighScores(currentUser)
-
-        achievements = achievements.get_result()
-        highscores = highscores.get_result()
-
-        curr_time = int(time.time())
-        exp_time = curr_time + 3600
-        request_info = {'currencyCode': 'USD',
-                        'sellerData': currentUser.id}
-        jwt_info = {'iss': SELLER_ID,
-                    'aud': 'Google',
-                    'typ': 'google/payments/inapp/item/v1',
-                    'iat': curr_time,
-                    'exp': exp_time,
-                    'request': request_info}
-
-        # create JWT for first item
-        request_info.update({'name': 'Word Smashing Gold', 'price': '0.97'})
-        token_1 = jwt.encode(jwt_info, SELLER_SECRET)
-
-
-        template_values = {
-            'jwt': token_1,
-            'ws': ws,
-            'facebook_app_id': FACEBOOK_APP_ID,
-            'current_user': currentUser,
-            'achievements': currentUser.achievements,
-            'highscores': currentUser.highscores,
-            'UNLOCKED_MEDIUM':UNLOCKED_MEDIUM,
-            'UNLOCKED_HARD':UNLOCKED_HARD,
-            'MEDIUM':MEDIUM,
-            'EASY':EASY,
-            'HARD':HARD,
-            'glogin_url': users.create_login_url(self.request.uri),
-            'glogout_url': users.create_logout_url(self.request.uri),
-            'url':self.request.uri,
-            'num_levels': len(LEVELS)
-        }
-        template_values.update(extraParams)
-
-        template = JINJA_ENVIRONMENT.get_template(view_name)
-        self.response.write(template.render(template_values))
 
 class GetUserHandler(BaseHandler):
     def get(self):
         currentUser = self.current_user
-        return json.dumps(currentUser)
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write( json.dumps(currentUser.to_dict(), cls = GameOnUtils.MyEncoder))
+        # try:
+        #     pass
+        #
+        # except Exception as e:
+        #     logging.error(e)
+        #     logging.error(e.message)
+        #     logging.error(currentUser)
+        #     logging.error(currentUser.__dict__)
+
         
 class ScoresHandler(BaseHandler):
     def get(self):
@@ -327,18 +286,18 @@ class PostbackHandler(BaseHandler):
             # respond back to complete payment
             self.response.out.write(order_id)
 
-app = ndb.toplevel(webapp2.WSGIApplication([
-    ('/getuser', GetUserHandler),
-    ('/savescore', ScoresHandler),
-    ('/achievements', AchievementsHandler),
-    ('/logout', LogoutHandler),
-    ('/postback', PostbackHandler),
-    ('/buy', BuyHandler),
-    ('/makegold', makeGoldHandler),
-    ('/isgold', IsGoldHandler),
-    ('/savevolume', SaveVolumeHandler),
-    ('/savemute', SaveMuteHandler),
-    ('/savelevelsunlocked', SaveLevelsUnlockedHandler),
-    ('/savedifficulty', SaveDifficultyHandler),
+routes = [
+    ('/gameon/getuser', GetUserHandler),
+    ('/gameon/savescore', ScoresHandler),
+    ('/gameon/achievements', AchievementsHandler),
+    ('/gameon/logout', LogoutHandler),
+    ('/gameon/postback', PostbackHandler),
+    ('/gameon/buy', BuyHandler),
+    ('/gameon/makegold', makeGoldHandler),
+    ('/gameon/isgold', IsGoldHandler),
+    ('/gameon/savevolume', SaveVolumeHandler),
+    ('/gameon/savemute', SaveMuteHandler),
+    ('/gameon/savelevelsunlocked', SaveLevelsUnlockedHandler),
+    ('/gameon/savedifficulty', SaveDifficultyHandler),
 
-], debug=ws.debug, config=config))
+]

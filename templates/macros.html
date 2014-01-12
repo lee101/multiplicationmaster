@@ -280,11 +280,7 @@ function loginmodal(){
       
   </script>
 {%- endmacro %}
-{%- macro pinIt(url, img, desc) %}
-<a href="//pinterest.com/pin/create/button/?url={{ url }}&media={{ img }}&description={{ desc }}" data-pin-do="buttonPin" data-pin-config="beside">
-    <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" />
-</a>
-{%- endmacro %}
+
 {%- macro shareBtnsHorizontal(differenturl) %}
 {% if not differenturl %}
 {% set differenturl = url %}

@@ -8,24 +8,28 @@ from google.appengine.ext import ndb
 from google.appengine.api import users
 from operator import attrgetter
 
+class BaseModel(ndb.Model):
+    def default(self, o): return o.to_dict()
+    # def to_dict(self):
+    #    return dict([(p, unicode(getattr(self, p))) for p in self._properties])
 
-class Score(ndb.Model):
+class Score(BaseModel):
     time = ndb.DateTimeProperty(auto_now_add=True)
     score = ndb.IntegerProperty(default=0)
     game_mode = ndb.IntegerProperty(default=0)
 
 
-class HighScore(ndb.Model):
+class HighScore(BaseModel):
     game_mode = ndb.IntegerProperty(default=0)
     score = ndb.IntegerProperty(default=0)
 
 
-class Achievement(ndb.Model):
+class Achievement(BaseModel):
     time = ndb.DateTimeProperty(auto_now_add=True)
     type = ndb.IntegerProperty()
 
 
-class User(ndb.Model):
+class User(BaseModel):
     id = ndb.StringProperty(required=True)
     cookie_user = ndb.IntegerProperty()
     name = ndb.StringProperty()
@@ -81,7 +85,7 @@ class User(ndb.Model):
         self.put()
 
 
-class Postback(ndb.Model):
+class Postback(BaseModel):
     jwtPostback = ndb.TextProperty()
     orderId = ndb.StringProperty()
     price = ndb.StringProperty()

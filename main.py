@@ -2,6 +2,7 @@
 
 from Models import *
 from google.appengine.api import users
+from gameon import gameon
 from ws import ws
 import os
 import webapp2
@@ -35,15 +36,15 @@ class BaseHandler(webapp2.RequestHandler):
     def render(self, view_name, extraParams = {}):
 
         template_values = {
-            'ws': ws,
-            'facebook_app_id': FACEBOOK_APP_ID,
-            'MEDIUM':MEDIUM,
-            'EASY':EASY,
-            'HARD':HARD,
-            'glogin_url': users.create_login_url(self.request.uri),
-            'glogout_url': users.create_logout_url(self.request.uri),
-            'url':self.request.uri,
-            'num_levels': len(LEVELS)
+            # 'ws': ws,
+            # 'facebook_app_id': FACEBOOK_APP_ID,
+            # 'MEDIUM':MEDIUM,
+            # 'EASY':EASY,
+            # 'HARD':HARD,
+            # 'glogin_url': users.create_login_url(self.request.uri),
+            # 'glogout_url': users.create_logout_url(self.request.uri),
+            # 'url':self.request.uri,
+            # 'num_levels': len(LEVELS)
         }
         template_values.update(extraParams)
 
@@ -65,10 +66,10 @@ class SitemapHandler(webapp2.RequestHandler):
 
 app = ndb.toplevel(webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/privacy-policy', PrivacyHandler),
-    ('/terms', TermsHandler),
-    ('/about', AboutHandler),
-    ('/contact', ContactHandler),
+    # ('/privacy-policy', PrivacyHandler),
+    # ('/terms', TermsHandler),
+    # ('/about', AboutHandler),
+    # ('/contact', ContactHandler),
     ('/sitemap', SitemapHandler),
 
-], debug=ws.debug, config=config))
+] + gameon.routes, debug=ws.debug, config=config))

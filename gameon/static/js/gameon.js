@@ -1,95 +1,96 @@
 // Globals: JQuery/$
 
 
-var gameon = function() {
-	var self = this;
+var GameOn = function () {
+    var self = this;
     (function InitUser() {
 
     })();
 
-    this.getUser = function(callback) {
-        if(self.user) {
+    this.getUser = function (callback) {
+        if (self.user) {
             callback(self.user);
         }
         else {
 
             $.ajax({
-                "url":  "/gameon/getuser",
+                "url": "/gameon/getuser",
                 "data": {},
                 "success": function (user) {
-                	
+                    self.user = user;
+                    callback(self.user);
                 },
                 "type": "GET",
                 "cache": false,
                 "error": function (xhr, error, thrown) {
-                    if ( error == "parsererror" ) {
+                    if (error == "parsererror") {
                     }
                 }
             });
         }
     }
 
-    self.clock = function(gameOver, newGame, startTime) {
+    self.clock = function (gameOver, newGame, startTime) {
         var self = this;
-        if(!startTime) {
-        	self.startTime = 5*60;
+        if (!startTime) {
+            self.startTime = 5 * 60;
         }
         else {
-        	self.startTime = startTime;
+            self.startTime = startTime;
         }
 
         var started = false;
 
-        self.reset = function() {
+        self.reset = function () {
             self.time = self.startTime;
             started = false;
         }
 
-        self.start = function() {
+        self.start = function () {
             started = true;
         }
 
-        self.pause = function() {
-        	started = false;
+        self.pause = function () {
+            started = false;
         }
 
-        self.tick = function() {
+        self.tick = function () {
 
         }
 
-        self.getTime = function() {
-        	return self._formattedTime;
+        self.getTime = function () {
+            return self._formattedTime;
         }
-        self.setTime = function(seconds) {
-        	self.time = seconds;
-        	self._updateFormattedTime();
+        self.setTime = function (seconds) {
+            self.time = seconds;
+            self._updateFormattedTime();
         }
         self.time = self.setTime(self.startTime);
 
-        self._updateFormattedTime = function() {
+        self._updateFormattedTime = function () {
             var separator = ':';
-            if (self.time%60 <= 9) {
+            if (self.time % 60 <= 9) {
                 separator = ':0'
             }
-            self._formattedTime = Math.floor(self.time/60) + separator + self.time%60;
+            self._formattedTime = Math.floor(self.time / 60) + separator + self.time % 60;
         }
 
-        setInterval(function() {
-            if(started) {
+        setInterval(function () {
+            if (started) {
                 self.setTime(self.time - 1);
                 self._updateFormattedTime();
                 self.tick();
             }
-        },1000);
+        }, 1000);
 
         //override functions
         var parent = gameOver;
-        gameover = function(){
+        gameover = function () {
             parent();
             self.reset();
         }
         var parent2 = newGame;
-        newGame = function(){
+        newGame = function () {
             parent2();
             self.reset();
             self.started();
