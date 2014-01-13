@@ -115,28 +115,28 @@ describe("gameon", function () {
         });
 
         it("should have persisted volume", function (done) {
-        	delete gameOn.user
+            delete gameOn.user
             gameOn.getUser(function (user) {
                 expect(user.volume).toEqual(volume)
                 done();
             })
         });
         it("should have persisted mute", function (done) {
-        	delete gameOn.user
+            delete gameOn.user
             gameOn.getUser(function (user) {
                 expect(user.mute).toEqual(mute)
                 done();
             })
         });
         it("should have persisted levels_unlocked", function (done) {
-        	delete gameOn.user
+            delete gameOn.user
             gameOn.getUser(function (user) {
                 expect(user.levels_unlocked).toEqual(levels_unlocked)
                 done();
             })
         });
         it("should have persisted difficulties_unlocked", function (done) {
-        	delete gameOn.user
+            delete gameOn.user
             gameOn.getUser(function (user) {
                 expect(user.difficulties_unlocked).toEqual(difficulties_unlocked)
                 done();

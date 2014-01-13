@@ -41,7 +41,7 @@ var GameOnUser = function (userJSON) {
                 }
             }
         });
-        userJSON.achievements.push({achievement:achievementNumber})
+        userJSON.achievements.push({achievement: achievementNumber})
     }
 
     userJSON.saveVolume = function (volume, callback) {

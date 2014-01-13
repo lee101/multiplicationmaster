@@ -37,6 +37,7 @@ class BaseHandler(webapp2.RequestHandler):
     user. See http://developers.facebook.com/docs/authentication/ for
     more information.
     """
+
     @property
     def current_user(self):
         #===== Google Auth
@@ -46,7 +47,7 @@ class BaseHandler(webapp2.RequestHandler):
             if dbUser:
                 return dbUser
             else:
-                
+
                 dbUser = User()
                 dbUser.id = user.user_id()
                 dbUser.name = user.nickname()
@@ -62,8 +63,8 @@ class BaseHandler(webapp2.RequestHandler):
             # Either used just logged in or just saw the first page
             # We'll see here
             fbcookie = facebook.get_user_from_cookie(self.request.cookies,
-                                                   FACEBOOK_APP_ID,
-                                                   FACEBOOK_APP_SECRET)
+                                                     FACEBOOK_APP_ID,
+                                                     FACEBOOK_APP_SECRET)
             if fbcookie:
                 # Okay so user logged in.
                 # Now, check to see if existing user
@@ -83,7 +84,7 @@ class BaseHandler(webapp2.RequestHandler):
                 elif user.access_token != fbcookie["access_token"]:
                     user.access_token = fbcookie["access_token"]
                     user.put()
-                # User is now logged in
+                    # User is now logged in
                 self.session["user"] = dict(
                     name=user.name,
                     profile_url=user.profile_url,
@@ -91,13 +92,13 @@ class BaseHandler(webapp2.RequestHandler):
                     access_token=user.access_token
                 )
                 return user
-        #======== use session cookie user
+            #======== use session cookie user
         anonymous_cookie = self.request.cookies.get('wsuser', None)
         if anonymous_cookie is None:
             cookie_value = utils.random_string()
-            self.response.set_cookie('wsuser', cookie_value, max_age = 15724800)
+            self.response.set_cookie('wsuser', cookie_value, max_age=15724800)
             anon_user = User()
-            anon_user.cookie_user=1
+            anon_user.cookie_user = 1
             anon_user.id = cookie_value
             anon_user.put()
             return anon_user
@@ -106,9 +107,9 @@ class BaseHandler(webapp2.RequestHandler):
             if anon_user:
                 return anon_user
             cookie_value = utils.random_string()
-            self.response.set_cookie('wsuser', cookie_value, max_age = 15724800)
+            self.response.set_cookie('wsuser', cookie_value, max_age=15724800)
             anon_user = User()
-            anon_user.cookie_user=1
+            anon_user.cookie_user = 1
             anon_user.id = cookie_value
             anon_user.put()
             return anon_user
@@ -144,17 +145,9 @@ class GetUserHandler(BaseHandler):
     def get(self):
         currentUser = self.current_user
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write( json.dumps(currentUser.to_dict(), cls = GameOnUtils.MyEncoder))
-        # try:
-        #     pass
-        #
-        # except Exception as e:
-        #     logging.error(e)
-        #     logging.error(e.message)
-        #     logging.error(currentUser)
-        #     logging.error(currentUser.__dict__)
+        self.response.out.write(json.dumps(currentUser.to_dict(), cls=GameOnUtils.MyEncoder))
 
-        
+
 class ScoresHandler(BaseHandler):
     def get(self):
         userscore = Score()
@@ -176,15 +169,16 @@ class AchievementsHandler(BaseHandler):
         currentUser.put()
         self.response.out.write('success')
 
+
 class IsGoldHandler(BaseHandler):
     def get(self):
         currentUser = self.current_user
         if currentUser.gold:
             self.response.out.write('success')
 
+
 class BuyHandler(BaseHandler):
     def get(self):
-
         # paymentAmount = "3.99"
         # CURRENCYCODE = "USD"
         # RETURNURL = "https://wordsmashing.appspot.com/buy"
@@ -195,6 +189,7 @@ class BuyHandler(BaseHandler):
     def post(self):
         self.render('buy.html')
 
+
 class LogoutHandler(BaseHandler):
     def get(self):
         if self.current_user is not None:
@@ -202,17 +197,19 @@ class LogoutHandler(BaseHandler):
 
         self.redirect('/')
 
+
 class makeGoldHandler(BaseHandler):
     def get(self):
         if self.request.get('reverse', None):
             user = self.current_user
-            user.gold=0
+            user.gold = 0
             user.put()
             self.response.out.write('success')
         else:
             User.buyFor(self.current_user.id)
             ##TODOFIX
             self.redirect("/campaign")
+
 
 class SaveVolumeHandler(BaseHandler):
     def get(self):
@@ -221,12 +218,14 @@ class SaveVolumeHandler(BaseHandler):
         user.put()
         self.response.out.write('success')
 
+
 class SaveMuteHandler(BaseHandler):
     def get(self):
         user = self.current_user
         user.mute = int(self.request.get('mute', None))
         user.put()
         self.response.out.write('success')
+
 
 class SaveLevelsUnlockedHandler(BaseHandler):
     def get(self):
@@ -235,6 +234,7 @@ class SaveLevelsUnlockedHandler(BaseHandler):
         user.put()
         self.response.out.write('success')
 
+
 class SaveDifficultiesUnlockedHandler(BaseHandler):
     def get(self):
         user = self.current_user
@@ -242,49 +242,51 @@ class SaveDifficultiesUnlockedHandler(BaseHandler):
         user.put()
         self.response.out.write('success')
 
+
 class PostbackHandler(BaseHandler):
-  """Handles server postback - received at /postback"""
+    """Handles server postback - received at /postback"""
 
-  def post(self):
-    """Handles post request."""
-    encoded_jwt = self.request.get('jwt', None)
-    if encoded_jwt is not None:
-      # jwt.decode won't accept unicode, cast to str
-      # http://github.com/progrium/pyjwt/issues/4
-      decoded_jwt = jwt.decode(str(encoded_jwt), SELLER_SECRET)
+    def post(self):
+        """Handles post request."""
+        encoded_jwt = self.request.get('jwt', None)
+        if encoded_jwt is not None:
+            # jwt.decode won't accept unicode, cast to str
+            # http://github.com/progrium/pyjwt/issues/4
+            decoded_jwt = jwt.decode(str(encoded_jwt), SELLER_SECRET)
 
-      # validate the payment request and respond back to Google
-      if decoded_jwt['iss'] == 'Google' and decoded_jwt['aud'] == SELLER_ID:
-        if ('response' in decoded_jwt and
-            'orderId' in decoded_jwt['response'] and
-            'request' in decoded_jwt):
-          order_id = decoded_jwt['response']['orderId']
-          request_info = decoded_jwt['request']
-          if ('currencyCode' in request_info and 'sellerData' in request_info
-              and 'name' in request_info and 'price' in request_info):
-            # optional - update local database
-            # orderId = decoded_jwt['response']['orderId']
+            # validate the payment request and respond back to Google
+            if decoded_jwt['iss'] == 'Google' and decoded_jwt['aud'] == SELLER_ID:
+                if ('response' in decoded_jwt and
+                            'orderId' in decoded_jwt['response'] and
+                            'request' in decoded_jwt):
+                    order_id = decoded_jwt['response']['orderId']
+                    request_info = decoded_jwt['request']
+                    if ('currencyCode' in request_info and 'sellerData' in request_info
+                        and 'name' in request_info and 'price' in request_info):
+                        # optional - update local database
+                        # orderId = decoded_jwt['response']['orderId']
 
-            pb = Postback()
-            pb.jwtPostback = encoded_jwt
-            pb.orderId = order_id
-            # pb.itemName = request_info.get('name')
-            # pb.saleType = decoded_jwt['typ']
+                        pb = Postback()
+                        pb.jwtPostback = encoded_jwt
+                        pb.orderId = order_id
+                        # pb.itemName = request_info.get('name')
+                        # pb.saleType = decoded_jwt['typ']
 
-            if (decoded_jwt['typ'] == 'google/payments/inapp/item/v1/postback/buy'):
-                pb.price = request_info['price']
-                pb.currencyCode = request_info['currencyCode']
-            elif (decoded_jwt['typ'] == 'google/payments/inapp/subscription/v1/postback/buy'):
-                pb.price = request_info['initialPayment']['price']
-                pb.currencyCode = request_info['initialPayment']['currencyCode']
-                # pb.recurrencePrice = request_info['recurrence']['price']
-                # pb.recurrenceFrequency = request_info['recurrence']['frequency']
+                        if (decoded_jwt['typ'] == 'google/payments/inapp/item/v1/postback/buy'):
+                            pb.price = request_info['price']
+                            pb.currencyCode = request_info['currencyCode']
+                        elif (decoded_jwt['typ'] == 'google/payments/inapp/subscription/v1/postback/buy'):
+                            pb.price = request_info['initialPayment']['price']
+                            pb.currencyCode = request_info['initialPayment']['currencyCode']
+                            # pb.recurrencePrice = request_info['recurrence']['price']
+                            # pb.recurrenceFrequency = request_info['recurrence']['frequency']
 
-            pb.put()
-            sellerData = request_info.get('sellerData')
-            User.buyFor(sellerData)
-            # respond back to complete payment
-            self.response.out.write(order_id)
+                        pb.put()
+                        sellerData = request_info.get('sellerData')
+                        User.buyFor(sellerData)
+                        # respond back to complete payment
+                        self.response.out.write(order_id)
+
 
 routes = [
     ('/gameon/getuser', GetUserHandler),
