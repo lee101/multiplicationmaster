@@ -41,6 +41,7 @@ var GameOnUser = function (userJSON) {
                 }
             }
         });
+        userJSON.achievements.push({achievement:achievementNumber})
     }
 
     userJSON.saveVolume = function (volume, callback) {
@@ -61,6 +62,7 @@ var GameOnUser = function (userJSON) {
                 }
             }
         });
+        userJSON.volume = volume
     }
 
     userJSON.saveMute = function (mute, callback) {
@@ -81,6 +83,8 @@ var GameOnUser = function (userJSON) {
                 }
             }
         });
+        userJSON.mute = mute
+
     }
 
     userJSON.saveLevelsUnlocked = function (levelsUnlocked, callback) {
@@ -90,7 +94,7 @@ var GameOnUser = function (userJSON) {
         }
         $.ajax({
             "url": "/gameon/savelevelsunlocked",
-            "data": {levelsunlocked: levelsUnlocked},
+            "data": {levels_unlocked: levelsUnlocked},
             "success": function (data) {
                 callback(data)
             },
@@ -101,6 +105,7 @@ var GameOnUser = function (userJSON) {
                 }
             }
         });
+        userJSON.levels_unlocked = levelsUnlocked
     }
 
     userJSON.saveDifficultiesUnlocked = function (difficultiesUnlocked, callback) {
@@ -110,7 +115,7 @@ var GameOnUser = function (userJSON) {
         }
         $.ajax({
             "url": "/gameon/savedifficultiesunlocked",
-            "data": {difficultiesunlocked: difficultiesUnlocked},
+            "data": {difficulties_unlocked: difficultiesUnlocked},
             "success": function (data) {
                 callback(data)
             },
@@ -121,6 +126,7 @@ var GameOnUser = function (userJSON) {
                 }
             }
         });
+        userJSON.difficulties_unlocked = difficultiesUnlocked
     }
 
 

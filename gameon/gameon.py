@@ -224,7 +224,7 @@ class SaveVolumeHandler(BaseHandler):
 class SaveMuteHandler(BaseHandler):
     def get(self):
         user = self.current_user
-        user.muted = int(self.request.get('mute', None))
+        user.mute = int(self.request.get('mute', None))
         user.put()
         self.response.out.write('success')
 
@@ -238,7 +238,7 @@ class SaveLevelsUnlockedHandler(BaseHandler):
 class SaveDifficultiesUnlockedHandler(BaseHandler):
     def get(self):
         user = self.current_user
-        user.difficulty = int(self.request.get('difficulties_unlocked', None))
+        user.difficulties_unlocked = int(self.request.get('difficulties_unlocked', None))
         user.put()
         self.response.out.write('success')
 
