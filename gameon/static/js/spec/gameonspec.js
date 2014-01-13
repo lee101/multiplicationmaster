@@ -12,25 +12,34 @@ describe("gameon", function () {
         })
     });
 
-//    describe("when song has been paused", function () {
-//        beforeEach(function () {
-//            player.play(song);
-//            player.pause();
-//        });
-//
-//        it("should indicate that the song is currently paused", function () {
-//            expect(player.isPlaying).toBeFalsy();
-//
-//            // demonstrates use of 'not' with a custom matcher
-//            expect(player).not.toBePlaying(song);
-//        });
-//
-//        it("should be possible to resume", function () {
-//            player.resume();
-//            expect(player.isPlaying).toBeTruthy();
-//            expect(player.currentlyPlayingSong).toEqual(song);
-//        });
-//    });
+    describe("when highscores have been added", function () {
+        beforeEach(function (done) {
+            gameOn.getUser(function (user) {
+                user.saveHighScore(1, 123, function(data) {
+                	done();
+
+                })
+            })
+        });
+
+        it("should be able to get a user with a score and highscore", function (done) {
+            gameOn.getUser(function (user) {
+                expect(user.volume).toBeDefined();
+                expect(user.scores[0].score).toEqual(123)
+                expect(user.scores[0].game_mode).toEqual(1)
+                done();
+            })
+        });
+        it("should be able to get a fresh user with a score and highscore", function (done) {
+            delete gameOn.user
+            gameOn.getUser(function (user) {
+                expect(user.volume).toBeDefined();
+                expect(user.scores[0].score).toEqual(123)
+                expect(user.scores[0].game_mode).toEqual(1)
+                done();
+            })
+        });
+    });
 //
 //    // demonstrates use of spies to intercept and test method calls
 //    it("tells the current song if the user has made it a favorite", function () {

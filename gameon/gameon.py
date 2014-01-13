@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from Models import *
+from models.models import *
 from google.appengine.api import users
 from gameon_utils import GameOnUtils
 import os
@@ -224,7 +224,7 @@ class SaveVolumeHandler(BaseHandler):
 class SaveMuteHandler(BaseHandler):
     def get(self):
         user = self.current_user
-        user.muted = int(self.request.get('muted', None))
+        user.muted = int(self.request.get('mute', None))
         user.put()
         self.response.out.write('success')
 
@@ -235,10 +235,10 @@ class SaveLevelsUnlockedHandler(BaseHandler):
         user.put()
         self.response.out.write('success')
 
-class SaveDifficultyHandler(BaseHandler):
+class SaveDifficultiesUnlockedHandler(BaseHandler):
     def get(self):
         user = self.current_user
-        user.difficulty = int(self.request.get('difficulty', None))
+        user.difficulty = int(self.request.get('difficulties_unlocked', None))
         user.put()
         self.response.out.write('success')
 
@@ -289,7 +289,7 @@ class PostbackHandler(BaseHandler):
 routes = [
     ('/gameon/getuser', GetUserHandler),
     ('/gameon/savescore', ScoresHandler),
-    ('/gameon/achievements', AchievementsHandler),
+    ('/gameon/saveachievement', AchievementsHandler),
     ('/gameon/logout', LogoutHandler),
     ('/gameon/postback', PostbackHandler),
     ('/gameon/buy', BuyHandler),
@@ -298,6 +298,6 @@ routes = [
     ('/gameon/savevolume', SaveVolumeHandler),
     ('/gameon/savemute', SaveMuteHandler),
     ('/gameon/savelevelsunlocked', SaveLevelsUnlockedHandler),
-    ('/gameon/savedifficulty', SaveDifficultyHandler),
+    ('/gameon/savedifficultiesunlocked', SaveDifficultiesUnlockedHandler),
 
 ]

@@ -1,6 +1,131 @@
 // Globals: JQuery/$
 
+var GameOnUser = function (userJSON) {
 
+    userJSON.saveHighScore = function (game_mode, score, callback) {
+        if (typeof callback == 'undefined') {
+            callback = function (data) {
+            }
+        }
+        $.ajax({
+            "url": "/gameon/savescore",
+            "data": {game_mode: game_mode, score: score},
+            "success": function (data) {
+                callback(data)
+            },
+            "type": "GET",
+            "cache": false,
+            "error": function (xhr, error, thrown) {
+                if (error == "parsererror") {
+                }
+            }
+        });
+        userJSON.scores.push({game_mode: game_mode, score: score});
+    }
+
+    userJSON.saveAchievement = function (achievementNumber, callback) {
+        if (typeof callback == 'undefined') {
+            callback = function (data) {
+            }
+        }
+        $.ajax({
+            "url": "/gameon/saveachievement",
+            "data": {achievement: achievementNumber},
+            "success": function (data) {
+                callback(data)
+            },
+            "type": "GET",
+            "cache": false,
+            "error": function (xhr, error, thrown) {
+                if (error == "parsererror") {
+                }
+            }
+        });
+    }
+
+    userJSON.saveVolume = function (volume, callback) {
+        if (typeof callback == 'undefined') {
+            callback = function (data) {
+            }
+        }
+        $.ajax({
+            "url": "/gameon/savevolume",
+            "data": {volume: volume},
+            "success": function (data) {
+                callback(data)
+            },
+            "type": "GET",
+            "cache": false,
+            "error": function (xhr, error, thrown) {
+                if (error == "parsererror") {
+                }
+            }
+        });
+    }
+
+    userJSON.saveMute = function (mute, callback) {
+        if (typeof callback == 'undefined') {
+            callback = function (data) {
+            }
+        }
+        $.ajax({
+            "url": "/gameon/savemute",
+            "data": {mute: mute},
+            "success": function (data) {
+                callback(data)
+            },
+            "type": "GET",
+            "cache": false,
+            "error": function (xhr, error, thrown) {
+                if (error == "parsererror") {
+                }
+            }
+        });
+    }
+
+    userJSON.saveLevelsUnlocked = function (levelsUnlocked, callback) {
+        if (typeof callback == 'undefined') {
+            callback = function (data) {
+            }
+        }
+        $.ajax({
+            "url": "/gameon/savelevelsunlocked",
+            "data": {levelsunlocked: levelsUnlocked},
+            "success": function (data) {
+                callback(data)
+            },
+            "type": "GET",
+            "cache": false,
+            "error": function (xhr, error, thrown) {
+                if (error == "parsererror") {
+                }
+            }
+        });
+    }
+
+    userJSON.saveDifficultiesUnlocked = function (difficultiesUnlocked, callback) {
+        if (typeof callback == 'undefined') {
+            callback = function (data) {
+            }
+        }
+        $.ajax({
+            "url": "/gameon/savedifficultiesunlocked",
+            "data": {difficultiesunlocked: difficultiesUnlocked},
+            "success": function (data) {
+                callback(data)
+            },
+            "type": "GET",
+            "cache": false,
+            "error": function (xhr, error, thrown) {
+                if (error == "parsererror") {
+                }
+            }
+        });
+    }
+
+
+    return userJSON;
+}
 var GameOn = function () {
     var self = this;
     (function InitUser() {
@@ -17,7 +142,7 @@ var GameOn = function () {
                 "url": "/gameon/getuser",
                 "data": {},
                 "success": function (user) {
-                    self.user = user;
+                    self.user = GameOnUser(user);
                     callback(self.user);
                 },
                 "type": "GET",
