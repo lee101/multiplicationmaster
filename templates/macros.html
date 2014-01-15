@@ -1,256 +1,34 @@
-{% macro jplayer() -%}
-<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 
-<div id="jp_container_1" class="jp-audio">
-<div class="jp-type-single">
-  <div class="jp-gui jp-interface">
-    <ul class="jp-controls">
-      <!--<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>-->
-      <!--<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>-->
-      <!--<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>-->
-      <li><a href="javascript:;" class="jp-mute btn btn-small btn-danger" tabindex="1" title="mute" onclick="mute()"><span class="icon-volume-off"></span></a></li>
-      <li><a href="javascript:;" class="jp-unmute btn btn-small btn-danger" tabindex="1" title="unmute" onclick="unmute()"><span class="icon-volume-up"></span></a></li>
-      <!--<li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>-->
-    </ul>
-    <!--<div class="jp-progress">-->
-      <!--<div class="jp-seek-bar">-->
-        <!--<div class="jp-play-bar"></div>-->
-      <!--</div>-->
-    <!--</div>-->
-    <div class="jp-volume-bar">
-        <div class="jp-volume-bg">
-            <div class="jp-volume-bar-value"></div>
-        </div>
-    </div>
-    <!--<div class="jp-time-holder">-->
-      <!--<div class="jp-current-time"></div>-->
-      <!--<div class="jp-duration"></div>-->
-      <!--<ul class="jp-toggles">-->
-        <!--<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>-->
-        <!--<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>-->
-      <!--</ul>-->
-    <!--</div>-->
-  </div>
-  <!--<div class="jp-title">-->
-    <!--<ul>-->
-      <!--<li>Bubble</li>-->
-    <!--</ul>-->
-  <!--</div>-->
-  <!--<div class="jp-no-solution">-->
-    <!--<span>Update Required</span>-->
-    <!--To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.-->
-  <!--</div>-->
-</div>
-</div>
-{%- endmacro %}
 
-{% macro headers(ws, highscores, achievements, level) -%}
+{% macro headers() -%}
     <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon"/>
     <link rel="apple-touch-icon" href="/static/img/word-smashing-icon-iphone.png" />
     <link rel="apple-touch-icon" sizes="72x72" href="/static/img/word-smashing-icon-ipad.png" />
     <link rel="apple-touch-icon" sizes="114x114" href="/static/img/word-smashing-icon-iphone-retina.png" />
     <link rel="apple-touch-icon" sizes="144x144" href="/static/img/word-smashing-icon-ipad-retina.png" />
+{%- endmacro %}
+
+{% macro cssheaders() -%}
     <link rel="stylesheet" rel="stylesheet" href="/static/css/social-likes.css"/>
     <link type="text/css" rel="stylesheet" href="/static/css/bootstrap.css"/>
     <link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
     <!--[if lte IE 7]><link rel="stylesheet" href="css/ie7.css" type="text/css" /><![endif]-->
     <!--[if IE 8]><link rel="stylesheet" href="/css/ie8.css" type="text/css" /><![endif]-->
     <link type="text/css" href="/gameon/static/jplayerskin/jplayer.pink.flag.css" rel="stylesheet" />
-      {% if ws.debug %}
-      <script src="https://sandbox.google.com/checkout/inapp/lib/buy.js"></script>
-      {% endif %}
-      {% if not ws.debug %}
-      <script src="https://sandbox.google.com/checkout/inapp/lib/buy.js"></script>
-      <!--<script src="https://wallet.google.com/inapp/lib/buy.js"></script>-->
-      {% endif %}
-      <script type="text/javascript">
+{%- endmacro %}
 
-        // Success handler
-        var successHandler = function(status){
-          if (window.console != undefined) {
-            console.log("Purchase completed successfully: ", status);
-            window.location.href = "http://www.wordsmashing.com/campaign";
-          }
-        }
-
-        // Failure handler
-        var failureHandler = function(status){
-          if (window.console != undefined) {
-            console.log("Purchase failed ", status);
-          }
-        }
-
-        function purchase(item) {
-          var generated_jwt;
-          if (item == "Gold") {
-            generated_jwt = "{{ jwt }}";
-          } else {
-            return;
-          }
-
-          google.payments.inapp.buy({
-            'jwt'     : generated_jwt,
-            'success' : successHandler,
-            'failure' : failureHandler
-          });
-        }
-      </script>
-    <script>
-    var achievements = {};
-    {% for achievement in achievements %}
-    {% if achievement.type == UNLOCKED_MEDIUM %}
-    achievements.medium = true;
-    {% endif %}
-    {% if achievement.type == UNLOCKED_HARD %}
-    achievements.hard = true;
-    {% endif %}
-    {% endfor %}
-
-    var highscores = {};
-    {% for score in highscores %}
-        {% if score.difficulty == MEDIUM %}
-            highscores.medium = {{ score.score }};
-        {% endif %}
-        {% if score.difficulty == EASY %}
-            highscores.easy = {{ score.score }};
-        {% endif %}
-        {% if score.difficulty == HARD %}
-            highscores.hard = {{ score.score }};
-        {% endif %}
-    {% endfor %}
-
-    {% if level %}
-      num_blocked = {{ level.blocked_spaces|length }} + {{ level.locked_spaces|length }};
-      {% if level.blocked_spaces %}
-        blocked_spaces = {}
-        {% for pair in level.blocked_spaces %}
-          {% set bx = pair[0] %}
-          {% set by = pair[1] %}
-          blocked_spaces['{{ bx }}-{{ by }}'] = true;
-        {% endfor %}
-      {% endif %}
-
-      {% if level.locked_spaces %}
-        num_locked = {{ level.locked_spaces|length }};
-        locked_spaces = {}
-        {% for pair in level.locked_spaces %}
-          {% set bx = pair[0] %}
-          {% set by = pair[1] %}
-          locked_spaces['{{ bx }}-{{ by }}'] = true;
-        {% endfor %}
-      {% endif %}
-    {% endif %}
-
-    {% if current_user.difficulty != 0 and current_user.difficulty != None %}
-    var difficulty = {{ current_user.difficulty }};
-    {% endif %}
-
-    var current_user = {};
-    {% if current_user.gold %}
-    current_user.has_bought = true;
-    {% endif %}
-
-var loginModalIsOpen = false;
-function loginmodal(){
-  loginModalIsOpen= true;
-    modal.open({content: 
-        '<p class="lead">Log in with Facebook or Google</p>'+
-        '<p style="text-align: center;"><a style="margin:10px;" href="{{ glogin_url }}"" title="Login With Google"><img src="/img/google-icon-64.png" alt="Google Login"/></a>' +
-        '<a href="#" onclick="fb_login();return false" title="Login With Facebook"><img src="/img/facebook-icon-64.png" alt="Facebook Login"/></a></p>'
-
-    });
-    var parentfunc = modal.close;
-
-    modal.close = function(){
-      parentfunc();
-      loginModalIsOpen = false;
-    }
-}
-    </script>
-
+{% macro jsheaders() -%}
     <script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery.blockUI.js"></script>
-    <script type="text/javascript" src="/static/js/wordutils.js"></script>
-    {% if 'multiplayer' in url %}
-      <script type="text/javascript" src="/static/js/game-with-friends.js"></script>
-    {% else %}
-      <script type="text/javascript" src="/static/js/game.js"></script>
-    {% endif %}
+
+    <script type="text/javascript" src="/gameon/static/js/gameon.js"></script>
+
+    <script type="text/javascript" src="/static/js/game.js"></script>
 
     <script src="/static/js/social-likes.min.js"></script>
 
     <script type="text/javascript" src="/static/js/jquery.jplayer.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#jquery_jplayer_1").jPlayer({
-            ready: function () {
-                $(this).jPlayer("setMedia", {
-                  {% if ws.debug %}
-                    mp3: "/music/ws-theme.mp3",
-                    oga: "/music/ws-theme.ogg"
-                  {% endif %}
-                  {% if not ws.debug %}
-                    mp3: "http://commondatastorage.googleapis.com/wordsmashing%2Fws-piano-theme2.mp3",
-                    oga: "http://commondatastorage.googleapis.com/wordsmashing%2Fws-piano-theme2.ogg"
-                  {% endif %}
-                });
-                $(this).jPlayer("option", "loop",true);
-                $(this).jPlayer("play");
-            },
-            ended: function() { // The $.jPlayer.event.ended event
-                $(this).jPlayer("play"); // Repeat the media
-            },
-            volumechange: function (event) {
-                var myVol = event.jPlayer.options.volume;
-                // myMuted = event.jPlayer.options.muted;
-                $.ajax( {
-                  "url":  "/savevolume",
-                  "data": {"volume":myVol},
-                  "success": function (text) {
-                  },
-                  "type": "GET",
-                  "cache": false,
-                  "error": function (xhr, error, thrown) {
-                  }
-                });
-            },
-            {% if current_user.volume %}
-            volume: {{ current_user.volume }},
-            {% else %}
-            volume: 0.5,
-            {% endif %}
-            {% if current_user.muted %}
-            muted: 1,
-            {% endif %}
-            
-            swfPath: "/js",
-            supplied: "mp3, oga"
-        });
-    });
-    function mute () {
-        $.ajax( {
-            "url":  "/savemute",
-            "data": {"muted":1},
-            "success": function (text) {
-            },
-            "type": "GET",
-            "cache": false,
-            "error": function (xhr, error, thrown) {
-            }
-        });
-    }
-    function unmute () {
-        $.ajax( {
-            "url":  "/savemute",
-            "data": {"muted":0},
-            "success": function (text) {
-            },
-            "type": "GET",
-            "cache": false,
-            "error": function (xhr, error, thrown) {
-            }
-        });
-    }
+    <script type="text/javascript">
 </script>
 
     <script type="text/javascript">

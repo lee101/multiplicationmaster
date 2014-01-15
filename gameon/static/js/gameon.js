@@ -134,11 +134,8 @@ var GameOnUser = function (userJSON) {
 }
 var GameOn = function () {
     var self = this;
-    (function InitUser() {
 
-    })();
-
-    this.getUser = function (callback) {
+    self.getUser = function (callback) {
         if (self.user) {
             callback(self.user);
         }
@@ -159,6 +156,74 @@ var GameOn = function () {
                 }
             });
         }
+    }
+
+    self.renderVolumeControlTo = function (selector) {
+        $(selector).jPlayer({
+            ready: function () {
+                $(this).jPlayer("setMedia", {
+                    mp3: "http://commondatastorage.googleapis.com/wordsmashing%2Fws-piano-theme2.mp3",
+                    oga: "http://commondatastorage.googleapis.com/wordsmashing%2Fws-piano-theme2.ogg"
+                });
+                $(this).jPlayer("option", "loop", true);
+                $(this).jPlayer("play");
+            },
+            ended: function () { // The $.jPlayer.event.ended event
+                $(this).jPlayer("play"); // Repeat the media
+            },
+            volumechange: function (event) {
+                var myVol = event.jPlayer.options.volume;
+                // myMuted = event.jPlayer.options.muted;
+                $.ajax({
+                    "url": "/savevolume",
+                    "data": {"volume": myVol},
+                    "success": function (text) {
+                    },
+                    "type": "GET",
+                    "cache": false,
+                    "error": function (xhr, error, thrown) {
+                    }
+                });
+            },
+            volume: self.user.volume,
+            muted: self.user.mute,
+            globalVolume: true,
+            swfPath: "/js",
+            supplied: "mp3, oga"
+        });
+    };
+
+    self.loadSound = function(name, url) {
+
+    }
+    self.playSound = function(name) {
+        
+    }
+
+    self.mute = function () {
+        $.ajax({
+            "url": "/savemute",
+            "data": {"muted": 1},
+            "success": function (text) {
+            },
+            "type": "GET",
+            "cache": false,
+            "error": function (xhr, error, thrown) {
+            }
+        });
+    }
+
+    self.unmute = function () {
+        $.ajax({
+            "url": "/savemute",
+            "data": {"muted": 0},
+            "success": function (text) {
+            },
+            "type": "GET",
+            "cache": false,
+            "error": function (xhr, error, thrown) {
+            }
+        });
     }
 
     self.clock = function (gameOver, newGame, startTime) {

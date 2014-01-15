@@ -38,7 +38,7 @@ class User(BaseModel):
     gold = ndb.IntegerProperty()
 
     mute = ndb.IntegerProperty()
-    volume = ndb.FloatProperty()
+    volume = ndb.FloatProperty(default=0.5)
 
     levels_unlocked = ndb.IntegerProperty(default=0)
     difficulties_unlocked = ndb.IntegerProperty(default=0)
