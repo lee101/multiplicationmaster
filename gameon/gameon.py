@@ -184,10 +184,10 @@ class BuyHandler(BaseHandler):
         # RETURNURL = "https://wordsmashing.appspot.com/buy"
         # CANCELURL = "https://wordsmashing.appspot.com/buy"
 
-        self.render('buy.html')
+        self.render('buy.jinja2')
 
     def post(self):
-        self.render('buy.html')
+        self.render('buy.jinja2')
 
 
 class LogoutHandler(BaseHandler):

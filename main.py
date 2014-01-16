@@ -53,7 +53,7 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        self.render('templates/index.html')
+        self.render('templates/index.jinja2')
 class SitemapHandler(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/xml'
