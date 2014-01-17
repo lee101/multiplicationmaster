@@ -113,7 +113,23 @@ class BaseHandler(webapp2.RequestHandler):
             anon_user.id = cookie_value
             anon_user.put()
             return anon_user
+    def render(self, view_name, extraParams = {}):
 
+        template_values = {
+            # 'ws': ws,
+            # 'facebook_app_id': FACEBOOK_APP_ID,
+            # 'MEDIUM':MEDIUM,
+            # 'EASY':EASY,
+            # 'HARD':HARD,
+            # 'glogin_url': users.create_login_url(self.request.uri),
+            # 'glogout_url': users.create_logout_url(self.request.uri),
+            # 'url':self.request.uri,
+            # 'num_levels': len(LEVELS)
+        }
+        template_values.update(extraParams)
+
+        template = JINJA_ENVIRONMENT.get_template(view_name)
+        self.response.write(template.render(template_values))
 
     def dispatch(self):
         """
@@ -242,6 +258,14 @@ class SaveDifficultiesUnlockedHandler(BaseHandler):
         user.put()
         self.response.out.write('success')
 
+class TestsHandler(BaseHandler):
+    def get(self):
+        try:
+            self.render('templates/tests.jinja2')
+        except Exception as e:
+            logging.error(e)
+
+
 
 class PostbackHandler(BaseHandler):
     """Handles server postback - received at /postback"""
@@ -301,5 +325,6 @@ routes = [
     ('/gameon/savemute', SaveMuteHandler),
     ('/gameon/savelevelsunlocked', SaveLevelsUnlockedHandler),
     ('/gameon/savedifficultiesunlocked', SaveDifficultiesUnlockedHandler),
+    ('/gameon/tests', TestsHandler),
 
 ]

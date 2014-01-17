@@ -1,8 +1,14 @@
 describe("gameon", function () {
 
-    var gameOn = [];
-    beforeEach(function () {
-        gameOn = new GameOn();
+    it("should be able to play music (looping)", function (done) {
+        gameOn.loadSound("music", 'http://commondatastorage.googleapis.com/wordsmashing%2Fws-piano-theme2.mp3')
+        gameOn.loopSound("music")
+    });
+
+    it("should be able to play sounds", function (done) {
+        gameOn.loadSound("sound", '/gameon/static/music/doublepoints.m4a')
+        gameOn.playSound("sound")
+        done()
     });
 
     it("should be able to get a user", function (done) {
@@ -17,7 +23,6 @@ describe("gameon", function () {
             gameOn.getUser(function (user) {
                 user.saveHighScore(1, 123, function (data) {
                     done();
-
                 })
             })
         });
@@ -136,9 +141,9 @@ describe("gameon", function () {
             })
         });
         it("should have persisted difficulties_unlocked", function (done) {
-            delete gameOn.user
+            delete gameOn.user;
             gameOn.getUser(function (user) {
-                expect(user.difficulties_unlocked).toEqual(difficulties_unlocked)
+                expect(user.difficulties_unlocked).toEqual(difficulties_unlocked);
                 done();
             })
         });

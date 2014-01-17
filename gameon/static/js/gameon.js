@@ -132,7 +132,7 @@ var GameOnUser = function (userJSON) {
 
     return userJSON;
 }
-var GameOn = function () {
+var gameOn = (function () {
     var self = this;
 
     self.getUser = function (callback) {
@@ -157,6 +157,20 @@ var GameOn = function () {
             });
         }
     }
+
+    soundManager.setup({
+        // where to find the SWF files, if needed
+        url: '/gameon/js/lib/soundmanager/script',
+        onready: function () {
+            // SM2 has loaded, API ready to use e.g., createSound() etc.
+
+        },
+        ontimeout: function () {
+            // Uh-oh. No HTML5 support, SWF missing, Flash blocked or other issue
+        }
+
+    });
+
 
     self.renderVolumeControlTo = function (selector) {
         $(selector).jPlayer({
@@ -193,11 +207,33 @@ var GameOn = function () {
         });
     };
 
-    self.loadSound = function(name, url) {
-
+    self.loadSound = function (name, url) {
+        soundManager.onready(function () {
+            soundManager.createSound({
+                id: name,
+                url: url
+            });
+        });
     }
-    self.playSound = function(name) {
 
+    self.playSound = function (name) {
+        soundManager.onready(function () {
+            soundManager.play(name);
+        });
+    }
+
+    function _loopSound(sound) {
+        sound.play({
+            onfinish: function () {
+                _loopSound(sound);
+            }
+        });
+    }
+    self.loopSound = function (name) {
+        soundManager.onready(function () {
+            var sound = soundManager.getSoundById(name);
+            _loopSound(sound)
+        });
     }
 
     self.mute = function () {
@@ -295,5 +331,5 @@ var GameOn = function () {
         return self;
     };
 
-    return this;
-}
+    return self;
+})()
