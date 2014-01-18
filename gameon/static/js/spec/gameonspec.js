@@ -3,6 +3,8 @@ describe("gameon", function () {
     it("should be able to play music (looping)", function (done) {
         gameOn.loadSound("music", 'http://commondatastorage.googleapis.com/wordsmashing%2Fws-piano-theme2.mp3')
         gameOn.loopSound("music")
+        done()
+
     });
 
     it("should be able to play sounds", function (done) {

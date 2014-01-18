@@ -222,6 +222,21 @@ var gameOn = (function () {
         });
     }
 
+    self.pauseAll = soundManager.pauseAll;
+    self.resumeAll = soundManager.resumeAll;
+    self.mute = soundManager.mute;
+    self.unmute = soundManager.unmute;
+
+    /**
+     * @param volume 0 to 1 global volume
+     */
+    self.setVolume = function(volume) {
+        volume = volume*100
+        $.each(soundManager.sounds, function(name, sound) {
+            sound.setVolume(volume)
+        });
+    }
+
     function _loopSound(sound) {
         sound.play({
             onfinish: function () {
