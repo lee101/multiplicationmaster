@@ -131,8 +131,9 @@ var GameOnUser = function (userJSON) {
 
 
     return userJSON;
-}
-var gameOn = (function () {
+};
+var gameon = new (function () {
+    "use strict";
     var self = this;
 
     self.getUser = function (callback) {
@@ -172,40 +173,6 @@ var gameOn = (function () {
     });
 
 
-    self.renderVolumeControlTo = function (selector) {
-        $(selector).jPlayer({
-            ready: function () {
-                $(this).jPlayer("setMedia", {
-                    mp3: "http://commondatastorage.googleapis.com/wordsmashing%2Fws-piano-theme2.mp3",
-                    oga: "http://commondatastorage.googleapis.com/wordsmashing%2Fws-piano-theme2.ogg"
-                });
-                $(this).jPlayer("option", "loop", true);
-                $(this).jPlayer("play");
-            },
-            ended: function () { // The $.jPlayer.event.ended event
-                $(this).jPlayer("play"); // Repeat the media
-            },
-            volumechange: function (event) {
-                var myVol = event.jPlayer.options.volume;
-                // myMuted = event.jPlayer.options.muted;
-                $.ajax({
-                    "url": "/savevolume",
-                    "data": {"volume": myVol},
-                    "success": function (text) {
-                    },
-                    "type": "GET",
-                    "cache": false,
-                    "error": function (xhr, error, thrown) {
-                    }
-                });
-            },
-            volume: self.user.volume,
-            muted: self.user.mute,
-            globalVolume: true,
-            swfPath: "/js",
-            supplied: "mp3, oga"
-        });
-    };
 
     self.loadSound = function (name, url) {
         soundManager.onready(function () {
@@ -230,10 +197,10 @@ var gameOn = (function () {
     /**
      * @param volume 0 to 1 global volume
      */
-    self.setVolume = function(volume) {
-        volume = volume*100
-        $.each(soundManager.sounds, function(name, sound) {
-            sound.setVolume(volume)
+    self.setVolume = function (volume) {
+        volume = volume * 100;
+        $.each(soundManager.sounds, function (name, sound) {
+            sound.setVolume(volume);
         });
     }
 
@@ -244,6 +211,7 @@ var gameOn = (function () {
             }
         });
     }
+
     self.loopSound = function (name) {
         soundManager.onready(function () {
             var sound = soundManager.getSoundById(name);
@@ -277,28 +245,38 @@ var gameOn = (function () {
         });
     }
 
-    self.clock = function (gameOver, newGame, startTime) {
+    //render volume controll
+    $(document).ready(function () {
+//        $('.gameon-volume').append('<input type="text" data-slider="true" value="0.4" data-slider-highlight="true" data-slider-theme="volume"/>');
+        $("[data-slider]")
+            .bind("slider:ready slider:changed", function (event, data) {
+                self.setVolume(data.ratio);
+
+            });
+    });
+
+    self.clock = function (gameOver, startSeconds) {
         var self = this;
-        if (!startTime) {
-            self.startTime = 5 * 60;
+        if (!startSeconds) {
+            self.startSeconds = 5 * 60;
         }
         else {
-            self.startTime = startTime;
+            self.startSeconds = startSeconds;
         }
 
-        var started = false;
+        self.started = false;
 
         self.reset = function () {
-            self.time = self.startTime;
-            started = false;
+            self.seconds = self.startSeconds;
+            self.started = false;
         }
 
         self.start = function () {
-            started = true;
+            self.started = true;
         }
-
+        self.unpause = self.start;
         self.pause = function () {
-            started = false;
+            self.started = false;
         }
 
         self.tick = function () {
@@ -309,42 +287,65 @@ var gameOn = (function () {
             return self._formattedTime;
         }
         self.setTime = function (seconds) {
-            self.time = seconds;
+            self.seconds = seconds;
             self._updateFormattedTime();
         }
-        self.time = self.setTime(self.startTime);
 
         self._updateFormattedTime = function () {
             var separator = ':';
-            if (self.time % 60 <= 9) {
+            if (self.seconds % 60 <= 9) {
                 separator = ':0'
             }
-            self._formattedTime = Math.floor(self.time / 60) + separator + self.time % 60;
+            self._formattedTime = Math.floor(self.seconds / 60) + separator + self.seconds % 60;
         }
+        self.setTime(self.startSeconds);
 
         setInterval(function () {
-            if (started) {
-                self.setTime(self.time - 1);
+            if (self.started) {
+                self.setTime(self.seconds - 1);
                 self._updateFormattedTime();
                 self.tick();
+                $('.gameon-clock').html(self.getTime())
+                if (self.seconds <= 0) {
+                    self.reset();
+                    gameOver();
+                }
             }
         }, 1000);
-
-        //override functions
-        var parent = gameOver;
-        gameover = function () {
-            parent();
-            self.reset();
-        }
-        var parent2 = newGame;
-        newGame = function () {
-            parent2();
-            self.reset();
-            self.started();
-        }
 
         return self;
     };
 
+    self.board = function (width, height) {
+        var self = this;
+        self.width = width;
+        self.height = height;
+
+        for (var i = 0; i < width; i++) {
+            for (var j = 0; j < height; j++) {
+//                self.grid[i][j] = "TODO";
+            }
+        }
+        self._renderBoard = function () {
+            var domtable = ['<table>'];
+            for (var i = 0; i < self.height; i++) {
+                domtable.push("<tr>");
+                for (var j = 0; j < self.width; j++) {
+                    var even = 'odd';
+                    if ((i + j) % 2 == 0) {
+                        even = 'even';
+                    }
+                    domtable.push('<td id="' + i + '-' + j + '" class="' + even + '">');
+//                    domtable.push(renderGameData(self.grid, i, j));
+                    domtable.push("</td>");
+                }
+                domtable.push("</tr>");
+            }
+            domtable.push('</table>')
+
+            $('.gameon-board').html(domtable.join(''));
+        }
+    }
+
     return self;
-})()
+})();

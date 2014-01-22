@@ -54,18 +54,18 @@ class User(BaseModel):
     achievements = ndb.StructuredProperty(Achievement, repeated=True)
 
     @classmethod
-    def byId(self, id):
-        return self.query(self.id == id).get()
+    def byId(cls, id):
+        return cls.query(cls.id == id).get()
 
     @classmethod
-    def buyFor(self, userid):
+    def buyFor(cls, userid):
         dbuser = User.byId(userid)
         dbuser.gold = 1
         dbuser.put()
 
     @classmethod
-    def byToken(self, token):
-        return self.query(self.access_token == token).get()
+    def byToken(cls, token):
+        return cls.query(cls.access_token == token).get()
 
     def getHighScores(self):
         return sorted(self.high_scores, key=attrgetter('game_mode', 'score'))

@@ -2,15 +2,17 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Jasmine Spec Runner v2.0.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Jasmine Spec Runner v2.0.0</title>
 
-  <link rel="shortcut icon" type="image/png" href="/gameon/static/js/lib/jasmine-2.0.0/jasmine_favicon.png">
-  <link rel="stylesheet" type="text/css" href="/gameon/static/js/lib/jasmine-2.0.0/jasmine.css">
+    <link rel="shortcut icon" type="image/png" href="/gameon/static/js/lib/jasmine-2.0.0/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="/gameon/static/js/lib/jasmine-2.0.0/jasmine.css">
 
-  <script type="text/javascript" src="/gameon/static/js/lib/jasmine-2.0.0/jasmine.js"></script>
-  <script type="text/javascript" src="/gameon/static/js/lib/jasmine-2.0.0/jasmine-html.js"></script>
-  <script type="text/javascript" src="/gameon/static/js/lib/jasmine-2.0.0/boot.js"></script>
+    {{ gameon.cssheaders() }}
+
+    <script type="text/javascript" src="/gameon/static/js/lib/jasmine-2.0.0/jasmine.js"></script>
+    <script type="text/javascript" src="/gameon/static/js/lib/jasmine-2.0.0/jasmine-html.js"></script>
+    <script type="text/javascript" src="/gameon/static/js/lib/jasmine-2.0.0/boot.js"></script>
 
     {{ gameon.jsheaders() }}
 
@@ -21,5 +23,10 @@
 </head>
 
 <body>
+<div class="gameon-clock"></div>
+<div class="gameon-board"></div>
+<div class="gameon-volume">
+    <input type="text" data-slider="true" value="0.4" data-slider-highlight="true" data-slider-theme="volume"/>
+</div>
 </body>
 </html>

@@ -1,0 +1,30 @@
+.gameon-clock {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+
+@media (min-width: 961px) {
+    .gameon-clock {
+        font-weight: bold;
+        font-size: 18px;
+    }
+}
+
+.gameon-board table {
+    border: 1px solid #808080;
+}
+
+.gameon-board td {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #131A13;
+
+}
+
+.gameon-board .even {
+    background-color: rgb(149, 155, 156);
+}
+
+.gameon-board .odd {
+    background-color: rgb(147, 204, 204);
+}
