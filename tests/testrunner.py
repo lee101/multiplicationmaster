@@ -10,7 +10,7 @@ USAGE = "runs tests"
 # SDK_PATH    Path to the SDK installation
 # TEST_PATH   Path to package containing test modules"""
 SDK_PATH = "/usr/local/google_appengine"
-# TEST_PATH = "/Users/lee/Downloads/projects/PycharmProjects/wordsmashing/tests/"
+# TEST_PATH = "/Users/lee/Downloads/projects/PycharmProjects/multiplcationmaster/tests/"
 TEST_PATH = "."
 def main(SDK_PATH, TEST_PATH):
     sys.path.insert(0, SDK_PATH)

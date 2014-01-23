@@ -1,14 +1,14 @@
 {
-    "name": "Word Smashing",
+    "name": "Multiplication Master",
     "description": "Word search puzzle with a twist",
     "version": "4",
     "manifest_version": 2,
     "app": {
         "urls": [
-            "*://www.wordsmashing.com/"
+            "*://www.multiplcationmaster.com/"
         ],
         "launch": {
-            "web_url": "http://www.wordsmashing.com/"
+            "web_url": "http://www.multiplcationmaster.com/"
         }
     },
     "icons": {
