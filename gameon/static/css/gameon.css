@@ -20,6 +20,7 @@
     width: 60px;
     height: 60px;
     border: 1px solid white;
+    text-align: center;
 }
 @media (min-width: 961px) {
     .gameon-board td {
@@ -58,4 +59,15 @@
 }
 .clear {
     clear: both;
+}
+
+/* =======    bootstrap overrides ======== */
+
+@media (min-width: 961px) {
+        
+    .btn-lg {
+        width: 100px;
+        height: 100px;
+        font-size: 60px;
+    }
 }

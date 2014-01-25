@@ -369,7 +369,7 @@ var gameon = new (function () {
     self.math = new (function () {
         var self = this;
         self.numberBetween = function(a,b) {
-            Math.random()*(a-b)+a;
+            return Math.floor(Math.random()*(b-a)+a);
         }
     })();
 

@@ -192,7 +192,7 @@ describe("gameon", function () {
             var self = this;
             self.number = gameon.math.numberBetween(1, 5);
             self.render = function () {
-                return '<button type="button" class="btn btn-danger">' + self.number + '</button>';
+                return '<button type="button" class="btn btn-danger btn-lg">' + self.number + '</button>';
             }
         }
         var board = new gameon.board(5, 5);
