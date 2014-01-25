@@ -10,6 +10,8 @@
     }
 }
 
+
+
 .gameon-board table {
     border: 1px solid #808080;
 }
@@ -17,14 +19,43 @@
 .gameon-board td {
     width: 60px;
     height: 60px;
-    border: 1px solid #131A13;
+    border: 1px solid white;
+}
+@media (min-width: 961px) {
+    .gameon-board td {
+        width: 120px;
+        height: 120px;
 
+    }
 }
 
 .gameon-board .even {
-    background-color: rgb(149, 155, 156);
+    background-color: #5bc0de;
 }
 
 .gameon-board .odd {
     background-color: rgb(147, 204, 204);
+}
+
+
+
+/*.slider-volume {*/
+    /*width: 50px;*/
+/*}*/
+
+.gameon-volume__unmute {
+    display: none;
+    float: left;
+}
+.gameon-volume__mute {
+    display: none;
+    float: left;
+}
+.gameon-volume__slider {
+    display: block;
+    margin: 10px 0 0 0;
+    float: left;
+}
+.clear {
+    clear: both;
 }

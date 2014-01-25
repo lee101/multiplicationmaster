@@ -187,9 +187,26 @@ describe("gameon", function () {
         });
     });
 
-    it("should be able to create a board", function () {
+    it("should be able to create a board", function (done) {
+        var Tile = function () {
+            var self = this;
+            self.number = gameon.math.numberBetween(1, 5);
+            self.render = function () {
+                return '<button type="button" class="btn btn-danger">' + self.number + '</button>';
+            }
+        }
         var board = new gameon.board(5, 5);
+        var tiles = [];
+        for (var i = 0; i < board.width; i++) {
+            for (var j = 0; j < board.height; j++) {
+                var tile = new Tile();
+
+                tiles.push(tile)
+            }
+        }
+        board.tiles=tiles;
         board._renderBoard();
+        done();
     });
 
 

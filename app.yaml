@@ -37,8 +37,6 @@ handlers:
   static_files: transient/robots.txt
   upload: transient/robots.txt
 
-
-
 - url: /gameon/static/*
   static_dir: gameon/static
   http_headers:

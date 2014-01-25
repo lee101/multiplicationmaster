@@ -21,7 +21,7 @@ var GameOnUser = function (userJSON) {
             }
         });
         userJSON.scores.push({game_mode: game_mode, score: score});
-    }
+    };
 
     userJSON.saveAchievement = function (achievementNumber, callback) {
         if (typeof callback == 'undefined') {
@@ -42,7 +42,7 @@ var GameOnUser = function (userJSON) {
             }
         });
         userJSON.achievements.push({achievement: achievementNumber})
-    }
+    };
 
     userJSON.saveVolume = function (volume, callback) {
         if (typeof callback == 'undefined') {
@@ -63,7 +63,7 @@ var GameOnUser = function (userJSON) {
             }
         });
         userJSON.volume = volume
-    }
+    };
 
     userJSON.saveMute = function (mute, callback) {
         if (typeof callback == 'undefined') {
@@ -85,7 +85,7 @@ var GameOnUser = function (userJSON) {
         });
         userJSON.mute = mute
 
-    }
+    };
 
     userJSON.saveLevelsUnlocked = function (levelsUnlocked, callback) {
         if (typeof callback == 'undefined') {
@@ -106,7 +106,7 @@ var GameOnUser = function (userJSON) {
             }
         });
         userJSON.levels_unlocked = levelsUnlocked
-    }
+    };
 
     userJSON.saveDifficultiesUnlocked = function (difficultiesUnlocked, callback) {
         if (typeof callback == 'undefined') {
@@ -127,7 +127,7 @@ var GameOnUser = function (userJSON) {
             }
         });
         userJSON.difficulties_unlocked = difficultiesUnlocked
-    }
+    };
 
 
     return userJSON;
@@ -157,7 +157,9 @@ var gameon = new (function () {
                 }
             });
         }
-    }
+    };
+
+    // ========== SOUND ================
 
     soundManager.setup({
         // where to find the SWF files, if needed
@@ -172,8 +174,6 @@ var gameon = new (function () {
 
     });
 
-
-
     self.loadSound = function (name, url) {
         soundManager.onready(function () {
             soundManager.createSound({
@@ -181,18 +181,16 @@ var gameon = new (function () {
                 url: url
             });
         });
-    }
+    };
 
     self.playSound = function (name) {
         soundManager.onready(function () {
             soundManager.play(name);
         });
-    }
+    };
 
     self.pauseAll = soundManager.pauseAll;
     self.resumeAll = soundManager.resumeAll;
-    self.mute = soundManager.mute;
-    self.unmute = soundManager.unmute;
 
     /**
      * @param volume 0 to 1 global volume
@@ -202,7 +200,7 @@ var gameon = new (function () {
         $.each(soundManager.sounds, function (name, sound) {
             sound.setVolume(volume);
         });
-    }
+    };
 
     function _loopSound(sound) {
         sound.play({
@@ -217,9 +215,10 @@ var gameon = new (function () {
             var sound = soundManager.getSoundById(name);
             _loopSound(sound)
         });
-    }
+    };
 
     self.mute = function () {
+        soundManager.mute();
         $.ajax({
             "url": "/savemute",
             "data": {"muted": 1},
@@ -230,9 +229,10 @@ var gameon = new (function () {
             "error": function (xhr, error, thrown) {
             }
         });
-    }
+    };
 
     self.unmute = function () {
+        soundManager.unmute();
         $.ajax({
             "url": "/savemute",
             "data": {"muted": 0},
@@ -243,17 +243,41 @@ var gameon = new (function () {
             "error": function (xhr, error, thrown) {
             }
         });
-    }
+    };
 
-    //render volume controll
-    $(document).ready(function () {
-//        $('.gameon-volume').append('<input type="text" data-slider="true" value="0.4" data-slider-highlight="true" data-slider-theme="volume"/>');
-        $("[data-slider]")
-            .bind("slider:ready slider:changed", function (event, data) {
-                self.setVolume(data.ratio);
+    self.muteClick = function () {
+        $('.gameon-volume__unmute').show()
+        $('.gameon-volume__mute').hide()
+        self.mute()
+    };
+    self.unmuteClick = function () {
+        $('.gameon-volume__unmute').hide()
+        $('.gameon-volume__mute').show()
+        self.unmute()
+    };
+    self.getUser(function (user) {
+        //render volume control
+        $(document).ready(function () {
+            //        $('.gameon-volume').append('<input type="text" data-slider="true" value="0.4" data-slider-highlight="true" data-slider-theme="volume"/>');
+            $("[data-slider]").simpleSlider("setRatio", user.volume);
+            if (user.mute) {
+                $('.gameon-volume__unmute').show();
+                self.mute();
+            }
+            else {
+                $('.gameon-volume__mute').show();
+            }
 
-            });
+            $("[data-slider]")
+                .bind("slider:ready slider:changed", function (event, data) {
+                    self.setVolume(data.ratio);
+
+                });
+        });
     });
+
+
+    // ===================       Clock       ===============================
 
     self.clock = function (gameOver, startSeconds) {
         var self = this;
@@ -269,27 +293,27 @@ var gameon = new (function () {
         self.reset = function () {
             self.seconds = self.startSeconds;
             self.started = false;
-        }
+        };
 
         self.start = function () {
             self.started = true;
-        }
+        };
         self.unpause = self.start;
         self.pause = function () {
             self.started = false;
-        }
+        };
 
         self.tick = function () {
 
-        }
+        };
 
         self.getTime = function () {
             return self._formattedTime;
-        }
+        };
         self.setTime = function (seconds) {
             self.seconds = seconds;
             self._updateFormattedTime();
-        }
+        };
 
         self._updateFormattedTime = function () {
             var separator = ':';
@@ -297,7 +321,7 @@ var gameon = new (function () {
                 separator = ':0'
             }
             self._formattedTime = Math.floor(self.seconds / 60) + separator + self.seconds % 60;
-        }
+        };
         self.setTime(self.startSeconds);
 
         setInterval(function () {
@@ -305,7 +329,7 @@ var gameon = new (function () {
                 self.setTime(self.seconds - 1);
                 self._updateFormattedTime();
                 self.tick();
-                $('.gameon-clock').html(self.getTime())
+                $('.gameon-clock').html(self.getTime());
                 if (self.seconds <= 0) {
                     self.reset();
                     gameOver();
@@ -320,23 +344,18 @@ var gameon = new (function () {
         var self = this;
         self.width = width;
         self.height = height;
-
-        for (var i = 0; i < width; i++) {
-            for (var j = 0; j < height; j++) {
-//                self.grid[i][j] = "TODO";
-            }
-        }
+        self.tiles = []
         self._renderBoard = function () {
             var domtable = ['<table>'];
-            for (var i = 0; i < self.height; i++) {
+            for (var h = 0; h < self.height; h++) {
                 domtable.push("<tr>");
-                for (var j = 0; j < self.width; j++) {
+                for (var w = 0; w < self.width; w++) {
                     var even = 'odd';
-                    if ((i + j) % 2 == 0) {
+                    if ((h + w) % 2 == 0) {
                         even = 'even';
                     }
-                    domtable.push('<td id="' + i + '-' + j + '" class="' + even + '">');
-//                    domtable.push(renderGameData(self.grid, i, j));
+                    domtable.push('<td id="' + h + '-' + w + '" class="' + even + '">');
+                    domtable.push(self.tiles[h*self.width + w].render());
                     domtable.push("</td>");
                 }
                 domtable.push("</tr>");
@@ -345,7 +364,15 @@ var gameon = new (function () {
 
             $('.gameon-board').html(domtable.join(''));
         }
-    }
+    };
+
+    self.math = new (function () {
+        var self = this;
+        self.numberBetween = function(a,b) {
+            Math.random()*(a-b)+a;
+        }
+    })();
+
 
     return self;
 })();
