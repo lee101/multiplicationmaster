@@ -1,7 +1,7 @@
 describe("gameon", function () {
 
     it("should be able to play music (looping)", function (done) {
-        gameon.loadSound("music", 'http://commondatastorage.googleapis.com/wordsmashing%2Fws-piano-theme2.mp3');
+        gameon.loadSound("music", 'http://commondatastorage.googleapis.com/multiplcationmaster%2Fws-piano-theme2.mp3');
         gameon.loopSound("music");
         done()
 

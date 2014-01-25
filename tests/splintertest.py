@@ -16,7 +16,7 @@ class SplinterTest(unittest.TestCase):
             # button = browser.find_by_name('btnG')
             # # Interact with elements
             # button.click()
-            if browser.is_text_present('word smashing'):
+            if browser.is_text_present('Multiplication Master'):
                 print "Yes, home page is working!"
             else:
                 print "No, it wasn't found... ERRORRRRRRRRRR"

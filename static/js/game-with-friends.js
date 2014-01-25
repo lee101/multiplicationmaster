@@ -972,9 +972,9 @@ if(! current_user.has_bought) {
             }
 
             modal.open({content: '<p class="lead">Buy The Full Game Now!</p>' +
-            '<a id="buylink" href="https://wordsmashing.appspot.com/buy" class="btn btn-large btn-warning" target="_blank">Buy Full Game $0.97!</a>' +
+            '<a id="buylink" href="https://multiplcationmaster.appspot.com/buy" class="btn btn-large btn-warning" target="_blank">Buy Full Game $0.97!</a>' +
             '<p class="lead" style="margin-top: 12px;">Or get it for Free For a Limited Time! Just Tell Your Friends!</p>' +
-            '<a id="buylink" href="http://www.wordsmashing.com/campaign/level1" class="btn btn-large btn-warning" '+ buytarget +'>Get Full Game Free!</a>'
+            '<a id="buylink" href="http://www.multiplcationmaster.com/campaign/level1" class="btn btn-large btn-warning" '+ buytarget +'>Get Full Game Free!</a>'
             })
 
             gameoverbuymodal = false;
@@ -1244,12 +1244,12 @@ function saveAchievement(achievement_number){
 
     var achievementURLs = Array();
     achievementURLs[0] = "";
-    achievementURLs[1] = "http://www.wordsmashing.com/achievement-medium.html";
-    achievementURLs[2] = "http://www.wordsmashing.com/achievement-hard.html";
+    achievementURLs[1] = "http://www.multiplcationmaster.com/achievement-medium.html";
+    achievementURLs[2] = "http://www.multiplcationmaster.com/achievement-hard.html";
 
-    achievementURLs[2] = "http://www.wordsmashing.com/achievement150.html";
-    achievementURLs[3] = "http://www.wordsmashing.com/achievement200.html";
-    achievementURLs[4] = "http://www.wordsmashing.com/achievementx3.html";
+    achievementURLs[2] = "http://www.multiplcationmaster.com/achievement150.html";
+    achievementURLs[3] = "http://www.multiplcationmaster.com/achievement200.html";
+    achievementURLs[4] = "http://www.multiplcationmaster.com/achievementx3.html";
 
     $.ajax( {
         "url":  "/achievements",
@@ -1281,11 +1281,11 @@ function postHighScoreToFacebook(){
         FB.ui(
             {
                 method: 'feed',
-                name: 'Word Smashing',
-                link: 'http://www.wordsmashing.com/multiplayer',
-                picture: 'http://www.wordsmashing.com/img/wordsmashing_logo155x100.png',
+                name: 'Multiplication Master',
+                link: 'http://www.multiplcationmaster.com/multiplayer',
+                picture: 'http://www.multiplcationmaster.com/img/multiplcationmaster_logo155x100.png',
                 caption: 'Got a High Score of ' + game.score + ' On Multiplayer!',
-                description: 'Come play the challenging new word puzzle at WordSmashing.com!'
+                description: 'Come play the challenging new word puzzle at multiplcationmaster.com!'
             },
             function(response) {
                 if (response && response.post_id) {
@@ -1310,11 +1310,11 @@ function postAchievementToFacebook(achievementnumber) {
         FB.ui(
             {
                 method: 'feed',
-                name: 'Word Smashing',
-                link: 'http://www.wordsmashing.com/multiplayer',
-                picture: 'http://www.wordsmashing.com/img/wordsmashing_logo155x100.png',
-                caption: 'Unlocked ' + achievementname + ' Difficulty on Word Smashing Multiplayer!',
-                description: 'Come Play the Challenging new Word Puzzle at WordSmashing.com!'
+                name: 'Multiplication Master',
+                link: 'http://www.multiplcationmaster.com/multiplayer',
+                picture: 'http://www.multiplcationmaster.com/img/multiplcationmaster_logo155x100.png',
+                caption: 'Unlocked ' + achievementname + ' Difficulty on Multiplication Master Multiplayer!',
+                description: 'Come Play the Challenging new Word Puzzle at multiplcationmaster.com!'
             },
             function(response) {
                 if (response && response.post_id) {

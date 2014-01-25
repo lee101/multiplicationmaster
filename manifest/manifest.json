@@ -1,23 +1,23 @@
 {
-    "name": "Word Smashing",
+    "name": "Multiplication Master",
     "description": "Make words! lots of words! two at once! heaps in a row! then you'll get bonus points! Get words up, down, forward and backwards! On easy, get words with 2+ letters, on medium 3+, Hard 4+! When the board fills up its game over!",
     "version": "4",
     "manifest_version": 2,
     "app": {
         "urls": [
-            "*://www.wordsmashing.com/"
+            "*://www.multiplcationmaster.com/"
         ],
         "launch": {
-            "web_url": "http://www.wordsmashing.com/"
+            "web_url": "http://www.multiplcationmaster.com/"
         }
     },
     "icons": {
-        "128": "/img/wordsmashing_icon128.png",
-        "60": "/img/wordsmashing_icon60.png"
+        "128": "/img/multiplcationmaster_icon128.png",
+        "60": "/img/multiplcationmaster_icon60.png"
     },
     "fullscreen": true,
     "developer": {
-        "name": "Word Smashing",
-        "url": "http://www.wordsmashing.com"
+        "name": "Multiplication Master",
+        "url": "http://www.multiplcationmaster.com"
     }
 }
