@@ -10,8 +10,6 @@
     }
 }
 
-
-
 .gameon-board table {
     border: 1px solid #808080;
 }
@@ -22,6 +20,7 @@
     border: 1px solid white;
     text-align: center;
 }
+
 @media (min-width: 961px) {
     .gameon-board td {
         width: 120px;
@@ -38,25 +37,26 @@
     background-color: rgb(147, 204, 204);
 }
 
-
-
 /*.slider-volume {*/
-    /*width: 50px;*/
+/*width: 50px;*/
 /*}*/
 
 .gameon-volume__unmute {
     display: none;
     float: left;
 }
+
 .gameon-volume__mute {
     display: none;
     float: left;
 }
+
 .gameon-volume__slider {
     display: block;
     margin: 10px 0 0 0;
     float: left;
 }
+
 .clear {
     clear: both;
 }
@@ -64,10 +64,48 @@
 /* =======    bootstrap overrides ======== */
 
 @media (min-width: 961px) {
-        
-    .btn-lg {
+
+    .gameon-board .btn-lg {
         width: 100px;
         height: 100px;
         font-size: 60px;
     }
+}
+
+.gameon-btn-hg {
+    font-size: 28px;
+}
+
+/* ===============        star ratings      =================  */
+
+.star-rating s:hover {
+    color: #e3780e;
+}
+
+.star-rating s {
+    color: #808080;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: default;
+    text-decoration: none;
+    line-height: 50px;
+}
+
+.star-rating {
+    padding: 2px;
+}
+
+
+.star-rating-rtl s {
+    color: yellow;
+}
+
+.star-rating s:hover:before {
+    content: "\2605";
+    /*color: yellow;*/
+    /*font-size: 37px;*/
+}
+
+.star-rating s:before {
+    content: "\2606";
 }

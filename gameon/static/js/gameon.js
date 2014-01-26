@@ -355,7 +355,7 @@ var gameon = new (function () {
                         even = 'even';
                     }
                     domtable.push('<td id="' + h + '-' + w + '" class="' + even + '">');
-                    domtable.push(self.tiles[h*self.width + w].render());
+                    domtable.push(self.tiles[h * self.width + w].render());
                     domtable.push("</td>");
                 }
                 domtable.push("</tr>");
@@ -368,11 +368,16 @@ var gameon = new (function () {
 
     self.math = new (function () {
         var self = this;
-        self.numberBetween = function(a,b) {
-            return Math.floor(Math.random()*(b-a)+a);
+        self.numberBetween = function (a, b) {
+            return Math.floor(Math.random() * (b - a) + a);
         }
     })();
 
+    self.starbar = function (one, two, three, end) {
+        var self = this;
+
+
+    };
 
     return self;
 })();

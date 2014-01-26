@@ -25,15 +25,8 @@
 <body>
 <div class="gameon-clock"></div>
 <div class="gameon-board"></div>
-<div class="gameon-volume">
-    <button class="gameon-volume__mute btn btn-large btn-info" type="button" onclick="gameon.muteClick()"><span
-            class="glyphicon glyphicon-volume-off"></span></button>
-    <button class="gameon-volume__unmute btn btn-large btn-info" type="button" onclick="gameon.unmuteClick()"><span
-            class="glyphicon glyphicon-volume-up"></span></button>
-    <div class="gameon-volume__slider">
-        <input type="text" data-slider="true" value="0.4" data-slider-highlight="true" data-slider-theme="volume"/>
-    </div>
-    <div class="clear"></div>
-</div>
+ {{ gameon.volume() }}
+<div class="star-rating"><s><s><s><s><s></s></s></s></s></s></div>
+<div class="star-rating-rtl"><s><s><s><s><s></s></s></s></s></s></div>
 </body>
 </html>
