@@ -12,6 +12,7 @@
 
 .gameon-board table {
     border: 1px solid #808080;
+    margin: 0 auto;
 }
 
 .gameon-board td {
@@ -37,9 +38,9 @@
     background-color: rgb(147, 204, 204);
 }
 
-/*.slider-volume {*/
-/*width: 50px;*/
-/*}*/
+.slider-volume {
+    width: 130px;
+}
 
 .gameon-volume__unmute {
     display: none;

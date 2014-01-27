@@ -53,8 +53,27 @@
   <script type="text/javascript">
       // the first parameter is accessToken, the second parameter is the "isGuest" flag.
       GAMESAPI.overrideParams("122151_chg3dsbnlc4sg1109q4q_hp54nh7v4tl4pk0kz33mvvls4n", false);
-      
+
   </script>
+{%- endmacro %}
+
+
+
+{%- macro jsvars() %}
+    EASY = {{ fixtures.EASY }};
+    MEDIUM = {{ fixtures.MEDIUM }};
+    HARD = {{ fixtures.HARD }};
+    EXPERT = {{ fixtures.EXPERT }};
+    EASY_LEVELS =   {{ json.dumps(fixtures.EASY_LEVELS, cls=GameOnUtils.MyEncoder) }};
+    MEDIUM_LEVELS = {{ json.dumps(fixtures.MEDIUM_LEVELS, cls=GameOnUtils.MyEncoder) }};
+    HARD_LEVELS =   {{ json.dumps(fixtures.HARD_LEVELS, cls=GameOnUtils.MyEncoder) }};
+    EXPERT_LEVELS = {{ json.dumps(fixtures.EXPERT_LEVELS, cls=GameOnUtils.MyEncoder) }};
+    LEVELS = EASY_LEVELS.concat(MEDIUM_LEVELS).concat(HARD_LEVELS).concat(EXPERT_LEVELS);
+    DIFFICULTY_TO_LEVELS_MAP = {};
+    DIFFICULTY_TO_LEVELS_MAP[EASY] = EASY_LEVELS;
+    DIFFICULTY_TO_LEVELS_MAP[MEDIUM] = MEDIUM_LEVELS;
+    DIFFICULTY_TO_LEVELS_MAP[HARD] = HARD_LEVELS;
+    DIFFICULTY_TO_LEVELS_MAP[EXPERT] = EXPERT_LEVELS;
 {%- endmacro %}
 
 {%- macro shareBtnsHorizontal(differenturl) %}
@@ -90,15 +109,15 @@
 
   // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
   // for any authentication related change, such as login, logout or session refresh. This means that
-  // whenever someone who was previously logged out tries to log in again, the correct case below 
-  // will be handled. 
+  // whenever someone who was previously logged out tries to log in again, the correct case below
+  // will be handled.
   FB.Event.subscribe('auth.authResponseChange', function(response) {
-    // Here we specify what we do with the response anytime this event occurs. 
+    // Here we specify what we do with the response anytime this event occurs.
     if (response.status === 'connected') {
       // The response object is returned with a status field that lets the app know the current
-      // login status of the person. In this case, we're handling the situation where they 
+      // login status of the person. In this case, we're handling the situation where they
       // have logged in to the app.
-      
+
       if (response.authResponse) {
           access_token = response.authResponse.accessToken; //get access token
           user_id = response.authResponse.userID; //get FB UID
@@ -114,7 +133,7 @@
           }
           {% if 'buy' in url or 'campaign' in url %}
           //only for buy page
-          
+
           //window.location.reload();
           buybtn = $('#paypalbuyform')
           if(buybtn) {
@@ -154,18 +173,18 @@
       console.log(response);
     } else if (response.status === 'not_authorized') {
       // In this case, the person is logged into Facebook, but not into the app, so we call
-      // FB.login() to prompt them to do so. 
-      // In real-life usage, you wouldn't want to immediately prompt someone to login 
+      // FB.login() to prompt them to do so.
+      // In real-life usage, you wouldn't want to immediately prompt someone to login
       // like this, for two reasons:
-      // (1) JavaScript created popup windows are blocked by most browsers unless they 
+      // (1) JavaScript created popup windows are blocked by most browsers unless they
       // result from direct interaction from people using the app (such as a mouse click)
       // (2) it is a bad experience to be continually prompted to login upon page load.
       FB.login();
     } else {
-      // In this case, the person is not logged into Facebook, so we call the login() 
+      // In this case, the person is not logged into Facebook, so we call the login()
       // function to prompt them to do so. Note that at this stage there is no indication
       // of whether they are logged into the app. If they aren't then they'll see the Login
-      // dialog right after they log in to Facebook. 
+      // dialog right after they log in to Facebook.
       // The same caveats as above apply to the FB.login() call here.
       FB.login();
     }
@@ -233,8 +252,8 @@ FB.getLoginStatus(function(ret) {
    ref.parentNode.insertBefore(js, ref);
   }(document));
 
-  // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
+  // Here we run a very simple test of the Graph API after login is successful.
+  // This testAPI() function is only called in those cases.
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
@@ -327,13 +346,13 @@ FB.getLoginStatus(function(ret) {
 
 {%- macro paypalbuyform() %}
 <script id="paypalbuyform" src="/static/js/paypal-button.min.js?merchant=P43U2BDEMJJXL"
-    data-button="buynow" 
-    data-name="Multiplication Master" 
-    data-quantity="1" 
-    data-amount="0.97" 
-    data-shipping="0" 
-    data-tax="0" 
-    data-callback="http://www.multiplcationmaster.com/ipn/{{ current_user.id }}" 
+    data-button="buynow"
+    data-name="Multiplication Master"
+    data-quantity="1"
+    data-amount="0.97"
+    data-shipping="0"
+    data-tax="0"
+    data-callback="http://www.multiplcationmaster.com/ipn/{{ current_user.id }}"
     data-return="http://www.multiplcationmaster.com/makegold"
     {% if ws.debug %}
     data-env="sandbox"
@@ -377,12 +396,12 @@ FB.getLoginStatus(function(ret) {
     <div class="footer">
       <p>
         {% if not url.endswith('learn-english') %}
-            <a class="footer__link" href="/learn-english" title="Learn English">Learn English</a> 
+            <a class="footer__link" href="/learn-english" title="Learn English">Learn English</a>
         {% endif %}
         {% if '/contact' in url %}
             <span>Contact</span>
         {% else %}
-            <a class="footer__link" href="/contact" title="Contact Us">Contact</a> 
+            <a class="footer__link" href="/contact" title="Contact Us">Contact</a>
         {% endif %}
         {% if '/about' in url %}
             <span>About Us</span>
@@ -392,12 +411,12 @@ FB.getLoginStatus(function(ret) {
         {% if '/terms' in url %}
             <span>Terms &amp; Conditions</span>
         {% else %}
-            <a class="footer__link" href="/terms" title="Terms &amp; Conditions">Terms &amp; Conditions</a> 
+            <a class="footer__link" href="/terms" title="Terms &amp; Conditions">Terms &amp; Conditions</a>
         {% endif %}
         {% if '/privacy-policy' in url %}
             <span>Privacy Policy</span>
         {% else %}
-            <a class="footer__link" href="/privacy-policy" title="Privacy Policy">Privacy Policy</a> 
+            <a class="footer__link" href="/privacy-policy" title="Privacy Policy">Privacy Policy</a>
         {% endif %}
 
         <span>© 2013 <a class="footer__link" href="http://www.addictingwordgames.com" title="Addicting Word Games" target="_blank">Addicting Word Games</a></span>
@@ -423,10 +442,10 @@ FB.getLoginStatus(function(ret) {
 {%- macro iframefooter() %}
   <div class="footer">
     <p>
-      <a class="footer__link" href="/contact" title="Contact Us" target="_blank">Contact</a> 
+      <a class="footer__link" href="/contact" title="Contact Us" target="_blank">Contact</a>
       <a class="footer__link" href="/about" title="About Multiplication Master" target="_blank">About Us</a>
       <a class="footer__link" href="/terms" title="Terms &amp; Conditions" target="_blank">Terms &amp; Conditions</a>
-      <a class="footer__link" href="/privacy-policy" title="Privacy Policy" target="_blank">Privacy Policy</a> 
+      <a class="footer__link" href="/privacy-policy" title="Privacy Policy" target="_blank">Privacy Policy</a>
       <span>© 2013 <a class="footer__link" href="http://www.addictingwordgames.com" title="Addicting Word Games" target="_blank">Addicting Word Games</a></span>
     </p>
   </div>

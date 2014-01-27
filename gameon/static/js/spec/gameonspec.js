@@ -1,7 +1,7 @@
 describe("gameon", function () {
 
     it("should be able to play music (looping)", function (done) {
-        gameon.loadSound("music", 'http://commondatastorage.googleapis.com/multiplcationmaster%2Fws-piano-theme2.mp3');
+        gameon.loadSound("music", '/gameon/static/music/ws-theme.mp3');
         gameon.loopSound("music");
         done()
 
@@ -191,21 +191,24 @@ describe("gameon", function () {
         var Tile = function () {
             var self = this;
             self.number = gameon.math.numberBetween(1, 5);
+            self.click = function() {
+                console.log('click')
+            }
             self.render = function () {
                 return '<button type="button" class="btn btn-danger btn-lg">' + self.number + '</button>';
             }
         }
-        var board = new gameon.board(5, 5);
         var tiles = [];
-        for (var i = 0; i < board.width; i++) {
-            for (var j = 0; j < board.height; j++) {
+        for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
                 var tile = new Tile();
-
                 tiles.push(tile)
+
             }
         }
-        board.tiles=tiles;
-        board._renderBoard();
+        var board = new gameon.board(5, 5, tiles);
+        board.render();
+        $('[data-yx="boardSelf.name'+this.yPos+''+this.xPos+'"]').click()
         done();
     });
 

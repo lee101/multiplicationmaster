@@ -30,7 +30,7 @@ var GameOnUser = function (userJSON) {
         }
         $.ajax({
             "url": "/gameon/saveachievement",
-            "data": {achievement: achievementNumber},
+            "data": {type: achievementNumber},
             "success": function (data) {
                 callback(data)
             },
@@ -41,7 +41,7 @@ var GameOnUser = function (userJSON) {
                 }
             }
         });
-        userJSON.achievements.push({achievement: achievementNumber})
+        userJSON.achievements.push({type: achievementNumber})
     };
 
     userJSON.saveVolume = function (volume, callback) {
@@ -219,42 +219,31 @@ var gameon = new (function () {
 
     self.mute = function () {
         soundManager.mute();
-        $.ajax({
-            "url": "/savemute",
-            "data": {"muted": 1},
-            "success": function (text) {
-            },
-            "type": "GET",
-            "cache": false,
-            "error": function (xhr, error, thrown) {
-            }
+        self.getUser(function (user) {
+            user.saveMute(1);
         });
     };
 
     self.unmute = function () {
         soundManager.unmute();
-        $.ajax({
-            "url": "/savemute",
-            "data": {"muted": 0},
-            "success": function (text) {
-            },
-            "type": "GET",
-            "cache": false,
-            "error": function (xhr, error, thrown) {
-            }
+        self.getUser(function (user) {
+            user.saveMute(0);
         });
     };
 
+    //TODO TEST clicks
     self.muteClick = function () {
-        $('.gameon-volume__unmute').show()
-        $('.gameon-volume__mute').hide()
-        self.mute()
+        $('.gameon-volume__unmute').show();
+        $('.gameon-volume__mute').hide();
+        self.mute();
     };
     self.unmuteClick = function () {
-        $('.gameon-volume__unmute').hide()
-        $('.gameon-volume__mute').show()
-        self.unmute()
+        $('.gameon-volume__unmute').hide();
+        $('.gameon-volume__mute').show();
+        self.unmute();
     };
+
+
     self.getUser(function (user) {
         //render volume control
         $(document).ready(function () {
@@ -340,30 +329,80 @@ var gameon = new (function () {
         return self;
     };
 
-    self.board = function (width, height) {
-        var self = this;
-        self.width = width;
-        self.height = height;
-        self.tiles = []
-        self._renderBoard = function () {
+    // =====================       Board            ===========================
+    var numBoards = 0;
+
+    /**
+     * tiles MUST have the functions click(), reRender() and render()
+     * @param width
+     * @param height
+     */
+    self.board = function (width, height, tiles) {
+        var boardSelf = this;
+        numBoards++;
+        boardSelf.id = numBoards;
+        boardSelf.name = 'gameonBoard' + numBoards;
+        self[boardSelf.name] = boardSelf;
+
+        boardSelf.width = width;
+        boardSelf.height = height;
+        boardSelf.tiles = tiles;
+        for (var i = 0; i < boardSelf.tiles.length; i++) {
+            var currTile = boardSelf.tiles[i];
+            currTile.xPos = i % boardSelf.width;
+            currTile.yPos = Math.floor(i / boardSelf.width);
+            currTile.reRender = function () {
+
+                var container = boardSelf.getRenderedTile(this.yPos,this.xPos).parent();
+                var renderedData = $(this.render());
+                renderedData.attr('onclick', 'gameon.' + boardSelf.name + '.click(this)');
+                renderedData.attr('data-yx', boardSelf.name + '-' + this.yPos + '-' + this.xPos);
+                container.html(renderedData[0].outerHTML);
+            }
+        }
+
+        boardSelf.getTile = function (y, x) {
+            return boardSelf.tiles[y * boardSelf.width + x];
+        }
+
+        boardSelf.getRenderedTile = function (y, x) {
+            return $('[data-yx="'+boardSelf.name+'-'+y+'-'+x+'"]');
+        }
+
+        boardSelf.click = function (elm) {
+            var yx = $(elm).attr('data-yx').split('-');
+            var y = +yx[1];
+            var x = +yx[2];
+            boardSelf.getTile(y, x).click();
+        }
+
+        boardSelf.render = function (target) {
+            if (typeof target === 'undefined') {
+                target = '.gameon-board';
+            }
             var domtable = ['<table>'];
-            for (var h = 0; h < self.height; h++) {
+            for (var h = 0; h < boardSelf.height; h++) {
                 domtable.push("<tr>");
-                for (var w = 0; w < self.width; w++) {
+                for (var w = 0; w < boardSelf.width; w++) {
                     var even = 'odd';
-                    if ((h + w) % 2 == 0) {
+                    if ((h + w) % 2 === 0) {
                         even = 'even';
                     }
-                    domtable.push('<td id="' + h + '-' + w + '" class="' + even + '">');
-                    domtable.push(self.tiles[h * self.width + w].render());
+                    domtable.push('<td class="' + even + '">');
+
+                    var renderedData = $(boardSelf.getTile(h, w).render());
+                    renderedData.attr('onclick', 'gameon.' + boardSelf.name + '.click(this)');
+                    renderedData.attr('data-yx', boardSelf.name + '-' + h + '-' + w);
+
+                    domtable.push(renderedData[0].outerHTML);
                     domtable.push("</td>");
                 }
                 domtable.push("</tr>");
             }
-            domtable.push('</table>')
+            domtable.push('</table>');
 
-            $('.gameon-board').html(domtable.join(''));
-        }
+            $(target).html(domtable.join(''));
+        };
     };
 
     self.math = new (function () {

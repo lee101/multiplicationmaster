@@ -1,20 +1,21 @@
-{% import "templates/macros.jinja2" as macros with context %}
 {% import "gameon/templates/templates.jinja2" as gameon %}
+{% import "templates/macros.jinja2" as macros with context %}
+{% import "templates/views.jinja2" as views with context %}
 <!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Multiplication Master - Addicting and Fun Word Puzzle Game</title>
+    <title>Multiplication Master - Maths Madness</title>
     <meta name="description"
-          content="An Utterly Addicting Word Game, Fun For Everyone! Play This Addicting New Word Puzzle, Now For Free!">
+          content="Multiplication Master, An Utterly Addicting Multiplication Game, Packed With Maths Madness! Train your brain while having a blast!">
 
     <meta name="keywords"
           contindeent="multiplication games, maths games, number games, puzzle games, learning games for kids">
-    <meta property="og:title" content="Multiplication Master - Addicting and Fun Word Puzzle Game">
+    <meta property="og:title" content="Multiplication Master - Maths Madness">
     <meta property="og:url" content="http://www.multiplcationmaster.com">
     <meta property="og:image" content="http://www.multiplcationmaster.com/img/multiplcationmaster_icon128.png">
     <meta property="og:description"
-          content="Play Multiplication Master! The Utterly Addicting and Fun Word Puzzle Game, Now For Free!">
+          content="Play Multiplication Master! The Utterly Maths Madness, Now For Free!">
     <meta property="og:type" content="game">
     <meta property="og:site_name" content="Multiplication Master">
     <meta property="fb:admins" content="337972272904903">
@@ -26,19 +27,31 @@
     {{ macros.cssheaders() }}
 
     {{ gameon.jsheaders() }}
+
+    <script type="application/javascript">
+        {{ macros.jsvars() }}
+    </script>
     {{ macros.jsheaders() }}
+
+    <script id="start" type="text/html">
+        {{ views.start() }}
+    </script>
+    <script id="difficulties" type="text/html">
+        {{ views.difficulties() }}
+    </script>
+    <script id="levels" type="text/html">
+        {{ views.levels() }}
+    </script>
+    <script id="level" type="text/html">
+        {{ views.level() }}
+    </script>
+    <script id="options" type="text/html">
+        {{ views.options() }}
+    </script>
 </head>
 <body>
-    <div class="mm-background">
-        <div class="mm-logo">
-            <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive" alt="Multiplication Master">
-        </div>
-        <div class="mm-play-btn">
-            <a type="button" class="gameon-btn-hg btn btn-success btn-lg">Play Now!</a>
-        </div>
-        <div class="mm-options-btn">
-        <a type="button" class="gameon-btn-hg btn btn-info btn-lg">Options</a>
-        </div>
-    </div>
+<div class="mm-background">
+    {{ views.start() }}
+</div>
 </body>
 </html>

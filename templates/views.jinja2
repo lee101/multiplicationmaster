@@ -1,0 +1,72 @@
+
+{% macro backbtn(method) -%}
+    <button type="button" class="back-btn gameon-btn-hg btn btn-info btn-lg" onclick="views.{{ method }}"><span class="glyphicon glyphicon-arrow-left"></span></button>
+{%- endmacro %}
+
+{% macro start() -%}
+    <div class="mm-logo">
+    <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
+                 alt="Multiplication Master">
+    </div>
+        <div class="mm-play-btn">
+    <a type="button" class="gameon-btn-hg btn btn-success btn-lg" onclick="views.difficulties()">Play Now!</a>
+    </div>
+        <div class="mm-options-btn">
+    <a type="button" class="gameon-btn-hg btn btn-info btn-lg" onclick="views.options()">Options</a>
+    </div>
+{%- endmacro %}
+
+
+{% macro difficulties() -%}
+
+    {{ backbtn('start()') }}
+    <div class="mm-logo">
+        <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
+             alt="Multiplication Master">
+    </div>
+    <div class="mm-difficulty mm-difficulty--{{ EASY }}">
+        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" onclick="views.levels(EASY)">Easy</button>
+    </div>
+    <div class="mm-difficulty mm-difficulty--{{ MEDIUM }}">
+        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" disabled="disabled"><span class="glyphicon glyphicon-lock"></span>Medium</button>
+    </div>
+    <div class="mm-difficulty mm-difficulty--{{ HARD }}">
+        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" disabled="disabled"><span class="glyphicon glyphicon-lock"></span>Hard</button>
+    </div>
+    <div class="mm-difficulty mm-difficulty--{{ EXPERT }}">
+        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" disabled="disabled"><span class="glyphicon glyphicon-lock"></span>Expert</button>
+    </div>
+{%- endmacro %}
+
+
+{% macro levels() -%}
+        {{ backbtn('difficulties()') }}
+    <div class="mm-logo">
+        <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
+             alt="Multiplication Master">
+    </div>
+    <div class="mm-levels gameon-board">
+
+    </div>
+{%- endmacro %}
+
+{% macro easylevels() -%}
+
+{%- endmacro %}
+
+
+{% macro level() -%}
+        {{ backbtn }}
+
+{%- endmacro %}
+
+
+{% macro options() -%}
+
+{%- endmacro %}
+
+
+{% macro about() -%}
+
+{%- endmacro %}
+

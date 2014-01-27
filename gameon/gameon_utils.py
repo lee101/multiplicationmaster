@@ -33,4 +33,4 @@ class GameOnUtils(object):
                 obj.id = None
                 return obj.to_dict()
 
-            return json.JSONEncoder.default(self, obj)
+            return obj.__dict__ #json.JSONEncoder.default(self, obj.__dict__)

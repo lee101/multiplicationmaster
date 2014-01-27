@@ -178,7 +178,7 @@ class ScoresHandler(BaseHandler):
 class AchievementsHandler(BaseHandler):
     def get(self):
         achieve = Achievement()
-        achieve.type = int(self.request.get('achievement'))
+        achieve.type = int(self.request.get('type'))
         currentUser = self.current_user
         currentUser.achievements.append(achieve)
         currentUser.put()
