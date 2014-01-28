@@ -13,6 +13,7 @@
 .gameon-board table {
     border: 1px solid #808080;
     margin: 0 auto;
+    overflow: hidden;
 }
 
 .gameon-board td {

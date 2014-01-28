@@ -437,24 +437,34 @@ var gameon = new (function () {
             //refreshui
             //TODO better way of getting falldist
             var falldist = 120;
+            var falltime = 0.20;
+            var maxNumDeletedPerColumn = 0;
+            var newTileNum =0;
             for (var w = 0; w < boardSelf.width; w++) {
 
                 var numDeleted = 0;
                 for (var h = boardSelf.height - 1; h >= 0; h--) {
                     var currTile = boardSelf.getTile(h, w);
 
+                    var renderedTile = boardSelf.getRenderedTile(currTile.yPos, currTile.xPos);
                     if (currTile.deleted) {
                         numDeleted += 1;
-                        var renderedTile = boardSelf.getRenderedTile(currTile.yPos, currTile.xPos);
+                        if(numDeleted > maxNumDeletedPerColumn) {
+                            maxNumDeletedPerColumn = numDeleted;
+                        }
                         renderedTile.css({display: 'none'});
                         continue;
                     } else {
-                        var fallDistance = numDeleted * falldist
-                        currTile.animate({top:fallDistance}, 2000);
+                        var fallDistance = numDeleted * falldist;
+                        renderedTile.animate({top:fallDistance}, falldist / (falltime/ numDeleted));
                     }
 
                 }
+
             }
+//            setTimeout(function() {
+//
+//            }, maxNumDeletedPerColumn * falltime)
         };
         return boardSelf;
     };

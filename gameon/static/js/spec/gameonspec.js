@@ -227,7 +227,7 @@ describe("gameon", function () {
         board.tiles[5].deleted = true;
 
         var newTiles = [];
-        for (var j = 0; j < 3; j++) {
+        for (var j = 0; j < 6; j++) {
             var tile = new Tile();
             tile.click = function () {
                 console.log('click');
