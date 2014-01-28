@@ -347,26 +347,47 @@ var gameon = new (function () {
         boardSelf.width = width;
         boardSelf.height = height;
         boardSelf.tiles = tiles;
-        for (var i = 0; i < boardSelf.tiles.length; i++) {
-            var currTile = boardSelf.tiles[i];
-            currTile.xPos = i % boardSelf.width;
-            currTile.yPos = Math.floor(i / boardSelf.width);
-            currTile.reRender = function () {
 
-                var container = boardSelf.getRenderedTile(this.yPos,this.xPos).parent();
+        boardSelf.addTile = function (y, x, tile) {
+            tile.yPos = y;
+            tile.xPos = x;
+            tile.tileRender = function () {
                 var renderedData = $(this.render());
                 renderedData.attr('onclick', 'gameon.' + boardSelf.name + '.click(this)');
                 renderedData.attr('data-yx', boardSelf.name + '-' + this.yPos + '-' + this.xPos);
-                container.html(renderedData[0].outerHTML);
-            }
-        }
+                renderedData.css({position: 'relative'});
+                return renderedData[0].outerHTML;
+            };
+            tile.reRender = function () {
+                var tile = boardSelf.getRenderedTile(this.yPos, this.xPos);
+                var container = tile.parent();
+                container.html(tile.tileRender());
+            };
+        };
+
+        boardSelf.getY = function (i) {
+            return Math.floor(i / boardSelf.width);
+        };
+        boardSelf.getX = function (i) {
+            return i % boardSelf.width;
+        };
 
         boardSelf.getTile = function (y, x) {
             return boardSelf.tiles[y * boardSelf.width + x];
+        };
+
+        for (var i = 0; i < boardSelf.tiles.length; i++) {
+            var currTile = boardSelf.tiles[i];
+
+            var x = boardSelf.getX(i);
+            var y = boardSelf.getY(i);
+
+            boardSelf.addTile(y, x, currTile);
         }
 
+
         boardSelf.getRenderedTile = function (y, x) {
-            return $('[data-yx="'+boardSelf.name+'-'+y+'-'+x+'"]');
+            return $('[data-yx="' + boardSelf.name + '-' + y + '-' + x + '"]');
         }
 
         boardSelf.click = function (elm) {
@@ -380,6 +401,7 @@ var gameon = new (function () {
             if (typeof target === 'undefined') {
                 target = '.gameon-board';
             }
+            boardSelf.target = target
             var domtable = ['<table>'];
             for (var h = 0; h < boardSelf.height; h++) {
                 domtable.push("<tr>");
@@ -390,11 +412,9 @@ var gameon = new (function () {
                     }
                     domtable.push('<td class="' + even + '">');
 
-                    var renderedData = $(boardSelf.getTile(h, w).render());
-                    renderedData.attr('onclick', 'gameon.' + boardSelf.name + '.click(this)');
-                    renderedData.attr('data-yx', boardSelf.name + '-' + h + '-' + w);
+                    var tile = boardSelf.getTile(h, w);
 
-                    domtable.push(renderedData[0].outerHTML);
+                    domtable.push(tile.tileRender());
                     domtable.push("</td>");
                 }
                 domtable.push("</tr>");
@@ -403,8 +423,41 @@ var gameon = new (function () {
 
             $(target).html(domtable.join(''));
         };
-    };
 
+        boardSelf.falldown = function (newTiles) {
+            // remove deleted tiles
+            for (var i = 0; i < boardSelf.tiles.length; i++) {
+                var currTile = boardSelf.tiles[i];
+                if (currTile.deleted) {
+
+                }
+            }
+            //work out the required state column by column and set the internal data to that straight away.
+            //animate towards that state
+            //refreshui
+            //TODO better way of getting falldist
+            var falldist = 120;
+            for (var w = 0; w < boardSelf.width; w++) {
+
+                var numDeleted = 0;
+                for (var h = boardSelf.height - 1; h >= 0; h--) {
+                    var currTile = boardSelf.getTile(h, w);
+
+                    if (currTile.deleted) {
+                        numDeleted += 1;
+                        var renderedTile = boardSelf.getRenderedTile(currTile.yPos, currTile.xPos);
+                        renderedTile.css({display: 'none'});
+                        continue;
+                    } else {
+                        var fallDistance = numDeleted * falldist
+                        currTile.animate({top:fallDistance}, 2000);
+                    }
+
+                }
+            }
+        };
+        return boardSelf;
+    };
     self.math = new (function () {
         var self = this;
         self.numberBetween = function (a, b) {

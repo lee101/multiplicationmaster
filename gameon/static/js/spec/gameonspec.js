@@ -187,31 +187,57 @@ describe("gameon", function () {
         });
     });
 
-    it("should be able to create a board", function (done) {
-        var Tile = function () {
-            var self = this;
-            self.number = gameon.math.numberBetween(1, 5);
-            self.click = function() {
-                console.log('click')
-            }
-            self.render = function () {
-                return '<button type="button" class="btn btn-danger btn-lg">' + self.number + '</button>';
-            }
-        }
+    // ========== BOARD STUFF =================
+    var board;
+    var Tile = function () {
+        var self = this;
+        self.number = gameon.math.numberBetween(1, 5);
+        self.click = function () {
+        };
+        self.render = function () {
+            return '<button type="button" class="btn btn-danger btn-lg">' + self.number + '</button>';
+        };
+    };
+    it("should be able to create & render a board", function (done) {
         var tiles = [];
         for (var i = 0; i < 5; i++) {
             for (var j = 0; j < 5; j++) {
                 var tile = new Tile();
-                tiles.push(tile)
+                tile.click = function () {
+                    console.log('click');
+                    done();
+                }
+                tiles.push(tile);
 
             }
         }
-        var board = new gameon.board(5, 5, tiles);
+        board = new gameon.board(5, 5, tiles);
         board.render();
-        $('[data-yx="boardSelf.name'+this.yPos+''+this.xPos+'"]').click()
-        done();
+        $('[data-yx="' + board.name + '-0-0"]').click();
     });
 
+    it("board should be able to delete tiles and do a falldown animation", function (done) {
+        var endPos = board.tiles.length - 1;
+
+        board.tiles[endPos].deleted = true;
+        board.tiles[endPos - 1].deleted = true;
+        board.tiles[endPos - 2].deleted = true;
+        board.tiles[endPos - 3].deleted = true;
+        board.tiles[endPos - 4].deleted = true;
+        board.tiles[5].deleted = true;
+
+        var newTiles = [];
+        for (var j = 0; j < 3; j++) {
+            var tile = new Tile();
+            tile.click = function () {
+                console.log('click');
+                done();
+            }
+            newTiles.push(tile);
+        }
+        board.falldown(newTiles);
+        done();
+    });
 
 //
 //    // demonstrates use of spies to intercept and test method calls
