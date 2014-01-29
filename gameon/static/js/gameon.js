@@ -375,6 +375,9 @@ var gameon = new (function () {
         boardSelf.getTile = function (y, x) {
             return boardSelf.tiles[y * boardSelf.width + x];
         };
+        boardSelf.setTile = function (y, x, tile) {
+            boardSelf.tiles[y * boardSelf.width + x] = tile;
+        };
 
         for (var i = 0; i < boardSelf.tiles.length; i++) {
             var currTile = boardSelf.tiles[i];
@@ -435,11 +438,12 @@ var gameon = new (function () {
             //work out the required state column by column and set the internal data to that straight away.
             //animate towards that state
             //refreshui
-            //TODO better way of getting falldist
-            var falldist = 120;
+            //TODO better way of getting tiledist eg 60 if $(window).width()<suu
+            var tiledist = 120;
             var falltime = 0.20;
             var maxNumDeletedPerColumn = 0;
             var newTileNum =0;
+            var numDeletedPerColumn = [];
             for (var w = 0; w < boardSelf.width; w++) {
 
                 var numDeleted = 0;
@@ -452,16 +456,23 @@ var gameon = new (function () {
                         if(numDeleted > maxNumDeletedPerColumn) {
                             maxNumDeletedPerColumn = numDeleted;
                         }
-                        renderedTile.css({display: 'none'});
+                        renderedTile.remove();
                         continue;
                     } else {
-                        var fallDistance = numDeleted * falldist;
-                        renderedTile.animate({top:fallDistance}, falldist / (falltime/ numDeleted));
+                        var fallDistance = numDeleted * tiledist;
+                        renderedTile.animate({top:fallDistance}, tiledist / (falltime/ numDeleted));
+
+                        var endPos = h + numDeleted;
+                        renderedTile.attr('data-yx', boardSelf.name + '-' + endPos + '-' + w);
+                        boardSelf.setTile(endPos, w, boardSelf.getTile(h, w));
+
                     }
 
                 }
+//                numDeletedPerColumn.push(numDeleted);
 
             }
+
 //            setTimeout(function() {
 //
 //            }, maxNumDeletedPerColumn * falltime)
