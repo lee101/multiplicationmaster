@@ -37,3 +37,6 @@ nosetests.xml
 .DS_STORE
 .DS_Store
 sellerinfo.py
+.tags_sorted_by_file
+.tags
+
