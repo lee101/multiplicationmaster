@@ -431,7 +431,7 @@ var gameon = new (function () {
             return $('.gameon-board tr:nth-child('+(y+1)+') td:nth-child('+(x+1)+')');
         };
 
-        boardSelf.falldown = function (newTiles) {
+        boardSelf.falldown = function (newTiles, callback) {
 
             //work out the required state column by column and set the internal data to that straight away.
             //animate towards that state
@@ -506,9 +506,7 @@ var gameon = new (function () {
 
             }
 
-//            setTimeout(function() {
-//
-//            }, maxNumDeletedPerColumn * falltime)
+           setTimeout(callback, maxNumDeletedPerColumn * falltime)
         };
         return boardSelf;
     };

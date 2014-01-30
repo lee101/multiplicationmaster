@@ -235,7 +235,21 @@ describe("gameon", function () {
             }
             newTiles.push(tile);
         }
-        board.falldown(newTiles);
+        board.falldown(newTiles, function () {
+            board.render()
+            board.tiles[endPos - 1].deleted = true;
+
+            var newTiles = [];
+            for (var j = 0; j < 1; j++) {
+                var tile = new Tile();
+                tile.click = function () {
+                    console.log('click');
+                    done();
+                }
+                newTiles.push(tile);
+            }
+            board.falldown(newTiles, function(){})
+        });
         done();
     });
 
