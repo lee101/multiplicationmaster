@@ -341,14 +341,14 @@ var gameon = new (function () {
         var boardSelf = this;
         numBoards++;
         boardSelf.id = numBoards;
-        boardSelf.name = 'gameonBoard' + numBoards;
+        boardSelf.name = 'board' + numBoards;
         self[boardSelf.name] = boardSelf;
 
         boardSelf.width = width;
         boardSelf.height = height;
         boardSelf.tiles = tiles;
 
-        boardSelf.addTile = function (y, x, tile) {
+        boardSelf.newTile = function (y, x, tile) {
             tile.yPos = y;
             tile.xPos = x;
             tile.tileRender = function () {
@@ -385,7 +385,7 @@ var gameon = new (function () {
             var x = boardSelf.getX(i);
             var y = boardSelf.getY(i);
 
-            boardSelf.addTile(y, x, currTile);
+            boardSelf.newTile(y, x, currTile);
         }
 
 
@@ -427,22 +427,20 @@ var gameon = new (function () {
             $(target).html(domtable.join(''));
         };
 
-        boardSelf.falldown = function (newTiles) {
-            // remove deleted tiles
-            for (var i = 0; i < boardSelf.tiles.length; i++) {
-                var currTile = boardSelf.tiles[i];
-                if (currTile.deleted) {
+        boardSelf.getContainerAt = function(y, x){
+            return $('.gameon-board tr:nth-child('+(y+1)+') td:nth-child('+(x+1)+')');
+        };
 
-                }
-            }
+        boardSelf.falldown = function (newTiles) {
+
             //work out the required state column by column and set the internal data to that straight away.
             //animate towards that state
             //refreshui
             //TODO better way of getting tiledist eg 60 if $(window).width()<suu
-            var tiledist = 120;
+            var tiledist = $('.gameon-board td').outerHeight();
             var falltime = 0.20;
             var maxNumDeletedPerColumn = 0;
-            var newTileNum =0;
+            var newTileNum = 0;
             var numDeletedPerColumn = [];
             for (var w = 0; w < boardSelf.width; w++) {
 
@@ -453,21 +451,56 @@ var gameon = new (function () {
                     var renderedTile = boardSelf.getRenderedTile(currTile.yPos, currTile.xPos);
                     if (currTile.deleted) {
                         numDeleted += 1;
-                        if(numDeleted > maxNumDeletedPerColumn) {
+                        if (numDeleted > maxNumDeletedPerColumn) {
                             maxNumDeletedPerColumn = numDeleted;
                         }
                         renderedTile.remove();
                         continue;
                     } else {
-                        var fallDistance = numDeleted * tiledist;
-                        renderedTile.animate({top:fallDistance}, tiledist / (falltime/ numDeleted));
-
+                        if (numDeleted == 0) {
+                            continue;
+                        }
                         var endPos = h + numDeleted;
+                        var fallDistance = numDeleted * tiledist;
+                        var container = boardSelf.getContainerAt(endPos, w);
+
+                        var renderedTile = boardSelf.getRenderedTile(h, w);
                         renderedTile.attr('data-yx', boardSelf.name + '-' + endPos + '-' + w);
-                        boardSelf.setTile(endPos, w, boardSelf.getTile(h, w));
+                        container.html(renderedTile);
 
+                        renderedTile = boardSelf.getRenderedTile(endPos, w);
+                        renderedTile.css({top:-fallDistance});
+                        renderedTile.animate({top: '+=' + fallDistance}, tiledist / (falltime / numDeleted));
+
+
+                        //update our model
+                        currTile.yPos = endPos;
+                        currTile.xPos = w;
+                        boardSelf.setTile(endPos, w, currTile);
                     }
+                }
+                for (var h = 0; h < numDeleted; h++) {
+                    var currNewTile = newTiles[newTileNum++];
+                    boardSelf.newTile(h, w, currNewTile);
 
+                    //update our model
+                    currNewTile.yPos = h;
+                    currNewTile.xPos = w;
+                    boardSelf.setTile(h, w, currNewTile);
+
+                    var container = boardSelf.getContainerAt(h, w);
+
+                    var fallDistance = numDeleted * tiledist;
+
+                    var renderedData = $(currNewTile.render());
+                    renderedData.attr('onclick', 'gameon.' + boardSelf.name + '.click(this)');
+                    renderedData.attr('data-yx', boardSelf.name + '-' + h + '-' + w);
+                    renderedData.css({position: 'relative'});
+                    renderedData.css({top:-fallDistance});
+
+                    container.html(renderedData[0].outerHTML)
+                    var renderedTile = boardSelf.getRenderedTile(h, w);
+                    renderedTile.animate({top: '+=' + fallDistance}, tiledist / (falltime / numDeleted));
                 }
 //                numDeletedPerColumn.push(numDeleted);
 
