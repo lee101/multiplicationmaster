@@ -206,7 +206,7 @@ describe("gameon", function () {
                 tile.click = function () {
                     console.log('click');
                     done();
-                }
+                };
                 tiles.push(tile);
 
             }
@@ -232,11 +232,11 @@ describe("gameon", function () {
             tile.click = function () {
                 console.log('click');
                 done();
-            }
+            };
             newTiles.push(tile);
         }
         board.falldown(newTiles, function () {
-            board.render()
+            board.render();
             board.tiles[endPos - 1].deleted = true;
 
             var newTiles = [];
@@ -245,12 +245,23 @@ describe("gameon", function () {
                 tile.click = function () {
                     console.log('click');
                     done();
-                }
+                };
                 newTiles.push(tile);
             }
             board.falldown(newTiles, function(){})
         });
         done();
+    });
+
+    it("should be able to create a star bar", function (done) {
+        var starBar = new gameon.StarBar(20,40,60,100);
+        starBar.setScore(10);
+        starBar.setScore(20);
+        starBar.setScore(40);
+        starBar.setScore(60);
+        starBar.setScore(70);
+        done();
+
     });
 
 //

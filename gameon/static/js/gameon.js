@@ -260,6 +260,9 @@ var gameon = new (function () {
             $("[data-slider]")
                 .bind("slider:ready slider:changed", function (event, data) {
                     self.setVolume(data.ratio);
+                    self.getUser(function (user) {
+                        user.saveVolume(data.ratio);
+                    })
 
                 });
         });
@@ -427,8 +430,8 @@ var gameon = new (function () {
             $(target).html(domtable.join(''));
         };
 
-        boardSelf.getContainerAt = function(y, x){
-            return $('.gameon-board tr:nth-child('+(y+1)+') td:nth-child('+(x+1)+')');
+        boardSelf.getContainerAt = function (y, x) {
+            return $('.gameon-board tr:nth-child(' + (y + 1) + ') td:nth-child(' + (x + 1) + ')');
         };
 
         boardSelf.falldown = function (newTiles, callback) {
@@ -469,7 +472,7 @@ var gameon = new (function () {
                         container.html(renderedTile);
 
                         renderedTile = boardSelf.getRenderedTile(endPos, w);
-                        renderedTile.css({top:-fallDistance});
+                        renderedTile.css({top: -fallDistance});
                         renderedTile.animate({top: '+=' + fallDistance}, tiledist / (falltime / numDeleted));
 
 
@@ -496,7 +499,7 @@ var gameon = new (function () {
                     renderedData.attr('onclick', 'gameon.' + boardSelf.name + '.click(this)');
                     renderedData.attr('data-yx', boardSelf.name + '-' + h + '-' + w);
                     renderedData.css({position: 'relative'});
-                    renderedData.css({top:-fallDistance});
+                    renderedData.css({top: -fallDistance});
 
                     container.html(renderedData[0].outerHTML)
                     var renderedTile = boardSelf.getRenderedTile(h, w);
@@ -506,7 +509,7 @@ var gameon = new (function () {
 
             }
 
-           setTimeout(callback, maxNumDeletedPerColumn * falltime)
+            setTimeout(callback, maxNumDeletedPerColumn * falltime)
         };
         return boardSelf;
     };
@@ -517,10 +520,30 @@ var gameon = new (function () {
         }
     })();
 
-    self.starbar = function (one, two, three, end) {
+
+    self.StarBar = function (one, two, three, end) {
         var self = this;
+        self.one = one;
+        self.two = two;
+        self.three = three;
+        self.end = end;
 
+        self._score = 0;
+        self.setScore = function (score) {
+            self._score = score;
+            self.update()
+        }
+        self.getScore = function () {
+            return self.score;
+        }
 
+        self.update = function () {
+            $('.highlight-track').html(self.score);
+
+            $(".gameon-starbar [data-slider]").simpleSlider("setRatio", self._score / self.end);
+            $('.gameon-starbar .highlight-track').html('<p class="gameon-starbar__score">' + self._score + '</p>')
+
+        }
     };
 
     return self;

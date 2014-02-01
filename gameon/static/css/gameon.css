@@ -97,7 +97,6 @@
     padding: 2px;
 }
 
-
 .star-rating-rtl s {
     color: yellow;
 }
@@ -110,4 +109,19 @@
 
 .star-rating s:before {
     content: "\2606";
+}
+
+/* Star rating slider overrides */
+
+.slider > .track, .slider > .highlight-track {
+    height: 30px;
+}
+
+.slider .dragger {
+    display: none;
+}
+
+.gameon-starbar__score {
+    font-size: 20px;
+    margin-left: 10px;
 }
