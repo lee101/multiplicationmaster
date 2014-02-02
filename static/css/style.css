@@ -49,12 +49,31 @@ body {
     }
 }
 
+.mm-level-controls {
+    margin: 0 auto;
+    width: 300px;
+}
+
+@media (min-width: 961px) {
+    .mm-level-controls {
+        width: 600px;
+    }
+}
+
+.mm-starbar-template {
+    display: none;
+}
+
 .mm-starbar {
+    margin: 20px 0 20px -5px;
+}
+
+.mm-volume-template {
     display: none;
 }
 
 .mm-volume {
-    display: none;
+    float: right;
 }
 
 .mm-equation {

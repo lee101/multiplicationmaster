@@ -104,6 +104,10 @@ var views = new (function () {
         $('.back-btn').click(function () {
             views.levels(level.difficulty);
         });
+        var starBar = new gameon.StarBar(level.starrating);
+        starBar.setScore(0);
+        $('.mm-volume').append($('.mm-volume-template').html());
+        $('.mm-starbar').append($('.mm-starbar-template').html());
     }
 
 

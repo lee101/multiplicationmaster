@@ -523,20 +523,20 @@ var gameon = new (function () {
     })();
 
 
-    self.StarBar = function (one, two, three, end) {
+    self.StarBar = function (starrating) {
         $('.gameon-starbar .track').off('click mousedown mouseup mousemove');
         $('.gameon-starbar .highlight-track').off('click mousedown mouseup mousemove');
 
         var self = this;
-        self.one = one;
-        self.two = two;
-        self.three = three;
-        self.end = end;
-        var sliderWidth = $('.gameon-starbar .track').outerWidth();
+        self.one = starrating[0];
+        self.two = starrating[1];
+        self.three = starrating[2];
+        self.end = starrating[3];
+        var sliderWidth = $('.gameon-starbar .slider').outerWidth();
 
-        var staronePos = (one / end) * sliderWidth;
-        var startwoPos = (two / end) * sliderWidth;
-        var starthreePos = (three / end) * sliderWidth;
+        var staronePos = (self.one / self.end) * sliderWidth;
+        var startwoPos = (self.two / self.end) * sliderWidth;
+        var starthreePos = (self.three / self.end) * sliderWidth;
         $('.gameon-starbar__star--one').css({left: staronePos});
         $('.gameon-starbar__star--two').css({left: startwoPos});
         $('.gameon-starbar__star--three').css({left: starthreePos});
@@ -558,15 +558,15 @@ var gameon = new (function () {
             $(".gameon-starbar [data-slider]").simpleSlider("setRatio", conpleteRatio);
 
             var numStars = 0;
-            if (self._score >= one) {
+            if (self._score >= self.one) {
                 $('.gameon-starbar__star--one').addClass('gameon-star--shiny');
                 numStars++;
             }
-            if (self._score >= two) {
+            if (self._score >= self.two) {
                 $('.gameon-starbar__star--two').addClass('gameon-star--shiny');
                 numStars++;
             }
-            if (self._score >= three) {
+            if (self._score >= self.three) {
                 $('.gameon-starbar__star--three').addClass('gameon-star--shiny');
                 numStars++;
             }
