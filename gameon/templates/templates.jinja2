@@ -1,8 +1,10 @@
 {% macro cssheaders() -%}
     <link type="text/css" rel="stylesheet" href="/gameon/static/css/social-likes.css"/>
     <link type="text/css" rel="stylesheet" href="/gameon/static/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-    <link type="text/css" rel="stylesheet" href="/gameon/static/js/lib/loopj-jquery-simple-slider-fa64f59/css/simple-slider.css"/>
-    <link type="text/css" rel="stylesheet" href="/gameon/static/js/lib/loopj-jquery-simple-slider-fa64f59/css/simple-slider-volume.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="/gameon/static/js/lib/loopj-jquery-simple-slider-fa64f59/css/simple-slider.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="/gameon/static/js/lib/loopj-jquery-simple-slider-fa64f59/css/simple-slider-volume.css"/>
     <link type="text/css" rel="stylesheet" href="/gameon/static/css/gameon.css"/>
 {%- endmacro %}
 
@@ -11,7 +13,8 @@
     <script type="text/javascript" src="/gameon/static/js/jquery.blockUI.js"></script>
 
     <script type="text/javascript" src="/gameon/static/js/lib/soundmanager/script/soundmanager2.js"></script>
-    <script type="text/javascript" src="/gameon/static/js/lib/loopj-jquery-simple-slider-fa64f59/js/simple-slider.min.js"></script>
+    <script type="text/javascript"
+            src="/gameon/static/js/lib/loopj-jquery-simple-slider-fa64f59/js/simple-slider.min.js"></script>
     <script type="text/javascript" src="/gameon/static/js/gameon.js"></script>
 {%- endmacro %}
 
@@ -25,5 +28,18 @@
             <input type="text" data-slider="true" value="0.4" data-slider-highlight="true" data-slider-theme="volume"/>
         </div>
         <div class="clear"></div>
+    </div>
+{%- endmacro %}
+
+{% macro starbar() -%}
+    <div class="gameon-starbar">
+        <div class="gameon-starbar__stars">
+            <span class="gameon-starbar__star gameon-starbar__star--one"></span>
+            <span class="gameon-starbar__star gameon-starbar__star--two"></span>
+            <span class="gameon-starbar__star gameon-starbar__star--three"></span>
+        </div>
+        <div class="gameon-starbar__bar">
+            <input type="text" data-slider="true" value="0.8" data-slider-highlight="true">
+        </div>
     </div>
 {%- endmacro %}

@@ -256,10 +256,14 @@ describe("gameon", function () {
     it("should be able to create a star bar", function (done) {
         var starBar = new gameon.StarBar(20,40,60,100);
         starBar.setScore(10);
-        starBar.setScore(20);
+        expect(starBar.numStars).toBe(0);
+        starBar.setScore(21);
+        expect(starBar.numStars).toBe(1);
         starBar.setScore(40);
+        expect(starBar.numStars).toBe(2);
         starBar.setScore(60);
         starBar.setScore(70);
+        expect(starBar.numStars).toBe(3);
         done();
 
     });

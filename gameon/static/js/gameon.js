@@ -248,7 +248,7 @@ var gameon = new (function () {
         //render volume control
         $(document).ready(function () {
             //        $('.gameon-volume').append('<input type="text" data-slider="true" value="0.4" data-slider-highlight="true" data-slider-theme="volume"/>');
-            $("[data-slider]").simpleSlider("setRatio", user.volume);
+            $(".gameon-volume [data-slider]").simpleSlider("setRatio", user.volume);
             if (user.mute) {
                 $('.gameon-volume__unmute').show();
                 self.mute();
@@ -257,7 +257,7 @@ var gameon = new (function () {
                 $('.gameon-volume__mute').show();
             }
 
-            $("[data-slider]")
+            $(".gameon-volume [data-slider]")
                 .bind("slider:ready slider:changed", function (event, data) {
                     self.setVolume(data.ratio);
                     self.getUser(function (user) {
@@ -419,8 +419,10 @@ var gameon = new (function () {
                     domtable.push('<td class="' + even + '">');
 
                     var tile = boardSelf.getTile(h, w);
+                    if (typeof tile !== 'undefined' && typeof tile['tileRender'] === 'function') {
+                        domtable.push(tile.tileRender());
+                    }
 
-                    domtable.push(tile.tileRender());
                     domtable.push("</td>");
                 }
                 domtable.push("</tr>");
@@ -522,11 +524,24 @@ var gameon = new (function () {
 
 
     self.StarBar = function (one, two, three, end) {
+        $('.gameon-starbar .track').off('click mousedown mouseup mousemove');
+        $('.gameon-starbar .highlight-track').off('click mousedown mouseup mousemove');
+
         var self = this;
         self.one = one;
         self.two = two;
         self.three = three;
         self.end = end;
+        var sliderWidth = $('.gameon-starbar .track').outerWidth();
+
+        var staronePos = (one / end) * sliderWidth;
+        var startwoPos = (two / end) * sliderWidth;
+        var starthreePos = (three / end) * sliderWidth;
+        $('.gameon-starbar__star--one').css({left: staronePos});
+        $('.gameon-starbar__star--two').css({left: startwoPos});
+        $('.gameon-starbar__star--three').css({left: starthreePos});
+
+        self.numStars = 0;
 
         self._score = 0;
         self.setScore = function (score) {
@@ -539,8 +554,24 @@ var gameon = new (function () {
 
         self.update = function () {
             $('.highlight-track').html(self.score);
+            var conpleteRatio = self._score / self.end
+            $(".gameon-starbar [data-slider]").simpleSlider("setRatio", conpleteRatio);
 
-            $(".gameon-starbar [data-slider]").simpleSlider("setRatio", self._score / self.end);
+            var numStars = 0;
+            if (self._score >= one) {
+                $('.gameon-starbar__star--one').addClass('gameon-star--shiny');
+                numStars++;
+            }
+            if (self._score >= two) {
+                $('.gameon-starbar__star--two').addClass('gameon-star--shiny');
+                numStars++;
+            }
+            if (self._score >= three) {
+                $('.gameon-starbar__star--three').addClass('gameon-star--shiny');
+                numStars++;
+            }
+            self.numStars = numStars;
+
             $('.gameon-starbar .highlight-track').html('<p class="gameon-starbar__score">' + self._score + '</p>')
 
         }

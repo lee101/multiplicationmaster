@@ -7,20 +7,27 @@ var views = new (function () {
 
     self.options = function () {
         $('.mm-background').html($('#options').html());
+        $('.back-btn').click(function () {
+            self.start();
+        });
     };
 
     self.difficulties = function () {
         $('.mm-background').html($('#difficulties').html());
+        $('.back-btn').click(function () {
+            views.start();
+        });
     };
 
     self.levels = function (difficulty) {
+
         var LevelLink = function (id, locked) {
             var self = this;
 
             self.locked = locked;
             self.id = id;
 
-            self.click = function() {
+            self.click = function () {
                 views.level(self.id);
             };
 
@@ -45,7 +52,11 @@ var views = new (function () {
         var board = new gameon.board(5, 5, tiles);
         $('.mm-background').html($('#levels').html());
         board.render('.mm-levels');
+        $('.back-btn').click(function () {
+            views.difficulties();
+        });
     };
+
 
     self.level = function (id) {
         var level = LEVELS[id - 1];
@@ -65,16 +76,16 @@ var views = new (function () {
 
             self.render = function () {
                 var btnStyle = 'btn btn-danger btn-lg';
-                if(self.selected) {
+                if (self.selected) {
                     btnStyle = 'btn btn-warning btn-lg';
                 }
                 if (self.locked) {
-                    return '<button type="button" class="'+btnStyle+'" disabled="disabled"><span class="glyphicon glyphicon-lock"></span></button>';
+                    return '<button type="button" class="' + btnStyle + '" disabled="disabled"><span class="glyphicon glyphicon-lock"></span></button>';
                 }
-                return '<button type="button" class="'+btnStyle+'" onclick="views.level.tileClick()">' + self.number + '</button>';
+                return '<button type="button" class="' + btnStyle + '">' + self.number + '</button>';
             };
         }
-        for (var i = 0; i < level.width* level.height; i++) {
+        for (var i = 0; i < level.width * level.height; i++) {
             var locked = true;
             if (level.difficulty == EASY && i == 0) {
                 var locked = false;
@@ -84,8 +95,15 @@ var views = new (function () {
 
         }
         var board = new gameon.board(level.width, level.height, tiles);
-        $('.mm-background').html($('#levels').html());
-        board.render('.mm-levels');
+        var equation = new gameon.board(5, 1, []);
+
+
+        $('.mm-background').html($('#level').html());
+        board.render('.mm-level');
+        equation.render('.mm-equation');
+        $('.back-btn').click(function () {
+            views.levels(level.difficulty);
+        });
     }
 
 

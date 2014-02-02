@@ -78,39 +78,6 @@
     font-size: 28px;
 }
 
-/* ===============        star ratings      =================  */
-
-.star-rating s:hover {
-    color: #e3780e;
-}
-
-.star-rating s {
-    color: #808080;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: default;
-    text-decoration: none;
-    line-height: 50px;
-}
-
-.star-rating {
-    padding: 2px;
-}
-
-.star-rating-rtl s {
-    color: yellow;
-}
-
-.star-rating s:hover:before {
-    content: "\2605";
-    /*color: yellow;*/
-    /*font-size: 37px;*/
-}
-
-.star-rating s:before {
-    content: "\2606";
-}
-
 /* Star rating slider overrides */
 
 .slider > .track, .slider > .highlight-track {
@@ -121,7 +88,55 @@
     display: none;
 }
 
+/* ===============        star bar      =================  */
+
+.gameon-starbar {
+    position: relative;
+
+}
+
+.gameon-starbar {
+
+}
+
 .gameon-starbar__score {
     font-size: 20px;
     margin-left: 10px;
+    font-weight: bold;
+}
+
+.gameon-starbar__stars {
+    padding: 2px;
+    position: absolute;
+    z-index: 10;
+    top: -18px;
+}
+
+.gameon-starbar__star {
+    color: #808080;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: default;
+    text-decoration: none;
+    line-height: 50px;
+    position: absolute;
+}
+
+.gameon-starbar__star:before {
+    content: "\2606";
+}
+
+.gameon-starbar__bar {
+    margin-top: 8px;
+
+}
+
+.gameon-star--shiny {
+    color: #e3780e;
+}
+
+.gameon-star--shiny:before {
+    content: "\2605";
+    /*color: yellow;*/
+    /*font-size: 37px;*/
 }
