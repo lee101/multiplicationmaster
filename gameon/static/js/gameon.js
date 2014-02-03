@@ -368,8 +368,8 @@ var gameon = new (function () {
                 return renderedData[0].outerHTML;
             };
             tile.reRender = function () {
-                var tile = boardSelf.getRenderedTile(this.yPos, this.xPos);
-                var container = tile.parent();
+                var renderedTile = boardSelf.getRenderedTile(this.yPos, this.xPos);
+                var container = renderedTile.parent();
                 container.html(tile.tileRender());
             };
         };

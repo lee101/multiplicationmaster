@@ -2,7 +2,6 @@ var mainTheme = 'mm-theme';
 gameon.loadSound(mainTheme, '/gameon/static/music/multiplication-master-theme1.mp3');
 
 
-
 var views = new (function () {
     'use strict';
     var self = this;
@@ -29,16 +28,16 @@ var views = new (function () {
             views.start();
         });
 
-        gameon.getUser(function(user){
+        gameon.getUser(function (user) {
             var difficultiesUnlocked = user.difficulties_unlocked;
             if (difficultiesUnlocked >= 1) {
-                gameon.unlock('.mm-difficulty--'+ MEDIUM);
+                gameon.unlock('.mm-difficulty--' + MEDIUM);
             }
             if (difficultiesUnlocked >= 2) {
-                gameon.unlock('.mm-difficulty--'+ HARD);
+                gameon.unlock('.mm-difficulty--' + HARD);
             }
             if (difficultiesUnlocked >= 3) {
-                gameon.unlock('.mm-difficulty--'+ EXPERT);
+                gameon.unlock('.mm-difficulty--' + EXPERT);
             }
 
         });
@@ -89,6 +88,8 @@ var views = new (function () {
         gameon.loopSound(mainTheme);
 
         var level = LEVELS[id - 1];
+        var gameState = {};
+        gameState.numSelected = 0;
         var tiles = [];
 
 
@@ -99,6 +100,10 @@ var views = new (function () {
             self.selected = false;
 
             self.click = function () {
+                if(gameState.numSelected >= 3) {
+                    return;
+                }
+                gameState.numSelected ++;
                 self.selected = !self.selected;
                 self.reRender();
             };
@@ -123,13 +128,11 @@ var views = new (function () {
             tiles.push(tile);
 
         }
-        var board = new gameon.board(level.width, level.height, tiles);
-        var equation = new gameon.board(5, 1, []);
-
-
+        gameState.board = new gameon.board(level.width, level.height, tiles);
         $('.mm-background').html($('#level').html());
-        board.render('.mm-level');
-        equation.render('.mm-equation');
+
+
+        gameState.board.render('.mm-level');
         $('.back-btn').click(function () {
             views.levels(level.difficulty);
             gameon.pauseSound(mainTheme);
@@ -137,10 +140,22 @@ var views = new (function () {
             $('.mm-volume .gameon-volume').detach().appendTo('.mm-volume-template');
             $('.mm-starbar .gameon-starbar').detach().appendTo('.mm-starbar-template');
         });
-        var starBar = new gameon.StarBar(level.starrating);
-        starBar.setScore(0);
+        gameState.starBar = new gameon.StarBar(level.starrating);
+        gameState.starBar.setScore(0);
+
         $('.mm-volume-template .gameon-volume').detach().appendTo('.mm-volume');
         $('.mm-starbar-template .gameon-starbar').detach().appendTo('.mm-starbar');
+
+
+        gameState.equation = new (function () {
+            var self = this;
+            self.board = new gameon.board(5, 1, []);
+            self.board.render('.mm-equation');
+
+            self.addTile = function (y, x, tile) {
+
+            }
+        })();
     }
 
 

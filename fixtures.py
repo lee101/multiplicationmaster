@@ -20,7 +20,9 @@ class Level(Fixture):
     formula = []
     number = []
 
-    def __init__(self, difficulty, low, high, width, height, formula='x0+x1==x2', starrating = [60,70,90,100]):
+    def __init__(self, difficulty, low, high, width, height,
+                 formula=['x0','+','x1','=','x2'],
+                 starrating = [60,70,90,100]):
         '''
         difficulty array of (x,y) pairs
         '''
