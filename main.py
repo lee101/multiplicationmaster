@@ -43,6 +43,10 @@ class MainHandler(BaseHandler):
     def get(self):
         self.render('templates/index.jinja2')
 
+class TestHandler(BaseHandler):
+    def get(self):
+        self.render('templates/tests.jinja2')
+
 
 class SitemapHandler(webapp2.RequestHandler):
     def get(self):
@@ -56,6 +60,7 @@ class SitemapHandler(webapp2.RequestHandler):
 
 app = ndb.toplevel(webapp2.WSGIApplication([
                                                ('/', MainHandler),
+                                               ('/tests', TestHandler),
                                                # ('/privacy-policy', PrivacyHandler),
                                                # ('/terms', TermsHandler),
                                                # ('/about', AboutHandler),

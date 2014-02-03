@@ -265,7 +265,6 @@ describe("gameon", function () {
         starBar.setScore(70);
         expect(starBar.numStars).toBe(3);
         done();
-
     });
 
 //

@@ -189,6 +189,12 @@ var gameon = new (function () {
         });
     };
 
+    self.pauseSound = function (name) {
+        soundManager.onready(function () {
+            soundManager.pause(name);
+        });
+    };
+
     self.pauseAll = soundManager.pauseAll;
     self.resumeAll = soundManager.resumeAll;
 
@@ -515,6 +521,8 @@ var gameon = new (function () {
         };
         return boardSelf;
     };
+
+
     self.math = new (function () {
         var self = this;
         self.numberBetween = function (a, b) {
@@ -576,6 +584,16 @@ var gameon = new (function () {
 
         }
     };
+
+    self.unlock = function (target) {
+        var button = $(target + ' button');
+        button.removeAttr('disabled');
+        button.find('.glyphicon-lock').remove();
+    }
+    self.isLocked = function (target) {
+        var button = $(target + ' button');
+        return button.attr('disabled');
+    }
 
     return self;
 })();

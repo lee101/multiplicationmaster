@@ -7,3 +7,12 @@
 //    }
 //  });
 //});
+var specHelpers = new (function(){
+    'use strict';
+    var self = this;
+
+    self.clickBtn = function(target){
+        $(target + ' button').click();
+    };
+
+})();

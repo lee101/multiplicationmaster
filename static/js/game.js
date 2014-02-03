@@ -1,11 +1,21 @@
+var mainTheme = 'mm-theme';
+gameon.loadSound(mainTheme, '/gameon/static/music/multiplication-master-theme1.mp3');
+
+
+
 var views = new (function () {
     'use strict';
     var self = this;
+    self.name = 'start';
+
     self.start = function () {
+        self.name = 'start';
         $('.mm-background').html($('#start').html());
     };
 
     self.options = function () {
+        self.name = 'options';
+
         $('.mm-background').html($('#options').html());
         $('.back-btn').click(function () {
             self.start();
@@ -13,13 +23,29 @@ var views = new (function () {
     };
 
     self.difficulties = function () {
+        self.name = 'difficulties';
         $('.mm-background').html($('#difficulties').html());
         $('.back-btn').click(function () {
             views.start();
         });
+
+        gameon.getUser(function(user){
+            var difficultiesUnlocked = user.difficulties_unlocked;
+            if (difficultiesUnlocked >= 1) {
+                gameon.unlock('.mm-difficulty--'+ MEDIUM);
+            }
+            if (difficultiesUnlocked >= 2) {
+                gameon.unlock('.mm-difficulty--'+ HARD);
+            }
+            if (difficultiesUnlocked >= 3) {
+                gameon.unlock('.mm-difficulty--'+ EXPERT);
+            }
+
+        });
     };
 
     self.levels = function (difficulty) {
+        self.name = 'levels';
 
         var LevelLink = function (id, locked) {
             var self = this;
@@ -59,6 +85,9 @@ var views = new (function () {
 
 
     self.level = function (id) {
+        self.name = 'level';
+        gameon.loopSound(mainTheme);
+
         var level = LEVELS[id - 1];
         var tiles = [];
 
@@ -103,11 +132,15 @@ var views = new (function () {
         equation.render('.mm-equation');
         $('.back-btn').click(function () {
             views.levels(level.difficulty);
+            gameon.pauseSound(mainTheme);
+
+            $('.mm-volume .gameon-volume').detach().appendTo('.mm-volume-template');
+            $('.mm-starbar .gameon-starbar').detach().appendTo('.mm-starbar-template');
         });
         var starBar = new gameon.StarBar(level.starrating);
         starBar.setScore(0);
-        $('.mm-volume').append($('.mm-volume-template').html());
-        $('.mm-starbar').append($('.mm-starbar-template').html());
+        $('.mm-volume-template .gameon-volume').detach().appendTo('.mm-volume');
+        $('.mm-starbar-template .gameon-starbar').detach().appendTo('.mm-starbar');
     }
 
 

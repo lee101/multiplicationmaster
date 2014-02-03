@@ -1,0 +1,60 @@
+{% import "gameon/templates/templates.jinja2" as gameon with context %}
+{% import "templates/macros.jinja2" as macros with context %}
+{% import "templates/views.jinja2" as views with context %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Jasmine Spec Runner v2.0.0</title>
+
+    <link rel="shortcut icon" type="image/png" href="/gameon/static/js/lib/jasmine-2.0.0/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="/gameon/static/js/lib/jasmine-2.0.0/jasmine.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{ macros.headers() }}
+    <script type="text/javascript" src="/gameon/static/js/lib/jasmine-2.0.0/jasmine.js"></script>
+    <script type="text/javascript" src="/gameon/static/js/lib/jasmine-2.0.0/jasmine-html.js"></script>
+    <script type="text/javascript" src="/gameon/static/js/lib/jasmine-2.0.0/boot.js"></script>
+    {{ gameon.cssheaders() }}
+    {{ macros.cssheaders() }}
+
+    {{ gameon.jsheaders() }}
+
+    <script type="application/javascript">
+        {{ macros.jsvars() }}
+    </script>
+    {{ macros.jsheaders() }}
+
+
+    <script type="text/javascript" src="/gameon/static/js/spec/SpecHelper.js"></script>
+    <script type="text/javascript" src="/static/js/gamespec.js"></script>
+
+    <script id="start" type="text/html">
+        {{ views.start() }}
+    </script>
+    <script id="difficulties" type="text/html">
+        {{ views.difficulties() }}
+    </script>
+    <script id="levels" type="text/html">
+        {{ views.levels() }}
+    </script>
+    <script id="level" type="text/html">
+        {{ views.level() }}
+    </script>
+    <script id="options" type="text/html">
+        {{ views.options() }}
+    </script>
+</head>
+<body>
+<div class="mm-volume-template">
+    {{ gameon.volume() }}
+</div>
+<div class="mm-starbar-template">
+    {{ gameon.starbar() }}
+</div>
+<div class="mm-background">
+    {{ views.start() }}
+</div>
+</body>
+</html>
