@@ -50,20 +50,37 @@
 
 
 {%- macro jsvars() %}
-    EASY = {{ fixtures.EASY }};
-    MEDIUM = {{ fixtures.MEDIUM }};
-    HARD = {{ fixtures.HARD }};
-    EXPERT = {{ fixtures.EXPERT }};
-    EASY_LEVELS =   {{ json.dumps(fixtures.EASY_LEVELS, cls=GameOnUtils.MyEncoder) }};
-    MEDIUM_LEVELS = {{ json.dumps(fixtures.MEDIUM_LEVELS, cls=GameOnUtils.MyEncoder) }};
-    HARD_LEVELS =   {{ json.dumps(fixtures.HARD_LEVELS, cls=GameOnUtils.MyEncoder) }};
-    EXPERT_LEVELS = {{ json.dumps(fixtures.EXPERT_LEVELS, cls=GameOnUtils.MyEncoder) }};
-    LEVELS = EASY_LEVELS.concat(MEDIUM_LEVELS).concat(HARD_LEVELS).concat(EXPERT_LEVELS);
-    DIFFICULTY_TO_LEVELS_MAP = {};
-    DIFFICULTY_TO_LEVELS_MAP[EASY] = EASY_LEVELS;
-    DIFFICULTY_TO_LEVELS_MAP[MEDIUM] = MEDIUM_LEVELS;
-    DIFFICULTY_TO_LEVELS_MAP[HARD] = HARD_LEVELS;
-    DIFFICULTY_TO_LEVELS_MAP[EXPERT] = EXPERT_LEVELS;
+    <script type="text/javascript">
+        EASY = {{ fixtures.EASY }};
+        MEDIUM = {{ fixtures.MEDIUM }};
+        HARD = {{ fixtures.HARD }};
+        EXPERT = {{ fixtures.EXPERT }};
+        EASY_LEVELS =   {{ json.dumps(fixtures.EASY_LEVELS, cls=GameOnUtils.MyEncoder) }};
+        MEDIUM_LEVELS = {{ json.dumps(fixtures.MEDIUM_LEVELS, cls=GameOnUtils.MyEncoder) }};
+        HARD_LEVELS =   {{ json.dumps(fixtures.HARD_LEVELS, cls=GameOnUtils.MyEncoder) }};
+        EXPERT_LEVELS = {{ json.dumps(fixtures.EXPERT_LEVELS, cls=GameOnUtils.MyEncoder) }};
+        LEVELS = EASY_LEVELS.concat(MEDIUM_LEVELS).concat(HARD_LEVELS).concat(EXPERT_LEVELS);
+        DIFFICULTY_TO_LEVELS_MAP = {};
+        DIFFICULTY_TO_LEVELS_MAP[EASY] = EASY_LEVELS;
+        DIFFICULTY_TO_LEVELS_MAP[MEDIUM] = MEDIUM_LEVELS;
+        DIFFICULTY_TO_LEVELS_MAP[HARD] = HARD_LEVELS;
+        DIFFICULTY_TO_LEVELS_MAP[EXPERT] = EXPERT_LEVELS;
+
+        function hack_equals(a, b) {
+            return !(a < b || b < a);
+        }
+
+        for(var i=0; i<LEVELS.length;i++) {
+            var level = LEVELS[i]
+            if(hack_equals(level.formula, ['x0,+,x1,=,x2'])){
+                level.formulas = [
+                    ['x2','-','x1'],
+                    ['x2','-','x0'],
+                    ['x1','+','x2'],
+                ]
+            }
+        }
+    </script>
 {%- endmacro %}
 
 {%- macro shareBtnsHorizontal(differenturl) %}

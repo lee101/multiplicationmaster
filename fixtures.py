@@ -36,17 +36,12 @@ class Level(Fixture):
         self.starrating = starrating
 
         self.formula = formula
-        if formula == 'x0+x1=x2':
-            self.formulas = [
-                'x2-x1',
-                'x2-x0',
-                'x1+x2',
-                ]
+
 
 
 EASY_LEVELS = [
-    Level(EASY, 0, 9, 5, 5,[15,20,25,30]),
-    Level(EASY, 0, 15, 5, 5,[32,40,50,60]),
+    Level(EASY, 0, 9, 5, 5, starrating=[15,20,25,30]),
+    Level(EASY, 0, 15, 5, 5, starrating=[32,40,50,60]),
     Level(EASY, 0, 9, 5, 5),
     Level(EASY, 0, 9, 5, 5),
     Level(EASY, 0, 9, 5, 5),

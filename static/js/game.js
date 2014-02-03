@@ -100,13 +100,24 @@ var views = new (function () {
             self.selected = false;
 
             self.click = function () {
-                if(gameState.numSelected >= 3) {
+                self.selected = !self.selected;
+                if(self.selected) {
+                    gameState.numSelected++;
+                }
+                else {
+                    gameState.numSelected--;
+                }
+                if(gameState.numSelected > 3) {
+                    gameState.numSelected--;
+                    self.selected = false;
                     return;
                 }
-                gameState.numSelected ++;
-                self.selected = !self.selected;
                 self.reRender();
             };
+
+            self.unselect = function() {
+
+            }
 
             self.render = function () {
                 var btnStyle = 'btn btn-danger btn-lg';
