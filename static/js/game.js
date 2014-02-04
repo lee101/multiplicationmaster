@@ -101,21 +101,23 @@ var views = new (function () {
 
             self.click = function () {
                 self.selected = !self.selected;
-                if(self.selected) {
+                if (self.selected) {
                     gameState.numSelected++;
                 }
                 else {
                     gameState.numSelected--;
                 }
-                if(gameState.numSelected > 3) {
+                if (gameState.numSelected > 3) {
                     gameState.numSelected--;
                     self.selected = false;
+                    gameState.equation.removeTileAt(self.yPos, self.xPos, self)
                     return;
                 }
                 self.reRender();
+                gameState.equation.addTile(self.yPos, self.xPos, self)
             };
 
-            self.unselect = function() {
+            self.unselect = function () {
 
             }
 
@@ -145,11 +147,11 @@ var views = new (function () {
 
         gameState.board.render('.mm-level');
         $('.back-btn').click(function () {
-            views.levels(level.difficulty);
-            gameon.pauseSound(mainTheme);
-
             $('.mm-volume .gameon-volume').detach().appendTo('.mm-volume-template');
             $('.mm-starbar .gameon-starbar').detach().appendTo('.mm-starbar-template');
+            views.levels(level.difficulty);
+
+            gameon.pauseSound(mainTheme);
         });
         gameState.starBar = new gameon.StarBar(level.starrating);
         gameState.starBar.setScore(0);
@@ -160,10 +162,44 @@ var views = new (function () {
 
         gameState.equation = new (function () {
             var self = this;
-            self.board = new gameon.board(5, 1, []);
-            self.board.render('.mm-equation');
+            self.numOperatorTiles = 0
+            var tiles = []
+            var OperatorTile = function (op) {
+                var self = this;
+                self.operator = op;
+                self.render = function () {
+                    return '<p class="mm-equation__operator">' + self.operator + '</button>';
+                }
+            }
+            for (var i = 0; i < level.formula.length; i++) {
+                if (level.formula[i][0] === 'x') {
+                    tiles.push({})
+                }
+                else {
+                    tiles.push(new OperatorTile(level.formula[i]));
+                    self.numOperatorTiles++;
+                }
+            }
 
+            self.board = new gameon.board(5, 1, tiles);
+
+            self.board.render('.mm-equation');
             self.addTile = function (y, x, tile) {
+                //find new tile pos
+                var newTilePos = 0;
+                var tiles = self.board.tiles;
+                for (var i = 0; i < tiles.length; i++) {
+                    if (typeof tiles[i]['render'] === 'undefined') {
+                        newTilePos=i
+                        break;
+                    }
+                }
+                // Deep copy
+                var tileCopy = jQuery.extend(true, {}, tile);
+                self.board.newTile(0, newTilePos, tileCopy)
+                self.board.setTile(0, newTilePos, tileCopy)
+//                var boardTile = self.board.getTile(0, newTilePos)
+                tileCopy.reRender();
 
             }
         })();

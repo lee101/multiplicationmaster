@@ -361,7 +361,13 @@ var gameon = new (function () {
             tile.yPos = y;
             tile.xPos = x;
             tile.tileRender = function () {
-                var renderedData = $(this.render());
+                var renderedData;
+                if(typeof this['render'] === 'function'){
+                    renderedData = $(this.render());
+                }
+                else {
+                    renderedData = $('<div></div>');
+                }
                 renderedData.attr('onclick', 'gameon.' + boardSelf.name + '.click(this)');
                 renderedData.attr('data-yx', boardSelf.name + '-' + this.yPos + '-' + this.xPos);
                 renderedData.css({position: 'relative'});
@@ -406,7 +412,10 @@ var gameon = new (function () {
             var yx = $(elm).attr('data-yx').split('-');
             var y = +yx[1];
             var x = +yx[2];
-            boardSelf.getTile(y, x).click();
+            var tile = boardSelf.getTile(y, x);
+            if(typeof tile['click'] === 'function') {
+                tile.click();
+            }
         }
 
         boardSelf.render = function (target) {

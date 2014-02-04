@@ -24,22 +24,22 @@
         <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
              alt="Multiplication Master">
     </div>
-    <div class="mm-difficulty mm-difficulty--{{ EASY }}">
+    <div class="mm-difficulty mm-difficulty--{{ fixtures.EASY }}">
         <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
                 onclick="views.levels(EASY)">Easy
         </button>
     </div>
-    <div class="mm-difficulty mm-difficulty--{{ MEDIUM }}">
+    <div class="mm-difficulty mm-difficulty--{{ fixtures.MEDIUM }}">
         <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" disabled="disabled"><span
                 class="glyphicon glyphicon-lock"></span>Medium
         </button>
     </div>
-    <div class="mm-difficulty mm-difficulty--{{ HARD }}">
+    <div class="mm-difficulty mm-difficulty--{{ fixtures.HARD }}">
         <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" disabled="disabled"><span
                 class="glyphicon glyphicon-lock"></span>Hard
         </button>
     </div>
-    <div class="mm-difficulty mm-difficulty--{{ EXPERT }}">
+    <div class="mm-difficulty mm-difficulty--{{ fixtures.EXPERT }}">
         <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" disabled="disabled"><span
                 class="glyphicon glyphicon-lock"></span>Expert
         </button>

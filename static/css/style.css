@@ -88,3 +88,17 @@ body {
     background-color: #30d770;
 }
 
+.mm-equation__operator {
+    font-weight: bold;
+    font-size: 36px;
+    margin: 0;
+    color: #ffffff;
+}
+
+@media (min-width: 961px) {
+    .mm-equation__operator {
+        font-size: 67px;
+    }
+}
+
+
