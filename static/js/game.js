@@ -103,18 +103,18 @@ var views = new (function () {
                 self.selected = !self.selected;
                 if (self.selected) {
                     gameState.numSelected++;
+                    if (gameState.numSelected > 3) {
+                        gameState.numSelected--;
+                        self.selected = false;
+                        return;
+                    }
+                    self.reRender();
+                    gameState.equation.addTile(self.yPos, self.xPos, self)
                 }
                 else {
                     gameState.numSelected--;
+                    gameState.equation.removeTile(self.yPos, self.xPos, self);
                 }
-                if (gameState.numSelected > 3) {
-                    gameState.numSelected--;
-                    self.selected = false;
-                    gameState.equation.removeTileAt(self.yPos, self.xPos, self)
-                    return;
-                }
-                self.reRender();
-                gameState.equation.addTile(self.yPos, self.xPos, self)
             };
 
             self.unselect = function () {
@@ -184,13 +184,15 @@ var views = new (function () {
             self.board = new gameon.board(5, 1, tiles);
 
             self.board.render('.mm-equation');
+
+
             self.addTile = function (y, x, tile) {
                 //find new tile pos
                 var newTilePos = 0;
                 var tiles = self.board.tiles;
                 for (var i = 0; i < tiles.length; i++) {
                     if (typeof tiles[i]['render'] === 'undefined') {
-                        newTilePos=i
+                        newTilePos = i
                         break;
                     }
                 }
@@ -202,6 +204,11 @@ var views = new (function () {
                 tileCopy.reRender();
 
             }
+            self.removeTile = function (y, x) {
+                self.board.removeWhere(function (tile) {
+                    return tile.xPos === x && tile.yPos === y;
+                });
+            };
         })();
     }
 

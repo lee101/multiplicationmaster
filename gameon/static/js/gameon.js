@@ -362,7 +362,7 @@ var gameon = new (function () {
             tile.xPos = x;
             tile.tileRender = function () {
                 var renderedData;
-                if(typeof this['render'] === 'function'){
+                if (typeof this['render'] === 'function') {
                     renderedData = $(this.render());
                 }
                 else {
@@ -403,6 +403,22 @@ var gameon = new (function () {
             boardSelf.newTile(y, x, currTile);
         }
 
+        boardSelf.removeWhere = function (func) {
+            for (var i = 0; i < boardSelf.tiles.length; i++) {
+                if(func(boardSelf.tiles[i])) {
+                    var x = boardSelf.getX(i);
+                    var y = boardSelf.getY(i);
+
+                    var newTile= {};
+                    boardSelf.newTile(y, x, newTile);
+                    boardSelf.setTile(y,x,newTile);
+                    //TODOFIX calling things on both objects
+                    newTile.reRender();
+//                    boardSelf.render()
+                }
+            }
+        }
+
 
         boardSelf.getRenderedTile = function (y, x) {
             return $('[data-yx="' + boardSelf.name + '-' + y + '-' + x + '"]');
@@ -413,7 +429,7 @@ var gameon = new (function () {
             var y = +yx[1];
             var x = +yx[2];
             var tile = boardSelf.getTile(y, x);
-            if(typeof tile['click'] === 'function') {
+            if (typeof tile['click'] === 'function') {
                 tile.click();
             }
         }
