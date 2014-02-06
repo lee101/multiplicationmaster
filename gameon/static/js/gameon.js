@@ -438,7 +438,12 @@ var gameon = new (function () {
 
         boardSelf.render = function (target) {
             if (typeof target === 'undefined') {
-                target = '.gameon-board';
+                if (typeof boardSelf.target === 'undefined') {
+                    target = '.gameon-board';
+                }
+                else{
+                    target = boardSelf.target;
+                }
             }
             boardSelf.target = target
             var domtable = ['<table>'];
@@ -466,7 +471,7 @@ var gameon = new (function () {
         };
 
         boardSelf.getContainerAt = function (y, x) {
-            return $('.gameon-board tr:nth-child(' + (y + 1) + ') td:nth-child(' + (x + 1) + ')');
+            return $(boardSelf.target + ' tr:nth-child(' + (y + 1) + ') td:nth-child(' + (x + 1) + ')');
         };
 
         boardSelf.falldown = function (newTiles, callback) {
@@ -475,7 +480,7 @@ var gameon = new (function () {
             //animate towards that state
             //refreshui
             //TODO better way of getting tiledist eg 60 if $(window).width()<suu
-            var tiledist = $('.gameon-board td').outerHeight();
+            var tiledist = $(boardSelf.target + ' td').outerHeight();
             var falltime = 0.20;
             var maxNumDeletedPerColumn = 0;
             var newTileNum = 0;
@@ -584,7 +589,7 @@ var gameon = new (function () {
             self.update()
         }
         self.getScore = function () {
-            return self.score;
+            return self._score;
         }
 
         self.update = function () {

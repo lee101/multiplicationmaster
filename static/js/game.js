@@ -89,7 +89,8 @@ var views = new (function () {
 
         var level = LEVELS[id - 1];
         var gameState = {};
-        function construct(){
+
+        function construct() {
             gameState.numSelected = 0;
 
             var tiles = [];
@@ -122,11 +123,15 @@ var views = new (function () {
             gameState.equation = new gameState.Equation();
         }
 
+        gameState.setTileDeleted = function (y, x) {
+            var tile = gameState.board.getTile(y, x);
+            tile.deleted = true;
+        }
 
-        var MainTile = function (id) {
+
+        var MainTile = function () {
             var self = this;
             self.number = gameon.math.numberBetween(1, 5);
-            self.id = id;
             self.selected = false;
 
             self.click = function () {
@@ -138,13 +143,17 @@ var views = new (function () {
                         self.selected = false;
                         return;
                     }
-                    gameState.equation.addTile(self.yPos, self.xPos, self)
+                    var hasWorked = gameState.equation.addTile(self.yPos, self.xPos, self)
+                    if(!hasWorked) {
+                        self.reRender();
+                    }
                 }
                 else {
                     gameState.numSelected--;
                     gameState.equation.removeTile(self.yPos, self.xPos, self);
+                    self.reRender();
+
                 }
-                self.reRender();
             };
 
             self.unselect = function () {
@@ -197,6 +206,7 @@ var views = new (function () {
 
 
             self.addTile = function (y, x, tile) {
+                var success = false;
                 //find new tile pos
                 var newTilePos = 0;
                 var tiles = self.board.tiles;
@@ -213,13 +223,43 @@ var views = new (function () {
                 tileCopy.oldX = x;
                 self.board.newTile(0, newTilePos, tileCopy);
                 self.board.setTile(0, newTilePos, tileCopy);
+                tileCopy.reRender();
 //                var boardTile = self.board.getTile(0, newTilePos)
                 if (newTilePos == tiles.length - 1) {
 //                    if(level.solutions[])
-                }
-                tileCopy.reRender();
+                    success = eval(self.getFormula());
+                    if (success) {
 
+                        var totalScore = gameState.starBar.getScore();
+                        var totalNumTilesDeleted = 0;
+                        for (var i = 0; i < tiles.length; i++) {
+                            var tile = tiles[i];
+                            if (typeof tile['getOperator'] === 'undefined') {
+                                totalScore += tile.number;
+                                gameState.numSelected = 0;
+                                gameState.setTileDeleted(tile.oldY, tile.oldX);
+                                totalNumTilesDeleted++;
+                            }
+                            else {
+
+                            }
+                        }
+                        var newTiles = []
+                        for(var i=0;i< totalNumTilesDeleted;i++) {
+                            newTiles.push(new MainTile())
+                        }
+                        self.board.removeWhere(function (tile) {
+                            return typeof tile['getOperator'] === 'undefined';
+                        });
+
+                        gameState.starBar.setScore(totalScore);
+                        gameState.board.render();
+                        gameState.board.falldown(newTiles);
+                    }
+                }
+                return success;
             };
+
 
             self.getFormula = function () {
                 var formula = '';
@@ -235,7 +275,7 @@ var views = new (function () {
                     }
                 }
                 return  formula;
-            }
+            };
 
             self.removeTile = function (oldY, oldX) {
                 self.board.removeWhere(function (tile) {
@@ -243,7 +283,7 @@ var views = new (function () {
                 });
             };
         };
-        construct()
+        construct();
         return gameState;
     }
 
