@@ -253,8 +253,8 @@ var gameon = new (function () {
     self.getUser(function (user) {
         //render volume control
         $(document).ready(function () {
-            //        $('.gameon-volume').append('<input type="text" data-slider="true" value="0.4" data-slider-highlight="true" data-slider-theme="volume"/>');
-            $(".gameon-volume [data-slider]").simpleSlider("setRatio", user.volume);
+            var slider = $(".gameon-volume [data-slider]");
+            slider.simpleSlider("setRatio", user.volume);
             if (user.mute) {
                 $('.gameon-volume__unmute').show();
                 self.mute();
@@ -263,12 +263,12 @@ var gameon = new (function () {
                 $('.gameon-volume__mute').show();
             }
 
-            $(".gameon-volume [data-slider]")
+            slider
                 .bind("slider:ready slider:changed", function (event, data) {
                     self.setVolume(data.ratio);
                     self.getUser(function (user) {
                         user.saveVolume(data.ratio);
-                    })
+                    });
 
                 });
         });
@@ -353,9 +353,19 @@ var gameon = new (function () {
         boardSelf.name = 'board' + numBoards;
         self[boardSelf.name] = boardSelf;
 
-        boardSelf.width = width;
-        boardSelf.height = height;
-        boardSelf.tiles = tiles;
+        function construct(width, height, tiles){
+            boardSelf.width = width;
+            boardSelf.height = height;
+            boardSelf.tiles = tiles;
+            for (var i = 0; i < boardSelf.tiles.length; i++) {
+                var currTile = boardSelf.tiles[i];
+
+                var x = boardSelf.getX(i);
+                var y = boardSelf.getY(i);
+
+                boardSelf.newTile(y, x, currTile);
+            }
+        }
 
         boardSelf.newTile = function (y, x, tile) {
             tile.yPos = y;
@@ -393,15 +403,6 @@ var gameon = new (function () {
         boardSelf.setTile = function (y, x, tile) {
             boardSelf.tiles[y * boardSelf.width + x] = tile;
         };
-
-        for (var i = 0; i < boardSelf.tiles.length; i++) {
-            var currTile = boardSelf.tiles[i];
-
-            var x = boardSelf.getX(i);
-            var y = boardSelf.getY(i);
-
-            boardSelf.newTile(y, x, currTile);
-        }
 
         boardSelf.removeWhere = function (func) {
             for (var i = 0; i < boardSelf.tiles.length; i++) {
@@ -544,6 +545,7 @@ var gameon = new (function () {
 
             setTimeout(callback, maxNumDeletedPerColumn * falltime)
         };
+        construct(width, height, tiles);
         return boardSelf;
     };
 
