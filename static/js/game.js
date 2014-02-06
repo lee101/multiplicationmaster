@@ -89,8 +89,38 @@ var views = new (function () {
 
         var level = LEVELS[id - 1];
         var gameState = {};
-        gameState.numSelected = 0;
-        var tiles = [];
+        function construct(){
+            gameState.numSelected = 0;
+
+            var tiles = [];
+            for (var i = 0; i < level.width * level.height; i++) {
+                var locked = true;
+                if (level.difficulty == EASY && i == 0) {
+                    var locked = false;
+                }
+                var tile = new MainTile();
+                tiles.push(tile);
+
+            }
+            gameState.board = new gameon.board(level.width, level.height, tiles);
+            $('.mm-background').html($('#level').html());
+
+            gameState.board.render('.mm-level');
+            $('.back-btn').click(function () {
+                $('.mm-volume .gameon-volume').detach().appendTo('.mm-volume-template');
+                $('.mm-starbar .gameon-starbar').detach().appendTo('.mm-starbar-template');
+                views.levels(level.difficulty);
+
+                gameon.pauseSound(mainTheme);
+            });
+            gameState.starBar = new gameon.StarBar(level.starrating);
+            gameState.starBar.setScore(0);
+
+            $('.mm-volume-template .gameon-volume').detach().appendTo('.mm-volume');
+            $('.mm-starbar-template .gameon-starbar').detach().appendTo('.mm-starbar');
+
+            gameState.equation = new gameState.Equation();
+        }
 
 
         var MainTile = function (id) {
@@ -108,13 +138,13 @@ var views = new (function () {
                         self.selected = false;
                         return;
                     }
-                    self.reRender();
                     gameState.equation.addTile(self.yPos, self.xPos, self)
                 }
                 else {
                     gameState.numSelected--;
                     gameState.equation.removeTile(self.yPos, self.xPos, self);
                 }
+                self.reRender();
             };
 
             self.unselect = function () {
@@ -131,49 +161,29 @@ var views = new (function () {
                 }
                 return '<button type="button" class="' + btnStyle + '">' + self.number + '</button>';
             };
-        }
-        for (var i = 0; i < level.width * level.height; i++) {
-            var locked = true;
-            if (level.difficulty == EASY && i == 0) {
-                var locked = false;
-            }
-            var tile = new MainTile();
-            tiles.push(tile);
+        };
 
-        }
-        gameState.board = new gameon.board(level.width, level.height, tiles);
-        $('.mm-background').html($('#level').html());
-
-
-        gameState.board.render('.mm-level');
-        $('.back-btn').click(function () {
-            $('.mm-volume .gameon-volume').detach().appendTo('.mm-volume-template');
-            $('.mm-starbar .gameon-starbar').detach().appendTo('.mm-starbar-template');
-            views.levels(level.difficulty);
-
-            gameon.pauseSound(mainTheme);
-        });
-        gameState.starBar = new gameon.StarBar(level.starrating);
-        gameState.starBar.setScore(0);
-
-        $('.mm-volume-template .gameon-volume').detach().appendTo('.mm-volume');
-        $('.mm-starbar-template .gameon-starbar').detach().appendTo('.mm-starbar');
-
-
-        gameState.equation = new (function () {
+        gameState.Equation = function () {
             var self = this;
-            self.numOperatorTiles = 0
-            var tiles = []
+            self.numOperatorTiles = 0;
+            var tiles = [];
             var OperatorTile = function (op) {
                 var self = this;
                 self.operator = op;
                 self.render = function () {
                     return '<p class="mm-equation__operator">' + self.operator + '</button>';
                 }
-            }
+
+                self.getOperator = function () {
+                    if (self.operator === '=') {
+                        return '==';
+                    }
+                    return self.operator;
+                };
+            };
             for (var i = 0; i < level.formula.length; i++) {
                 if (level.formula[i][0] === 'x') {
-                    tiles.push({})
+                    tiles.push({});
                 }
                 else {
                     tiles.push(new OperatorTile(level.formula[i]));
@@ -192,24 +202,49 @@ var views = new (function () {
                 var tiles = self.board.tiles;
                 for (var i = 0; i < tiles.length; i++) {
                     if (typeof tiles[i]['render'] === 'undefined') {
-                        newTilePos = i
+                        newTilePos = i;
                         break;
                     }
                 }
                 // Deep copy
                 var tileCopy = jQuery.extend(true, {}, tile);
-                self.board.newTile(0, newTilePos, tileCopy)
-                self.board.setTile(0, newTilePos, tileCopy)
+
+                tileCopy.oldY = y;
+                tileCopy.oldX = x;
+                self.board.newTile(0, newTilePos, tileCopy);
+                self.board.setTile(0, newTilePos, tileCopy);
 //                var boardTile = self.board.getTile(0, newTilePos)
+                if (newTilePos == tiles.length - 1) {
+//                    if(level.solutions[])
+                }
                 tileCopy.reRender();
 
+            };
+
+            self.getFormula = function () {
+                var formula = '';
+                var tiles = self.board.tiles;
+                var terms = level.formula;
+                for (var i = 0; i < tiles.length; i++) {
+                    var tile = tiles[i];
+                    if (typeof tile['getOperator'] !== 'undefined') {
+                        formula += tile.getOperator();
+                    }
+                    else {
+                        formula += tile.number;
+                    }
+                }
+                return  formula;
             }
-            self.removeTile = function (y, x) {
+
+            self.removeTile = function (oldY, oldX) {
                 self.board.removeWhere(function (tile) {
-                    return tile.xPos === x && tile.yPos === y;
+                    return tile.oldX === oldX && tile.oldY === oldY;
                 });
             };
-        })();
+        };
+        construct()
+        return gameState;
     }
 
 

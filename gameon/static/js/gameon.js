@@ -351,6 +351,7 @@ var gameon = new (function () {
         numBoards++;
         boardSelf.id = numBoards;
         boardSelf.name = 'board' + numBoards;
+        //TODO need to delete/garbage collect these boards
         self[boardSelf.name] = boardSelf;
 
         function construct(width, height, tiles){
@@ -418,12 +419,12 @@ var gameon = new (function () {
 //                    boardSelf.render()
                 }
             }
-        }
+        };
 
 
         boardSelf.getRenderedTile = function (y, x) {
             return $('[data-yx="' + boardSelf.name + '-' + y + '-' + x + '"]');
-        }
+        };
 
         boardSelf.click = function (elm) {
             var yx = $(elm).attr('data-yx').split('-');
@@ -433,7 +434,7 @@ var gameon = new (function () {
             if (typeof tile['click'] === 'function') {
                 tile.click();
             }
-        }
+        };
 
         boardSelf.render = function (target) {
             if (typeof target === 'undefined') {
@@ -492,7 +493,6 @@ var gameon = new (function () {
                             maxNumDeletedPerColumn = numDeleted;
                         }
                         renderedTile.remove();
-                        continue;
                     } else {
                         if (numDeleted == 0) {
                             continue;
