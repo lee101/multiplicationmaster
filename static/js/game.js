@@ -62,7 +62,7 @@ var views = new (function () {
                 }
                 return '<button type="button" class="btn btn-danger btn-lg">' + self.id + '</button>';
             }
-        }
+        };
         var tiles = [];
         var levels = DIFFICULTY_TO_LEVELS_MAP[difficulty];
         for (var i = 0; i < levels.length; i++) {
@@ -129,25 +129,25 @@ var views = new (function () {
         self.EndHandler = function() {
             var endSelf = this;
             endSelf.moves = level.numMoves;
-            endSelf.render = function() {
+            endSelf.render = function () {
                 if (level.numMoves) {
-                    $('.mm-end-condition').html('<p>Moves: ' + endSelf.moves +'</p>');
+                    $('.mm-end-condition').html('<p>Moves: ' + endSelf.moves + '</p>');
                 }
                 else {
                     $('.mm-end-condition').html('<p>Time: <span class="gameon-clock"></span></p>');
                 }
-            }
-            endSelf.setMoves = function(moves) {
+            };
+            endSelf.setMoves = function (moves) {
                 endSelf.moves = moves;
-                if(moves <= 0) {
+                if (moves <= 0) {
                     endSelf.gameOver();
                     return;
                 }
                 endSelf.render();
-            }
+            };
             endSelf.gameOver = function () {
 
-            }
+            };
             if (level.numMoves) {
                 gameState.clock = gameon.clock(endSelf.gameOver, level.clock);
             }
@@ -156,7 +156,7 @@ var views = new (function () {
         gameState.setTileDeleted = function (y, x) {
             var tile = gameState.board.getTile(y, x);
             tile.deleted = true;
-        }
+        };
 
 
         var MainTile = function () {
@@ -173,7 +173,7 @@ var views = new (function () {
                         self.selected = false;
                         return;
                     }
-                    var hasWorked = gameState.equation.addTile(self.yPos, self.xPos, self)
+                    var hasWorked = gameState.equation.addTile(self.yPos, self.xPos, self);
                     if(!hasWorked) {
                         self.reRender();
                     }
@@ -188,7 +188,7 @@ var views = new (function () {
 
             self.unselect = function () {
 
-            }
+            };
 
             self.render = function () {
                 var btnStyle = 'btn btn-danger btn-lg';
@@ -211,7 +211,7 @@ var views = new (function () {
                 self.operator = op;
                 self.render = function () {
                     return '<p class="mm-equation__operator">' + self.operator + '</button>';
-                }
+                };
 
                 self.getOperator = function () {
                     if (self.operator === '=') {
@@ -274,7 +274,7 @@ var views = new (function () {
 
                             }
                         }
-                        var newTiles = []
+                        var newTiles = [];
                         for(var i=0;i< totalNumTilesDeleted;i++) {
                             newTiles.push(new MainTile())
                         }

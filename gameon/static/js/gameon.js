@@ -446,7 +446,7 @@ var gameon = new (function () {
                     target = boardSelf.target;
                 }
             }
-            boardSelf.target = target
+            boardSelf.target = target;
             var domtable = ['<table>'];
             for (var h = 0; h < boardSelf.height; h++) {
                 domtable.push("<tr>");
@@ -541,7 +541,7 @@ var gameon = new (function () {
                     renderedData.css({position: 'relative'});
                     renderedData.css({top: -fallDistance});
 
-                    container.html(renderedData[0].outerHTML)
+                    container.html(renderedData[0].outerHTML);
                     var renderedTile = boardSelf.getRenderedTile(h, w);
                     renderedTile.animate({top: '+=' + fallDistance}, tiledist / (falltime / numDeleted));
                 }
@@ -588,14 +588,14 @@ var gameon = new (function () {
         starSelf.setScore = function (score) {
             starSelf._score = score;
             starSelf.update()
-        }
+        };
         starSelf.getScore = function () {
             return starSelf._score;
-        }
+        };
 
         starSelf.update = function () {
             $('.highlight-track').html(starSelf.score);
-            var conpleteRatio = starSelf._score / starSelf.end
+            var conpleteRatio = starSelf._score / starSelf.end;
             $(".gameon-starbar [data-slider]").simpleSlider("setRatio", conpleteRatio);
 
             var numStars = 0;
@@ -625,11 +625,11 @@ var gameon = new (function () {
         var button = $(target + ' button');
         button.removeAttr('disabled');
         button.find('.glyphicon-lock').remove();
-    }
+    };
     self.isLocked = function (target) {
         var button = $(target + ' button');
         return button.attr('disabled');
-    }
+    };
 
     return self;
 })();
