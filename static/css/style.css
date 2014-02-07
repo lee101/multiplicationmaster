@@ -101,4 +101,16 @@ body {
     }
 }
 
+.mm-end-condition {
+    float: left;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+@media (min-width: 961px) {
+    .mm-end-condition {
+        font-size: 26px;
+    }
+}
+
 

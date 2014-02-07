@@ -121,7 +121,37 @@ var views = new (function () {
             $('.mm-starbar-template .gameon-starbar').detach().appendTo('.mm-starbar');
 
             gameState.equation = new gameState.Equation();
+            gameState.endHandler = new self.EndHandler();
+            gameState.endHandler.render();
+
         }
+
+        self.EndHandler = function() {
+            var endSelf = this;
+            endSelf.moves = level.numMoves;
+            endSelf.render = function() {
+                if (level.numMoves) {
+                    $('.mm-end-condition').html('<p>Moves: ' + endSelf.moves +'</p>');
+                }
+                else {
+                    $('.mm-end-condition').html('<p>Time: <span class="gameon-clock"></span></p>');
+                }
+            }
+            endSelf.setMoves = function(moves) {
+                endSelf.moves = moves;
+                if(moves <= 0) {
+                    endSelf.gameOver();
+                    return;
+                }
+                endSelf.render();
+            }
+            endSelf.gameOver = function () {
+
+            }
+            if (level.numMoves) {
+                gameState.clock = gameon.clock(endSelf.gameOver, level.clock);
+            }
+        };
 
         gameState.setTileDeleted = function (y, x) {
             var tile = gameState.board.getTile(y, x);
@@ -131,7 +161,7 @@ var views = new (function () {
 
         var MainTile = function () {
             var self = this;
-            self.number = gameon.math.numberBetween(1, 5);
+            self.number = gameon.math.numberBetween(1, 9);
             self.selected = false;
 
             self.click = function () {
@@ -255,6 +285,7 @@ var views = new (function () {
                         gameState.starBar.setScore(totalScore);
                         gameState.board.render();
                         gameState.board.falldown(newTiles);
+                        gameState.endHandler.setMoves(gameState.endHandler.moves-1);
                     }
                 }
                 return success;

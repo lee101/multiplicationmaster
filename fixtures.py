@@ -20,7 +20,7 @@ class Level(Fixture):
     formula = []
     number = []
 
-    def __init__(self, difficulty, low, high, width, height,
+    def __init__(self, difficulty, low, high, width, height, numMoves, time,
                  formula=['x0','+','x1','=','x2'],
                  starrating = [60,70,90,100]):
         '''
@@ -33,6 +33,8 @@ class Level(Fixture):
         self.high = high
         self.width = width
         self.height = height
+        self.numMoves = numMoves
+        self.time = time
         self.starrating = starrating
 
         self.formula = formula
@@ -40,64 +42,64 @@ class Level(Fixture):
 
 
 EASY_LEVELS = [
-    Level(EASY, 0, 9, 5, 5, starrating=[15,20,25,30]),
-    Level(EASY, 0, 15, 5, 5, starrating=[32,40,50,60]),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
+    Level(EASY, 0, 9, 5, 5, 5, 0, starrating=[15,20,25,30]),
+    Level(EASY, 0, 15, 5, 5, 10, 0, starrating=[32,40,50,60]),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5, starrating=[32, 40, 50, 60]),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
 
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
 
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
-    Level(EASY, 0, 9, 5, 5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
+    Level(EASY, 0, 9, 5, 5, 0, 60*5),
 ]
 MEDIUM_LEVELS = [
 
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
-    Level(MEDIUM, 0, 9, 5, 5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
+    Level(MEDIUM, 0, 9, 5, 5, 0, 60*5),
 
 
 ]
 
-HARD_LEVELS =[
+HARD_LEVELS = [
 
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
-    Level(HARD, 0, 9, 5, 5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
+    Level(HARD, 0, 9, 5, 5, 0, 60*5),
 ]
 
 EXPERT_LEVELS=[

@@ -103,6 +103,7 @@
     font-size: 20px;
     margin-left: 10px;
     font-weight: bold;
+    float: left;
 }
 
 .gameon-starbar__stars {
@@ -132,7 +133,8 @@
 }
 
 .gameon-star--shiny {
-    color: #e3780e;
+    /*color: #e3780e;*/
+    color: #FFEF35;
 }
 
 .gameon-star--shiny:before {

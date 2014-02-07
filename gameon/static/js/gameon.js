@@ -163,10 +163,9 @@ var gameon = new (function () {
 
     soundManager.setup({
         // where to find the SWF files, if needed
-        url: '/gameon/js/lib/soundmanager/script',
+        url: '/gameon/static/js/lib/soundmanager/script',
         onready: function () {
             // SM2 has loaded, API ready to use e.g., createSound() etc.
-
         },
         ontimeout: function () {
             // Uh-oh. No HTML5 support, SWF missing, Flash blocked or other issue
@@ -182,6 +181,7 @@ var gameon = new (function () {
             });
         });
     };
+    self.loadSound("doublepoints", '/gameon/static/music/doublepoints.m4a');
 
     self.playSound = function (name) {
         soundManager.onready(function () {
@@ -219,7 +219,8 @@ var gameon = new (function () {
     self.loopSound = function (name) {
         soundManager.onready(function () {
             var sound = soundManager.getSoundById(name);
-            _loopSound(sound)
+            _loopSound(sound);
+//            sound.play({loops:999999});
         });
     };
 
@@ -354,7 +355,7 @@ var gameon = new (function () {
         //TODO need to delete/garbage collect these boards
         self[boardSelf.name] = boardSelf;
 
-        function construct(width, height, tiles){
+        function construct(width, height, tiles) {
             boardSelf.width = width;
             boardSelf.height = height;
             boardSelf.tiles = tiles;
@@ -407,13 +408,13 @@ var gameon = new (function () {
 
         boardSelf.removeWhere = function (func) {
             for (var i = 0; i < boardSelf.tiles.length; i++) {
-                if(func(boardSelf.tiles[i])) {
+                if (func(boardSelf.tiles[i])) {
                     var x = boardSelf.getX(i);
                     var y = boardSelf.getY(i);
 
-                    var newTile= {};
+                    var newTile = {};
                     boardSelf.newTile(y, x, newTile);
-                    boardSelf.setTile(y,x,newTile);
+                    boardSelf.setTile(y, x, newTile);
                     //TODOFIX calling things on both objects
                     newTile.reRender();
 //                    boardSelf.render()
@@ -441,7 +442,7 @@ var gameon = new (function () {
                 if (typeof boardSelf.target === 'undefined') {
                     target = '.gameon-board';
                 }
-                else{
+                else {
                     target = boardSelf.target;
                 }
             }
@@ -567,52 +568,55 @@ var gameon = new (function () {
         $('.gameon-starbar .track').off('click mousedown mouseup mousemove');
         $('.gameon-starbar .highlight-track').off('click mousedown mouseup mousemove');
 
-        var self = this;
-        self.one = starrating[0];
-        self.two = starrating[1];
-        self.three = starrating[2];
-        self.end = starrating[3];
+        var starSelf = this;
+        starSelf.one = starrating[0];
+        starSelf.two = starrating[1];
+        starSelf.three = starrating[2];
+        starSelf.end = starrating[3];
         var sliderWidth = $('.gameon-starbar .slider').outerWidth();
 
-        var staronePos = (self.one / self.end) * sliderWidth;
-        var startwoPos = (self.two / self.end) * sliderWidth;
-        var starthreePos = (self.three / self.end) * sliderWidth;
+        var staronePos = (starSelf.one / starSelf.end) * sliderWidth;
+        var startwoPos = (starSelf.two / starSelf.end) * sliderWidth;
+        var starthreePos = (starSelf.three / starSelf.end) * sliderWidth;
         $('.gameon-starbar__star--one').css({left: staronePos});
         $('.gameon-starbar__star--two').css({left: startwoPos});
         $('.gameon-starbar__star--three').css({left: starthreePos});
 
-        self.numStars = 0;
+        starSelf.numStars = 0;
 
-        self._score = 0;
-        self.setScore = function (score) {
-            self._score = score;
-            self.update()
+        starSelf._score = 0;
+        starSelf.setScore = function (score) {
+            starSelf._score = score;
+            starSelf.update()
         }
-        self.getScore = function () {
-            return self._score;
+        starSelf.getScore = function () {
+            return starSelf._score;
         }
 
-        self.update = function () {
-            $('.highlight-track').html(self.score);
-            var conpleteRatio = self._score / self.end
+        starSelf.update = function () {
+            $('.highlight-track').html(starSelf.score);
+            var conpleteRatio = starSelf._score / starSelf.end
             $(".gameon-starbar [data-slider]").simpleSlider("setRatio", conpleteRatio);
 
             var numStars = 0;
-            if (self._score >= self.one) {
+            if (starSelf._score >= starSelf.one) {
                 $('.gameon-starbar__star--one').addClass('gameon-star--shiny');
                 numStars++;
             }
-            if (self._score >= self.two) {
+            if (starSelf._score >= starSelf.two) {
                 $('.gameon-starbar__star--two').addClass('gameon-star--shiny');
                 numStars++;
             }
-            if (self._score >= self.three) {
+            if (starSelf._score >= starSelf.three) {
                 $('.gameon-starbar__star--three').addClass('gameon-star--shiny');
                 numStars++;
             }
-            self.numStars = numStars;
+            if (numStars > starSelf.numStars) {
+                self.playSound('doublepoints');
+            }
+            starSelf.numStars = numStars;
 
-            $('.gameon-starbar .highlight-track').html('<p class="gameon-starbar__score">' + self._score + '</p>')
+            $('.gameon-starbar .highlight-track').html('<p class="gameon-starbar__score">' + starSelf._score + '</p>')
 
         }
     };
