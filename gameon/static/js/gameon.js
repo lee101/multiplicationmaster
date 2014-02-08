@@ -592,6 +592,9 @@ var gameon = new (function () {
         starSelf.getScore = function () {
             return starSelf._score;
         };
+        starSelf.hasWon = function () {
+            return starSelf._score >= starSelf.one;
+        };
 
         starSelf.update = function () {
             $('.highlight-track').html(starSelf.score);

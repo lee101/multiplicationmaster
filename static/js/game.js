@@ -1,5 +1,6 @@
 var mainTheme = 'mm-theme';
 gameon.loadSound(mainTheme, '/gameon/static/music/multiplication-master-theme1.mp3');
+gameon.loadSound('score', '/gameon/static/music/star.mp3');
 
 
 var views = new (function () {
@@ -39,12 +40,12 @@ var views = new (function () {
             if (difficultiesUnlocked >= 3) {
                 gameon.unlock('.mm-difficulty--' + EXPERT);
             }
-
         });
     };
 
     self.levels = function (difficulty) {
         self.name = 'levels';
+        var levelsSelf = this;
 
         var LevelLink = function (id, locked) {
             var self = this;
@@ -65,21 +66,24 @@ var views = new (function () {
         };
         var tiles = [];
         var levels = DIFFICULTY_TO_LEVELS_MAP[difficulty];
-        for (var i = 0; i < levels.length; i++) {
-            var locked = true;
-            if (difficulty == EASY && i == 0) {
-                var locked = false;
+        gameon.getUser(function (user) {
+            for (var i = 0; i < levels.length; i++) {
+                var locked = true;
+                if(user.levels_unlocked + 1 >= levels[i].id) {
+                    locked = false;
+                }
+                var tile = new LevelLink(levels[i].id, locked);
+                tiles.push(tile);
             }
-            var tile = new LevelLink(levels[i].id, locked);
-            tiles.push(tile);
-
-        }
-        var board = new gameon.board(5, 5, tiles);
+        });
+        levelsSelf.levelsList = levels;
+        levelsSelf.board = new gameon.board(5, 5, tiles);
         $('.mm-background').html($('#levels').html());
-        board.render('.mm-levels');
+        levelsSelf.board.render('.mm-levels');
         $('.back-btn').click(function () {
             views.difficulties();
         });
+        return levelsSelf;
     };
 
 
@@ -107,13 +111,14 @@ var views = new (function () {
             $('.mm-background').html($('#level').html());
 
             gameState.board.render('.mm-level');
-            $('.back-btn').click(function () {
+            gameState.destruct = function () {
                 $('.mm-volume .gameon-volume').detach().appendTo('.mm-volume-template');
                 $('.mm-starbar .gameon-starbar').detach().appendTo('.mm-starbar-template');
                 views.levels(level.difficulty);
 
                 gameon.pauseSound(mainTheme);
-            });
+            };
+            $('.back-btn').click(gameState.destruct);
             gameState.starBar = new gameon.StarBar(level.starrating);
             gameState.starBar.setScore(0);
 
@@ -123,10 +128,9 @@ var views = new (function () {
             gameState.equation = new gameState.Equation();
             gameState.endHandler = new self.EndHandler();
             gameState.endHandler.render();
-
         }
 
-        self.EndHandler = function() {
+        self.EndHandler = function () {
             var endSelf = this;
             endSelf.moves = level.numMoves;
             endSelf.render = function () {
@@ -140,13 +144,29 @@ var views = new (function () {
             endSelf.setMoves = function (moves) {
                 endSelf.moves = moves;
                 if (moves <= 0) {
+                    //todo settimeout so they can watch successanimation
                     endSelf.gameOver();
                     return;
                 }
                 endSelf.render();
             };
             endSelf.gameOver = function () {
-
+                //render donelevel
+                var results = {};
+                gameon.getUser(function (user) {
+                    user.saveHighScore(level.id, gameState.starBar.getScore());
+                    if (gameState.starBar.hasWon()) {
+                        if (user.levels_unlocked < level.id) {
+                            user.saveLevelsUnlocked(level.id);
+                            var numLevels = DIFFICULTY_TO_LEVELS_MAP[level.difficulty].length;
+                            if (user.levels_unlocked % numLevels == 0) {
+                                user.saveDifficultiesUnlocked(user.difficulties_unlocked + 1);
+                            }
+                        }
+                    }
+                });
+                gameState.destruct();
+                views.donelevel(results);
             };
             if (level.numMoves) {
                 gameState.clock = gameon.clock(endSelf.gameOver, level.clock);
@@ -174,7 +194,7 @@ var views = new (function () {
                         return;
                     }
                     var hasWorked = gameState.equation.addTile(self.yPos, self.xPos, self);
-                    if(!hasWorked) {
+                    if (!hasWorked) {
                         self.reRender();
                     }
                 }
@@ -275,7 +295,7 @@ var views = new (function () {
                             }
                         }
                         var newTiles = [];
-                        for(var i=0;i< totalNumTilesDeleted;i++) {
+                        for (var i = 0; i < totalNumTilesDeleted; i++) {
                             newTiles.push(new MainTile())
                         }
                         self.board.removeWhere(function (tile) {
@@ -285,7 +305,8 @@ var views = new (function () {
                         gameState.starBar.setScore(totalScore);
                         gameState.board.render();
                         gameState.board.falldown(newTiles);
-                        gameState.endHandler.setMoves(gameState.endHandler.moves-1);
+                        gameState.endHandler.setMoves(gameState.endHandler.moves - 1);
+                        gameon.playSound('score');
                     }
                 }
                 return success;
@@ -316,7 +337,12 @@ var views = new (function () {
         };
         construct();
         return gameState;
-    }
+    };
 
+    self.donelevel = function (results) {
+        $('#donelevel').html()
+    };
 
+    return self;
 })();
+
