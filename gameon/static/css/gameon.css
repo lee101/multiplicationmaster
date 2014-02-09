@@ -142,3 +142,15 @@
     /*color: yellow;*/
     /*font-size: 37px;*/
 }
+.right {
+    float: right;
+}
+.left {
+    float: left;
+}
+
+.mm-end-message {
+    font-size: 45px;
+    font-weight: bold;
+    color: #5CB75C;
+}

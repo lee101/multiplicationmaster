@@ -60,15 +60,19 @@ body {
     }
 }
 
-.mm-starbar-template {
+.gameon-starbar-template {
     display: none;
 }
 
 .mm-starbar {
     margin: 20px 0 20px -5px;
 }
+.mm-starbar--center {
+    margin: 15px auto;
+    width: 300px;
+}
 
-.mm-volume-template {
+.gameon-volume-template {
     display: none;
 }
 

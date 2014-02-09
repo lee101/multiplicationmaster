@@ -69,7 +69,7 @@ var views = new (function () {
         gameon.getUser(function (user) {
             for (var i = 0; i < levels.length; i++) {
                 var locked = true;
-                if(user.levels_unlocked + 1 >= levels[i].id) {
+                if (user.levels_unlocked + 1 >= levels[i].id) {
                     locked = false;
                 }
                 var tile = new LevelLink(levels[i].id, locked);
@@ -112,18 +112,19 @@ var views = new (function () {
 
             gameState.board.render('.mm-level');
             gameState.destruct = function () {
-                $('.mm-volume .gameon-volume').detach().appendTo('.mm-volume-template');
-                $('.mm-starbar .gameon-starbar').detach().appendTo('.mm-starbar-template');
-                views.levels(level.difficulty);
-
+                //TODO gameon to handle this awkwardness
+                $('.mm-volume .gameon-volume').detach().appendTo('.gameon-volume-template');
                 gameon.pauseSound(mainTheme);
             };
-            $('.back-btn').click(gameState.destruct);
+            $('.back-btn').click(function () {
+                gameState.destruct();
+                views.levels(level.difficulty);
+            });
             gameState.starBar = new gameon.StarBar(level.starrating);
             gameState.starBar.setScore(0);
 
-            $('.mm-volume-template .gameon-volume').detach().appendTo('.mm-volume');
-            $('.mm-starbar-template .gameon-starbar').detach().appendTo('.mm-starbar');
+            $('.gameon-volume-template .gameon-volume').detach().appendTo('.mm-volume');
+            gameState.starBar.render('.mm-starbar');
 
             gameState.equation = new gameState.Equation();
             gameState.endHandler = new self.EndHandler();
@@ -151,8 +152,6 @@ var views = new (function () {
                 endSelf.render();
             };
             endSelf.gameOver = function () {
-                //render donelevel
-                var results = {};
                 gameon.getUser(function (user) {
                     user.saveHighScore(level.id, gameState.starBar.getScore());
                     if (gameState.starBar.hasWon()) {
@@ -166,7 +165,7 @@ var views = new (function () {
                     }
                 });
                 gameState.destruct();
-                views.donelevel(results);
+                views.donelevel(gameState.starBar, level);
             };
             if (level.numMoves) {
                 gameState.clock = gameon.clock(endSelf.gameOver, level.clock);
@@ -339,8 +338,33 @@ var views = new (function () {
         return gameState;
     };
 
-    self.donelevel = function (results) {
-        $('#donelevel').html()
+    self.donelevel = function (starBar, level) {
+
+        $('.mm-background').html($('#donelevel').html());
+        starBar.render('.mm-starbar');
+        if (starBar.hasWon()) {
+            var $button = $('#mm-next-level');
+            $button.removeAttr('disabled');
+            $button.find('.glyphicon-lock').remove();
+            $button.click(function () {
+                self.nextLevel(level);
+            });
+        }
+        $('#mm-replay').click(function(){
+            self.level(level.id);
+        });
+        if (starBar.numStars == 0) {
+            $('.mm-end-message p').html('Try Again!');
+        }
+        else if (starBar.numStars == 1) {
+            $('.mm-end-message p').html('Good!');
+        }
+        else if (starBar.numStars == 2) {
+            $('.mm-end-message p').html('Great!');
+        }
+    };
+    self.nextLevel = function (level) {
+        self.level(level.id + 1);
     };
 
     return self;

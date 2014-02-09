@@ -1,4 +1,13 @@
 // Globals: JQuery/$
+(function ($) {
+    $.event.special.destroyed = {
+        remove: function (o) {
+            if (o.handler) {
+                o.handler();
+            }
+        }
+    };
+})(jQuery);
 
 var GameOnUser = function (userJSON) {
 
@@ -602,25 +611,49 @@ var gameon = new (function () {
             $(".gameon-starbar [data-slider]").simpleSlider("setRatio", conpleteRatio);
 
             var numStars = 0;
+
             if (starSelf._score >= starSelf.one) {
                 $('.gameon-starbar__star--one').addClass('gameon-star--shiny');
                 numStars++;
             }
+            else {
+                $('.gameon-starbar__star--one').removeClass('gameon-star--shiny');
+            }
+
             if (starSelf._score >= starSelf.two) {
                 $('.gameon-starbar__star--two').addClass('gameon-star--shiny');
                 numStars++;
             }
+            else {
+                $('.gameon-starbar__star--two').removeClass('gameon-star--shiny');
+            }
+
             if (starSelf._score >= starSelf.three) {
                 $('.gameon-starbar__star--three').addClass('gameon-star--shiny');
                 numStars++;
             }
+            else {
+                $('.gameon-starbar__star--three').removeClass('gameon-star--shiny');
+            }
+
             if (numStars > starSelf.numStars) {
                 self.playSound('doublepoints');
             }
             starSelf.numStars = numStars;
 
             $('.gameon-starbar .highlight-track').html('<p class="gameon-starbar__score">' + starSelf._score + '</p>')
+        }
 
+        starSelf.render = function (target) {
+            starSelf.target = target;
+            var $starBar = $('.gameon-starbar-template .gameon-starbar').detach()
+            $starBar.appendTo(starSelf.target);
+            $(starSelf.target).bind('destroyed', function () {
+                $(target+' .gameon-starbar').detach().appendTo('.gameon-starbar-template');
+                $('.gameon-starbar__star').removeClass('gameon-star--shiny');
+                starSelf.update();
+            });
+//            $starBar.appendTo('.gameon-starbar-template');
         }
     };
 

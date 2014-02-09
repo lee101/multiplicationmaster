@@ -9,7 +9,8 @@
              alt="Multiplication Master">
     </div>
     <div class="mm-play-btn">
-        <button type="button" class="gameon-btn-hg btn btn-success btn-lg" onclick="views.difficulties()">Play Now!</button>
+        <button type="button" class="gameon-btn-hg btn btn-success btn-lg" onclick="views.difficulties()">Play Now!
+        </button>
     </div>
     <div class="mm-options-btn">
         <button type="button" class="gameon-btn-hg btn btn-info btn-lg" onclick="views.options()">Options</button>
@@ -84,7 +85,7 @@
 
 {% macro donelevel() -%}
     <div class="mm-logo">
-        <div class="mm-starbar">
+        <div class="mm-starbar mm-starbar--center">
 
         </div>
         <div class="mm-end-message">
@@ -92,19 +93,19 @@
         </div>
         <div class="mm-level-controls">
             <div class="left">
-                <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
-                        disabled="disabled">Replay
+                <button id="mm-replay" type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
+                        >Replay
                 </button>
             </div>
             <div class="right">
-                <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
+                <button id="mm-next-level" type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
                         disabled="disabled"><span
                         class="glyphicon glyphicon-lock"></span>Next
                 </button>
             </div>
             <div class="clear"></div>
             <div class="text-center">
-                <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
+                <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" onclick="views.difficulties()"
                         >Menu
                 </button>
             </div>

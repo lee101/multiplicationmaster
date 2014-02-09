@@ -71,9 +71,24 @@ describe("game", function () {
     });
 
     it('THEN it should let you loose', function (done) {
+        currLevel.endHandler.setMoves(0);
+        done();
+    });
+    it('THEN you can try again and get better', function (done) {
+        currLevel = views.level(1);
+        var one = currLevel.starBar.one;
+        currLevel.starBar.setScore(one);
+        currLevel.endHandler.setMoves(0);
 
-        var board = currLevel.board;
-        currLevel.
+        currLevel = views.level(1);
+        var two = currLevel.starBar.two;
+        currLevel.starBar.setScore(two);
+        currLevel.endHandler.setMoves(0);
+
+        currLevel = views.level(1);
+        var threestar = currLevel.starBar.end;
+        currLevel.starBar.setScore(threestar);
+        currLevel.endHandler.setMoves(0);
         done();
     });
 
