@@ -118,3 +118,20 @@ body {
 }
 
 
+.mm-article-theme {
+    text-align: left;
+    font-size: 20px;
+}
+
+@media (max-width: 600px) {
+    .mm-article-theme {
+        font-size: 18px;
+    }
+}
+
+.mm-article-theme-bg {
+    background-color: white;
+    padding-left: 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
