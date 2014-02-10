@@ -67,6 +67,7 @@ body {
 .mm-starbar {
     margin: 20px 0 20px -5px;
 }
+
 .mm-starbar--center {
     margin: 15px auto;
     width: 300px;
@@ -117,7 +118,6 @@ body {
     }
 }
 
-
 .mm-article-theme {
     text-align: left;
     font-size: 20px;
@@ -137,7 +137,8 @@ body {
 }
 
 .mm-responsivead-bottom {
-
+    margin: 0 auto;
+    text-align: center;
 }
 
 .mm-responsivead-right {
@@ -146,16 +147,19 @@ body {
     right: 0;
     top: 0;
     bottom: 0;
+    margin-top: 50px;
+    margin-right: 50px;
 }
 
 @media (min-width: 600px) and (max-width: 1130px) {
     .mm-responsivead-right {
-        width:160px;
+        width: 160px;
     }
 }
+
 @media (min-width: 1131px) and (max-width: 1449px) {
     .mm-responsivead-right {
-        width:250px;
+        width: 250px;
     }
 }
 
