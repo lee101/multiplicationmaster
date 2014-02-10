@@ -5,10 +5,10 @@
     "manifest_version": 2,
     "app": {
         "urls": [
-            "*://www.multiplcationmaster.com/"
+            "*://www.multiplicationmaster.com/"
         ],
         "launch": {
-            "web_url": "http://www.multiplcationmaster.com/"
+            "web_url": "http://www.multiplicationmaster.com/"
         }
     },
     "icons": {

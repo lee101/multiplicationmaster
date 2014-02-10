@@ -5,19 +5,19 @@
     "manifest_version": 2,
     "app": {
         "urls": [
-            "*://www.multiplcationmaster.com/"
+            "*://www.multiplicationmaster.com/"
         ],
         "launch": {
-            "web_url": "http://www.multiplcationmaster.com/"
+            "web_url": "http://www.multiplicationmaster.com/"
         }
     },
     "icons": {
-        "128": "/img/multiplcationmaster_icon128.png",
-        "60": "/img/multiplcationmaster_icon60.png"
+        "128": "/img/multiplicationmaster_icon128.png",
+        "60": "/img/multiplicationmaster_icon60.png"
     },
     "fullscreen": true,
     "developer": {
         "name": "Multiplication Master",
-        "url": "http://www.multiplcationmaster.com"
+        "url": "http://www.multiplicationmaster.com"
     }
 }

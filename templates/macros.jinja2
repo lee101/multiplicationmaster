@@ -35,7 +35,7 @@
 {#	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)#}
 {#	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');#}
 {##}
-{#	  ga('create', 'UA-41301467-1', 'multiplcationmaster.com');#}
+{#	  ga('create', 'UA-41301467-1', 'multiplicationmaster.com');#}
 {#	  ga('send', 'pageview');#}
 {##}
 {#	</script>#}
@@ -102,7 +102,7 @@
 {% endif %}
 <ul class="social-likes" data-url="{{ differenturl }}">
   <li class="facebook" title="Share link on Facebook">Facebook</li>
-  <li class="twitter" data-via="multiplcationmaster" data-related="multiplcationmaster:Multiplication Master Tweeting About Puzzles and Games" title="Share link on Twitter">Twitter</li>
+  <li class="twitter" data-via="multiplicationmaster" data-related="multiplicationmaster:Multiplication Master Tweeting About Puzzles and Games" title="Share link on Twitter">Twitter</li>
   <li class="plusone" title="Share link on Google+">Google+</li>
   <li class="pinterest" title="Share image on Pinterest" data-media="{{ differenturl }}">Pinterest</li>
 </ul>
@@ -114,7 +114,7 @@
   window.fbAsyncInit = function() {
   FB.init({
     appId      : '138831849632195',                        // App ID from the app dashboard
-    channelUrl : '//multiplcationmaster.appspot.com/channel.html', // Channel file for x-domain comms
+    channelUrl : '//multiplicationmaster.appspot.com/channel.html', // Channel file for x-domain comms
     status     : true, // check login status
     cookie     : true, // enable cookies to allow the server to access the session
     xfbml      : true  // parse XFBML
@@ -157,7 +157,7 @@
           //window.location.reload();
           buybtn = $('#paypalbuyform')
           if(buybtn) {
-            buybtn.attr('data-callback', 'http://www.multiplcationmaster.com/ipn/' + user_id)
+            buybtn.attr('data-callback', 'http://www.multiplicationmaster.com/ipn/' + user_id)
           }
           $('#logintobuy').html('Hi, '+user_name+ ' Your purchase will be asscociated with your Facebook account!')
           $('#buybutton').prop('disabled', false);
@@ -295,7 +295,7 @@ FB.getLoginStatus(function(ret) {
 
 {%- macro buyLink() %}
 <div id="buy">
-  <a id="buylink" href="https://multiplcationmaster.appspot.com/buy" class="btn btn-large btn-warning" target="_blank">Buy Full Game $0.97</a>
+  <a id="buylink" href="https://multiplicationmaster.appspot.com/buy" class="btn btn-large btn-warning" target="_blank">Buy Full Game $0.97</a>
 </div>
 {%- endmacro %}
 
@@ -372,8 +372,8 @@ FB.getLoginStatus(function(ret) {
     data-amount="0.97"
     data-shipping="0"
     data-tax="0"
-    data-callback="http://www.multiplcationmaster.com/ipn/{{ current_user.id }}"
-    data-return="http://www.multiplcationmaster.com/makegold"
+    data-callback="http://www.multiplicationmaster.com/ipn/{{ current_user.id }}"
+    data-return="http://www.multiplicationmaster.com/makegold"
     {% if ws.debug %}
     data-env="sandbox"
     {% endif %}
@@ -383,9 +383,9 @@ FB.getLoginStatus(function(ret) {
     <input id="submitBtn" type="submit"
     value="Pay with PayPal" />
     <input type="hidden" name="success_url"
-    value="https://multiplcationmaster.appspot.com/buy" />
+    value="https://multiplicationmaster.appspot.com/buy" />
     <input type="hidden" name="cancel_url"
-    value="https://multiplcationmaster.appspot.com/buy">
+    value="https://multiplicationmaster.appspot.com/buy">
   </p>
 </form>
  <form action="checkout.php" METHOD="POST">
@@ -440,7 +440,7 @@ FB.getLoginStatus(function(ret) {
         {% endif %}
 
         <span>© 2013 <a class="footer__link" href="http://www.addictingwordgames.com" title="Addicting Word Games" target="_blank">Addicting Word Games</a></span>
-        <a href="http://www.facebook.com/multiplcationmaster" title="Multiplication Master on Facebook" target="_blank">
+        <a href="http://www.facebook.com/multiplicationmaster" title="Multiplication Master on Facebook" target="_blank">
             <img src="/static/img/facebook.jpg" alt="Multiplication Master on Facebook" width="144px" height="44px">
         </a>
         <div class="g-plus" data-href="//plus.google.com/116949277834973226564" data-rel="publisher"></div>
@@ -453,7 +453,7 @@ FB.getLoginStatus(function(ret) {
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
           })();
         </script><br/>
-          <a href="https://twitter.com/multiplcationmaster" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @multiplcationmaster</a>
+          <a href="https://twitter.com/multiplicationmaster" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @multiplicationmaster</a>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
       </p>
     </div>
