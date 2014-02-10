@@ -20,7 +20,7 @@ config = {'webapp2_extras.sessions': dict(secret_key='93986c9cdd240540f70efaea56
 class BaseHandler(webapp2.RequestHandler):
     def render(self, view_name, extraParams={}):
         template_values = {
-            'fixtures':fixtures,
+            'fixtures': fixtures,
             'ws': ws,
             'json': json,
             'GameOnUtils': GameOnUtils,
@@ -43,26 +43,36 @@ class MainHandler(BaseHandler):
     def get(self):
         self.render('templates/index.jinja2')
 
+
 class TestHandler(BaseHandler):
     def get(self):
         self.render('templates/tests.jinja2')
+
+
+class PrivacyHandler(BaseHandler):
+    def get(self):
+        self.render('templates/privacy.jinja2')
+
+
+class TermsHandler(BaseHandler):
+    def get(self):
+        self.render('templates/terms.jinja2')
 
 
 class SitemapHandler(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/xml'
         template_values = {
-            'learnenglishlevels': LEARN_ENGLISH_LEVELS,
         }
-        template = JINJA_ENVIRONMENT.get_template('sitemap.xml')
+        template = JINJA_ENVIRONMENT.get_template('templates/sitemap.xml')
         self.response.write(template.render(template_values))
 
 
 app = ndb.toplevel(webapp2.WSGIApplication([
                                                ('/', MainHandler),
                                                ('/tests', TestHandler),
-                                               # ('/privacy-policy', PrivacyHandler),
-                                               # ('/terms', TermsHandler),
+                                               ('/privacy', PrivacyHandler),
+                                               ('/terms', TermsHandler),
                                                # ('/about', AboutHandler),
                                                # ('/contact', ContactHandler),
                                                ('/sitemap', SitemapHandler),

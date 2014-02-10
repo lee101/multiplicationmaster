@@ -5,44 +5,12 @@
 		<priority>1</priority>
 	</url>
 	<url>
-		<loc>http://www.multiplcationmaster.com/multiplayer</loc>
-		<changefreq>weekly</changefreq>
-		<priority>1</priority>
-	</url>
-	<url>
-		<loc>http://www.multiplcationmaster.com/timed</loc>
-		<changefreq>weekly</changefreq>
-		<priority>1</priority>
-	</url>
-	<url>
-		<loc>http://www.multiplcationmaster.com/learn-english</loc>
-		<changefreq>weekly</changefreq>
-		<priority>1</priority>
-	</url>
-	{% for key, level in learnenglishlevels.iteritems() %}
-	<url>
-		<loc>http://www.multiplcationmaster.com/learn-english/{{ key }}</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-	</url>
-	{% endfor %}
-	<url>
-		<loc>http://www.multiplcationmaster.com/about</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.1</priority>
-	</url>
-	<url>
 		<loc>http://www.multiplcationmaster.com/terms</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0</priority>
 	</url>
 	<url>
 		<loc>http://www.multiplcationmaster.com/privacy-policy</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0</priority>
-	</url>
-	<url>
-		<loc>http://www.multiplcationmaster.com/contact</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0</priority>
 	</url>

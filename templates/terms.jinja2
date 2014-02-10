@@ -1,121 +1,109 @@
-{% import "macros.jinja2" as macros with context %}
+{% import "gameon/templates/templates.jinja2" as gameon %}
+{% import "templates/macros.jinja2" as macros with context %}
+{% import "templates/views.jinja2" as views with context %}
 <!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Terms | Multiplication Master The Maths Madness</title>
+    <title>Multiplication Master - Maths Madness | Terms</title>
     <meta name="description"
-          content="Terms and Conditions | Multiplication Master! The Utterly Maths Madness, Fun For Everyone!">
+          content="Multiplication Master, An Utterly Addicting Multiplication Game, Packed With Maths Madness! Train your brain while having a blast!">
 
-    <meta name="keywords" content="puzzle games, word finder terms, crossword, game, word puzzle game">
-    <meta property="og:title" content="Terms | Multiplication Master - Maths Madness">
+    <meta name="keywords"
+          contindeent="multiplication games, maths games, number games, puzzle games, terms">
+    <meta property="og:title" content="Multiplication Master - Maths Madness">
     <meta property="og:url" content="http://www.multiplcationmaster.com">
-    <meta property="og:image" content="http://www.multiplcationmaster.com/img/multiplcationmaster_logo.png">
+    <meta property="og:image" content="http://www.multiplcationmaster.com/img/multiplcationmaster_icon128.png">
     <meta property="og:description"
-          content="Terms and Conditions | Multiplication Master! The Utterly Maths Madness">
+          content="Play Multiplication Master! The Utterly Maths Madness, Now For Free!">
     <meta property="og:type" content="game">
     <meta property="og:site_name" content="Multiplication Master">
     <meta property="fb:admins" content="337972272904903">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{ macros.headers(ws, highscores, achievements, blocked_spaces) }}
+    {{ macros.headers() }}
+
+    {{ gameon.cssheaders() }}
+    {{ macros.cssheaders() }}
+
+    {{ gameon.jsheaders() }}
+
+    {{ macros.jsvars() }}
+    {{ macros.jsheaders() }}
+
+    <script id="start" type="text/html">
+        {{ views.start() }}
+    </script>
+    <script id="difficulties" type="text/html">
+        {{ views.difficulties() }}
+    </script>
+    <script id="levels" type="text/html">
+        {{ views.levels() }}
+    </script>
+    <script id="level" type="text/html">
+        {{ views.level() }}
+    </script>
+    <script id="options" type="text/html">
+        {{ views.options() }}
+    </script>
+    <script id="donelevel" type="text/html">
+        {{ views.donelevel() }}
+    </script>
 </head>
 <body>
-  {{ macros.fbstuff() }}
-  <div id="pagebody">
-    <div id="container">
-        <div id="main">
-        	<div id="logo">
-                <a href="/" title="Multiplication Master Word Puzzle Game">
-                    <img src="/static/img/multiplcationmaster_logo.png" alt="Multiplication Master" title="Multiplication Master" width="250" height="184"/>
-                </a>
-                <div id="login">
-                {{ macros.loginoutbutton() }}
-                    {{ macros.jplayer() }}
-			    </div>
-	        </div>
-
-            <table id="gametable" border="1">
-                <tr>
-                    <td>
-
-                    </td>
-
-                </tr>
-            </table>
-            <div class="fb-like" data-href="https://www.facebook.com/multiplcationmaster" data-send="true" data-width="450" data-show-faces="true"></div>
-            {{ macros.shareBtnsHorizontal() }}
-            <div id="showscore0">
-                <button style="display: none"></button>
-            </div>
-            <div id="showscore1">
-                <button style="display: none"></button>
-            </div>
-            <div id="showscore2">
-                <button style="display: none"></button>
-            </div>
-            <div id="showscore3">
-                <button style="display: none"></button>
-            </div>
-        </div>
-        <div id="gameoptions">
-            {{ macros.standardgameoptions() }}
-
-        </div>
-        <div id="bannerAdd">
-            <script type="text/javascript"><!--
-            google_ad_client = "ca-pub-7026363262140448";
-            /* word game vert */
-            google_ad_slot = "3713734958";
-            google_ad_width = 160;
-            google_ad_height = 600;
-            //-->
-            </script>
-            <script type="text/javascript"
-                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
-
-        </div>
-
-        <div id="instructions">
-
-            <h1>Multiplication Master Terms and Conditions</h1>
+{{ gameon.templates() }}
+<div class="mm-background">
+    <h1>Multiplication Master Terms and Conditions</h1>
     <br>
-<p>Using this website you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern COMPANY’s relationship with you in relation to this website.The term ‘COMPANY’ or ‘us’ or ‘we’ refers to the owner of the website. The term ‘you’ refers to the user or viewer of our website.The use of this website is subject to the following terms of use:</p>
-<ul>
-<li>The content of the pages of this website is for your general information and use only. It is subject to change without notice.</li>
-<li>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.</li>
-<li>Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable. It shall be your own responsibility to ensure that any products, services or information available through this website meet your specific requirements.</li>
-<li>This website contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance with the copyright notice, which forms part of these terms and conditions.</li>
-<li>All trade marks reproduced in this website which are not the property of, or licensed to, the operator are acknowledged on the website.</li>
-<li>Unauthorised use of this website may give rise to a claim for damages and/or be a criminal offence.</li>
-<li>From time to time this website may also include links to other websites. These links are provided for your convenience to provide further information. They do not signify that we endorse the website(s). We have no responsibility for the content of the linked website(s).</li>
-<li>You may not create a link to this website from another website or document without COMPANY’s prior written consent.</li>
-<li>Your use of this website and any dispute arising out of such use of the website is subject to the laws of New Zealand.</li>
-</ul>
-        </div>
-        <div class="clear"></div>
-        <div id="btm">
-            <script type="text/javascript"><!--
-            google_ad_client = "ca-pub-7026363262140448";
-            /* big h default */
-            google_ad_slot = "3155331752";
-            google_ad_width = 728;
-            google_ad_height = 90;
-            //-->
-            </script>
-            <script type="text/javascript"
-                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
 
-
-        </div>
-    </div>
-
-    <div class="clear">
-    </div>
-    {{ macros.footer() }}
-	<div class="clear">
-	</div>
+    <p>Using this website you are agreeing to comply with and be bound by the following terms and conditions of use,
+        which
+        together with our privacy policy govern COMPANY’s relationship with you in relation to this website.The term
+        ‘COMPANY’ or ‘us’ or ‘we’ refers to the owner of the website. The term ‘you’ refers to the user or viewer of our
+        website.The use of this website is subject to the following terms of use:</p>
+    <ul>
+        <li>The content of the pages of this website is for your general information and use only. It is subject to
+            change
+            without notice.
+        </li>
+        <li>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness,
+            performance,
+            completeness or suitability of the information and materials found or offered on this website for any
+            particular
+            purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we
+            expressly
+            exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.
+        </li>
+        <li>Your use of any information or materials on this website is entirely at your own risk, for which we shall
+            not be
+            liable. It shall be your own responsibility to ensure that any products, services or information available
+            through this website meet your specific requirements.
+        </li>
+        <li>This website contains material which is owned by or licensed to us. This material includes, but is not
+            limited
+            to, the design, layout, look, appearance and graphics. Reproduction is prohibited other than in accordance
+            with
+            the copyright notice, which forms part of these terms and conditions.
+        </li>
+        <li>All trade marks reproduced in this website which are not the property of, or licensed to, the operator are
+            acknowledged on the website.
+        </li>
+        <li>Unauthorised use of this website may give rise to a claim for damages and/or be a criminal offence.</li>
+        <li>From time to time this website may also include links to other websites. These links are provided for your
+            convenience to provide further information. They do not signify that we endorse the website(s). We have no
+            responsibility for the content of the linked website(s).
+        </li>
+        <li>You may not create a link to this website from another website or document without COMPANY’s prior written
+            consent.
+        </li>
+        <li>Your use of this website and any dispute arising out of such use of the website is subject to the laws of
+            New
+            Zealand.
+        </li>
+    </ul>
 </div>
 </body>
 </html>
+
+
+

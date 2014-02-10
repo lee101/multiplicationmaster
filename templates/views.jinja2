@@ -105,7 +105,8 @@
             </div>
             <div class="clear"></div>
             <div class="text-center">
-                <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" onclick="views.difficulties()"
+                <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
+                        onclick="views.difficulties()"
                         >Menu
                 </button>
             </div>
@@ -116,6 +117,21 @@
 
 {% macro options() -%}
 
+    {{ backbtn() }}
+    <div class="mm-logo">
+        <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
+             alt="Multiplication Master">
+    </div>
+    <div class="mm-difficulty">
+        <a href="/terms" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg">
+            Terms
+        </a>
+    </div>
+    <div class="mm-difficulty">
+        <a href="/privacy" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg">
+            Privacy
+        </a>
+    </div>
 {%- endmacro %}
 
 
