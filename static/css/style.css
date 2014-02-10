@@ -135,3 +135,32 @@ body {
     padding-top: 30px;
     padding-bottom: 20px;
 }
+
+.mm-responsivead-bottom {
+
+}
+
+.mm-responsivead-right {
+    width: 0px;
+    left: inherit;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+@media (min-width: 600px) and (max-width: 1130px) {
+    .mm-responsivead-right {
+        width:160px;
+    }
+}
+@media (min-width: 1131px) and (max-width: 1449px) {
+    .mm-responsivead-right {
+        width:250px;
+    }
+}
+
+@media (min-width: 1500px) {
+    .mm-responsivead-right {
+        width: 400px;
+    }
+}
