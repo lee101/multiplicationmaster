@@ -41,7 +41,8 @@ class BaseHandler(webapp2.RequestHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        self.render('templates/index.jinja2')
+        noads = self.request.get('noads', False)
+        self.render('templates/index.jinja2', {'noads': noads})
 
 
 class TestHandler(BaseHandler):
