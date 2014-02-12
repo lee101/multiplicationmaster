@@ -350,7 +350,7 @@ var views = new (function () {
                 self.nextLevel(level);
             });
         }
-        $('#mm-replay').click(function(){
+        $('#mm-replay').click(function () {
             self.level(level.id);
         });
         if (starBar.numStars == 0) {
@@ -362,6 +362,7 @@ var views = new (function () {
         else if (starBar.numStars == 2) {
             $('.mm-end-message p').html('Great!');
         }
+        $('.mm-responsivead-bottom').show();
     };
     self.nextLevel = function (level) {
         self.level(level.id + 1);
@@ -370,3 +371,8 @@ var views = new (function () {
     return self;
 })();
 
+$(document).ready(function () {
+    $('.mm-hide-btn').click(function () {
+        $(this).parent().hide();
+    });
+});

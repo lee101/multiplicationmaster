@@ -189,3 +189,10 @@ and (min-height: 750px) {
         display: block;
     }
 }
+
+.mm-hide-btn {
+    position: relative;
+    left: 0;
+    right: 0;
+    top: -45px;
+}
