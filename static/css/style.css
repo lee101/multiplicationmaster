@@ -125,6 +125,7 @@ and (min-height: 750px) {
     font-size: 16px;
     font-weight: bold;
 }
+
 .mm-end-condition p {
     background-color: aliceblue;
 }
@@ -195,4 +196,10 @@ and (min-height: 750px) {
     left: 0;
     right: 0;
     top: -45px;
+}
+
+@media (min-width: 481px) {
+    .mm-hide-btn {
+        display: none;
+    }
 }
