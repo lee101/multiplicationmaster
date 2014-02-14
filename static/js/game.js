@@ -95,7 +95,6 @@ var views = new (function () {
         var gameState = {};
 
         function construct() {
-            gameState.numSelected = 0;
 
             var tiles = [];
             for (var i = 0; i < level.width * level.height; i++) {
@@ -186,9 +185,7 @@ var views = new (function () {
             self.click = function () {
                 self.selected = !self.selected;
                 if (self.selected) {
-                    gameState.numSelected++;
-                    if (gameState.numSelected > 3) {
-                        gameState.numSelected--;
+                    if (gameState.equation.isFull()) {
                         self.selected = false;
                         return;
                     }
@@ -198,7 +195,6 @@ var views = new (function () {
                     }
                 }
                 else {
-                    gameState.numSelected--;
                     gameState.equation.removeTile(self.yPos, self.xPos, self);
                     self.reRender();
 
@@ -223,8 +219,7 @@ var views = new (function () {
 
         gameState.Equation = function () {
             var self = this;
-            self.numOperatorTiles = 0;
-            var tiles = [];
+
             var OperatorTile = function (op) {
                 var self = this;
                 self.operator = op;
@@ -239,19 +234,26 @@ var views = new (function () {
                     return self.operator;
                 };
             };
-            for (var i = 0; i < level.formula.length; i++) {
-                if (level.formula[i][0] === 'x') {
-                    tiles.push({});
-                }
-                else {
-                    tiles.push(new OperatorTile(level.formula[i]));
-                    self.numOperatorTiles++;
-                }
-            }
 
-            self.board = new gameon.board(5, 1, tiles);
+            self.construct = function() {
+                self.numOperatorTiles = 0;
+                var tiles = [];
 
-            self.board.render('.mm-equation');
+                for (var i = 0; i < level.formula.length; i++) {
+                    if (level.formula[i][0] === 'x') {
+                        tiles.push({});
+                    }
+                    else {
+                        tiles.push(new OperatorTile(level.formula[i]));
+                        self.numOperatorTiles++;
+                    }
+                }
+
+                self.board = new gameon.board(5, 1, tiles);
+
+                self.board.render('.mm-equation');
+            };
+
 
 
             self.addTile = function (y, x, tile) {
@@ -285,7 +287,6 @@ var views = new (function () {
                             var tile = tiles[i];
                             if (typeof tile['getOperator'] === 'undefined') {
                                 totalScore += tile.number;
-                                gameState.numSelected = 0;
                                 gameState.setTileDeleted(tile.oldY, tile.oldX);
                                 totalNumTilesDeleted++;
                             }
@@ -295,7 +296,7 @@ var views = new (function () {
                         }
                         var newTiles = [];
                         for (var i = 0; i < totalNumTilesDeleted; i++) {
-                            newTiles.push(new MainTile())
+                            newTiles.push(new MainTile());
                         }
                         self.board.removeWhere(function (tile) {
                             return typeof tile['getOperator'] === 'undefined';
@@ -309,6 +310,16 @@ var views = new (function () {
                     }
                 }
                 return success;
+            };
+
+            self.isFull = function() {
+                var tiles = self.board.tiles;
+                for (var i = 0; i < tiles.length; i++) {
+                    if (typeof tiles[i]['render'] === 'undefined') {
+                        return false;
+                    }
+                }
+                return true;
             };
 
 
@@ -333,6 +344,8 @@ var views = new (function () {
                     return tile.oldX === oldX && tile.oldY === oldY;
                 });
             };
+            self.construct();
+            return self;
         };
         construct();
         return gameState;
