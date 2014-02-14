@@ -358,13 +358,14 @@ var gameon = new (function () {
      */
     self.board = function (width, height, tiles) {
         var boardSelf = this;
-        numBoards++;
-        boardSelf.id = numBoards;
-        boardSelf.name = 'board' + numBoards;
-        //TODO need to delete/garbage collect these boards
-        self[boardSelf.name] = boardSelf;
 
         function construct(width, height, tiles) {
+            numBoards++;
+            boardSelf.id = numBoards;
+            boardSelf.name = 'board' + numBoards;
+            //TODO need to delete/garbage collect these boards
+            self[boardSelf.name] = boardSelf;
+
             boardSelf.width = width;
             boardSelf.height = height;
             boardSelf.tiles = tiles;
@@ -429,6 +430,16 @@ var gameon = new (function () {
 //                    boardSelf.render()
                 }
             }
+        };
+
+        boardSelf.isFull = function () {
+            var tiles = boardSelf.tiles;
+            for (var i = 0; i < tiles.length; i++) {
+                if (typeof tiles[i]['render'] === 'undefined') {
+                    return false;
+                }
+            }
+            return true;
         };
 
 

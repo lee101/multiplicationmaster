@@ -313,15 +313,8 @@ var views = new (function () {
             };
 
             self.isFull = function() {
-                var tiles = self.board.tiles;
-                for (var i = 0; i < tiles.length; i++) {
-                    if (typeof tiles[i]['render'] === 'undefined') {
-                        return false;
-                    }
-                }
-                return true;
+                return self.board.isFull();
             };
-
 
             self.getFormula = function () {
                 var formula = '';
