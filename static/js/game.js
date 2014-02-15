@@ -316,10 +316,13 @@ var views = new (function () {
                 return self.board.isFull();
             };
 
+            /**
+             * Gets the formula on the board as a string eg '1+1==2'
+             * @returns {string}
+             */
             self.getFormula = function () {
                 var formula = '';
                 var tiles = self.board.tiles;
-                var terms = level.formula;
                 for (var i = 0; i < tiles.length; i++) {
                     var tile = tiles[i];
                     if (typeof tile['getOperator'] !== 'undefined') {
@@ -329,7 +332,7 @@ var views = new (function () {
                         formula += tile.number;
                     }
                 }
-                return  formula;
+                return formula;
             };
 
             self.removeTile = function (oldY, oldX) {
