@@ -266,6 +266,29 @@ describe("gameon", function () {
         expect(starBar.numStars).toBe(3);
         done();
     });
+    it("should have a correct math package", function (done) {
+        var maths = gameon.math;
+        expect(maths.numberBetween(1,2)).toBe(1);
+        expect(maths.numberBetween(0,1)).toBe(0);
+
+        var low = 0;
+        var step = 0.1;
+        var numline = new maths.NumberLine(low, 10, step);
+        expect(numline.length()).toBe(100);
+        var expectedTotal = 0;
+        var currNum = low;
+        for (var i = 0; i < numline.length(); i++) {
+            expectedTotal += currNum;
+            currNum+= step;
+        }
+        expectedTotal = Math.round(expectedTotal)
+        var total= 0;
+        for (var i = 0; i < numline.length(); i++) {
+            total += numline.shuffledGet(i);
+        }
+        expect(total).toBe(expectedTotal);
+        done();
+    });
 
 //
 //    // demonstrates use of spies to intercept and test method calls

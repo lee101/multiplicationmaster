@@ -580,7 +580,40 @@ var gameon = new (function () {
         var self = this;
         self.numberBetween = function (a, b) {
             return Math.floor(Math.random() * (b - a) + a);
+        };
+
+        self.NumberLine = function (low, high, step) {
+            var lineSelf = this;
+
+            function construc() {
+                lineSelf.low = low;
+                lineSelf.high = high;
+                lineSelf.step = step;
+                lineSelf.primes = [4177, 4201, 4259, 4261, 4349, 4357, 4447, 4451, 4519, 4523,
+                    4621, 4637, 7907, 7919, 6529, 6547, 6551, 6553, 6563, 6569];
+                lineSelf.shuffle();
+            }
+
+            lineSelf.get = function (i) {
+                return lineSelf.low + (lineSelf.step * i);
+            };
+            lineSelf.shuffledGet = function (i) {
+                var i = lineSelf.hash(i);
+                return lineSelf.get(i);
+            };
+            lineSelf.hash = function (i) {
+                return i * lineSelf.primes[lineSelf.primeIdx] % lineSelf.length();
+            };
+            lineSelf.length = function () {
+                return +((lineSelf.high - lineSelf.low) / step);
+            };
+            lineSelf.shuffle = function () {
+                lineSelf.primeIdx = self.numberBetween(0, lineSelf.primes.length);
+            };
+            construc();
+            return lineSelf;
         }
+
     })();
 
 
@@ -653,11 +686,11 @@ var gameon = new (function () {
             starSelf.numStars = numStars;
 
             $('.gameon-starbar .highlight-track').html('<p class="gameon-starbar__score">' + starSelf._score + '</p>')
-        }
+        };
 
         starSelf.render = function (target) {
             starSelf.target = target;
-            var $starBar = $('.gameon-starbar-template .gameon-starbar').detach()
+            var $starBar = $('.gameon-starbar-template .gameon-starbar').detach();
             $starBar.appendTo(starSelf.target);
             $(starSelf.target).bind('destroyed', function () {
                 $(target+' .gameon-starbar').detach().appendTo('.gameon-starbar-template');
