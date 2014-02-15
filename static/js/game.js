@@ -98,13 +98,8 @@ var views = new (function () {
 
             var tiles = [];
             for (var i = 0; i < level.width * level.height; i++) {
-                var locked = true;
-                if (level.difficulty == EASY && i == 0) {
-                    var locked = false;
-                }
                 var tile = new MainTile();
                 tiles.push(tile);
-
             }
             gameState.board = new gameon.board(level.width, level.height, tiles);
             $('.mm-background').html($('#level').html());
@@ -126,11 +121,11 @@ var views = new (function () {
             gameState.starBar.render('.mm-starbar');
 
             gameState.equation = new gameState.Equation();
-            gameState.endHandler = new self.EndHandler();
+            gameState.endHandler = new gameState.EndHandler();
             gameState.endHandler.render();
         }
 
-        self.EndHandler = function () {
+        gameState.EndHandler = function () {
             var endSelf = this;
             endSelf.moves = level.numMoves;
             endSelf.render = function () {
