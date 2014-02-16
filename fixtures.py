@@ -27,7 +27,9 @@ class Level(Fixture):
                 '''
         self.id = Level.NUM_LEVELS
         Level.NUM_LEVELS+=1
+
         self.difficulty = difficulty
+
         self.low = low
         self.high = high
         self.precision = precision
@@ -37,6 +39,7 @@ class Level(Fixture):
 
         self.numMoves = numMoves
         self.time = time
+
         self.starrating = starrating
 
         self.formula = formula

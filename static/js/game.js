@@ -96,11 +96,7 @@ var views = new (function () {
 
         function construct() {
 
-            var tiles = [];
-            for (var i = 0; i < level.width * level.height; i++) {
-                var tile = new MainTile();
-                tiles.push(tile);
-            }
+            var tiles = gameState.initialBoardTiles();
             gameState.board = new gameon.board(level.width, level.height, tiles);
             $('.mm-background').html($('#level').html());
 
@@ -124,6 +120,140 @@ var views = new (function () {
             gameState.endHandler = new gameState.EndHandler();
             gameState.endHandler.render();
         }
+
+        gameState.solve = function (i, params) {
+            var pIdx = 0;
+            var equation = level.solutions[i];
+            var pluggedEquation = '';
+            for (var j = 0; j < equation.length; j++) {
+                var term = equation[j];
+                if (term[0] == 'x') {
+                    pluggedEquation += params[pIdx++];
+                }
+                else {
+                    pluggedEquation += term;
+                }
+            }
+            return eval(pluggedEquation);
+        };
+
+        gameState.initialBoardTiles = function () {
+
+            var numTilesNeeded = level.width * level.height;
+
+            gameState.numberLine = new gameon.math.NumberLine(level.low, level.high, level.precision);
+
+            //search number line for matches.
+            //TODO make this support arbitrarily long formula
+
+            var generatedNumbers = [];
+
+            var numPossibleNumbers = gameState.numberLine.length();
+            numberFinder:
+                for (var i = 0; i < numPossibleNumbers; i++) {
+                    var x = gameState.numberLine.shuffledGet(i);
+                    for (var j = 0; j < numPossibleNumbers; j++) {
+                        var y = gameState.numberLine.shuffledGet(j);
+
+                        var foundMatch = false;
+                        var z = 0;
+                        for (var formulaNum = 0; formulaNum < level.solutions.length; formulaNum++) {
+                            //try find z
+                            z = gameState.solve(formulaNum, [x, y]);
+                            if (gameState.numberLine.contains(z)) {
+                                foundMatch = true;
+                                break;
+                            }
+                            z = gameState.solve(formulaNum, [y, x]);
+                            if (gameState.numberLine.contains(z)) {
+                                foundMatch = true;
+                                break;
+                            }
+                        }
+
+                        if (foundMatch) {
+                            generatedNumbers.push(x);
+                            generatedNumbers.push(y);
+                            generatedNumbers.push(z);
+                            if (generatedNumbers.length > numTilesNeeded) {
+                                break numberFinder;
+                            }
+                            else {
+                                gameState.numberLine.shuffle();
+                                i=0;
+                                j=0;
+                                continue numberFinder;
+                            }
+                        }
+                    }
+                }
+
+            var tiles = [];
+            for (var i = 0; i < numTilesNeeded; i++) {
+
+                var tile = new MainTile(generatedNumbers[i]);
+                tiles.push(tile);
+            }
+            return gameon.shuffle(tiles);
+        };
+
+        gameState.newBoardTiles = function(numTilesNeeded) {
+
+            gameState.numberLine = new gameon.math.NumberLine(level.low, level.high, level.precision);
+
+            //search number line for matches.
+            //TODO make this support arbitrarily long formula
+
+            var generatedNumbers = [];
+
+            var numTiles = gameState.board.tiles.length;
+            numberFinder:
+                for (var i = 0; i < numTiles; i++) {
+                    var x = gameState.numberLine.shuffledGet(i);
+                    for (var j = 0; j < numTiles; j++) {
+                        var y = gameState.numberLine.shuffledGet(j);
+
+                        var foundMatch = false;
+                        var z = 0;
+                        for (var formulaNum = 0; formulaNum < level.solutions.length; formulaNum++) {
+                            //try find z
+                            z = gameState.solve(formulaNum, [x, y]);
+                            if (gameState.numberLine.contains(z)) {
+                                foundMatch = true;
+                                break;
+                            }
+                            z = gameState.solve(formulaNum, [y, x]);
+                            if (gameState.numberLine.contains(z)) {
+                                foundMatch = true;
+                                break;
+                            }
+                        }
+
+                        if (foundMatch) {
+                            generatedNumbers.push(x);
+                            generatedNumbers.push(y);
+                            generatedNumbers.push(z);
+                            if (generatedNumbers.length > numTilesNeeded) {
+                                break numberFinder;
+                            }
+                            else {
+                                gameState.numberLine.shuffle();
+                                i = 0;
+                                j = 0;
+                                continue numberFinder;
+                            }
+                        }
+                    }
+                }
+
+            var tiles = [];
+            for (var i = 0; i < numTilesNeeded; i++) {
+
+                var tile = new MainTile(generatedNumbers[i]);
+                tiles.push(tile);
+            }
+            return gameon.shuffle(tiles);
+        };
 
         gameState.EndHandler = function () {
             var endSelf = this;
@@ -172,9 +302,9 @@ var views = new (function () {
         };
 
 
-        var MainTile = function () {
+        var MainTile = function (n) {
             var self = this;
-            self.number = gameon.math.numberBetween(1, 9);
+            self.number = n;//gameon.math.numberBetween(1, 9);
             self.selected = false;
 
             self.click = function () {
@@ -289,10 +419,8 @@ var views = new (function () {
 
                             }
                         }
-                        var newTiles = [];
-                        for (var i = 0; i < totalNumTilesDeleted; i++) {
-                            newTiles.push(new MainTile());
-                        }
+                        var newTiles = gameState.newBoardTiles(totalNumTilesDeleted);
+
                         self.board.removeWhere(function (tile) {
                             return typeof tile['getOperator'] === 'undefined';
                         });

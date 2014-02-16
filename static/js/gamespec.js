@@ -86,6 +86,9 @@ describe("game", function () {
         currLevel.endHandler.setMoves(0);
 
         currLevel = views.level(1);
+
+        expect(currLevel.solve(0,[1,2])).toBe(-1);
+
         var threestar = currLevel.starBar.end;
         currLevel.starBar.setScore(threestar);
         currLevel.endHandler.setMoves(0);
