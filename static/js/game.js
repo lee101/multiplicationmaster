@@ -420,7 +420,7 @@ var views = new (function () {
                         for (var i = 0; i < tiles.length; i++) {
                             var tile = tiles[i];
                             if (typeof tile['getOperator'] === 'undefined') {
-                                totalScore += tile.number;
+                                totalScore += Math.abs(tile.number);
                                 gameState.setTileDeleted(tile.oldY, tile.oldX);
                                 totalNumTilesDeleted++;
                             }
@@ -437,7 +437,10 @@ var views = new (function () {
                         gameState.starBar.setScore(totalScore);
                         gameState.board.render();
                         gameState.board.falldown(newTiles);
-                        gameState.endHandler.setMoves(gameState.endHandler.moves - 1);
+                        if(! level.time) {
+                            gameState.endHandler.setMoves(gameState.endHandler.moves - 1);
+
+                        }
                         gameon.playSound('score');
                     }
                 }
