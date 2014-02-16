@@ -2,11 +2,16 @@
     <button type="button" class="back-btn gameon-btn-hg btn btn-info btn-lg"><span
             class="glyphicon glyphicon-arrow-left"></span></button>
 {%- endmacro %}
+{% macro logo() -%}
+    <a href="/" title="Multiplication Master - Maths Madness!">
+        <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
+             alt="Multiplication Master">
+    </a>
+{%- endmacro %}
 
 {% macro start() -%}
     <div class="mm-logo">
-        <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
-             alt="Multiplication Master">
+        {{ logo() }}
     </div>
     <div class="mm-play-btn">
         <button type="button" class="gameon-btn-hg btn btn-success btn-lg" onclick="views.difficulties()">Play Now!
@@ -22,8 +27,7 @@
 
     {{ backbtn() }}
     <div class="mm-logo">
-        <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
-             alt="Multiplication Master">
+        {{ logo() }}
     </div>
     <div class="mm-difficulty mm-difficulty--{{ fixtures.EASY }}">
         <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
@@ -57,8 +61,7 @@
 {% macro levels() -%}
     {{ backbtn() }}
     <div class="mm-logo">
-        <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
-             alt="Multiplication Master">
+        {{ logo() }}
     </div>
     <div class="mm-levels gameon-board">
 
@@ -125,8 +128,7 @@
 
     {{ backbtn() }}
     <div class="mm-logo">
-        <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
-             alt="Multiplication Master">
+        {{ logo() }}
     </div>
     <div class="mm-difficulty">
         <a href="/terms" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg">
@@ -236,7 +238,7 @@
     <p style="margin-left:15px">
         Please also visit our Terms and Conditions section establishing the use, disclaimers,
         and limitations of liability governing the use of our website at <a href="/terms">
-        http://www.multiplicationmaster.com/about</a><br></p>
+        http://www.multiplicationmaster.com/terms</a><br></p>
     <br>
     <strong>Your Consent</strong>
     <br>
