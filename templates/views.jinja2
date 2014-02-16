@@ -31,17 +31,23 @@
         </button>
     </div>
     <div class="mm-difficulty mm-difficulty--{{ fixtures.MEDIUM }}">
-        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" disabled="disabled"><span
+        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
+                onclick="views.levels(MEDIUM)"
+                disabled="disabled"><span
                 class="glyphicon glyphicon-lock"></span>Medium
         </button>
     </div>
     <div class="mm-difficulty mm-difficulty--{{ fixtures.HARD }}">
-        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" disabled="disabled"><span
+        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
+                onclick="views.levels(HARD)"
+                disabled="disabled"><span
                 class="glyphicon glyphicon-lock"></span>Hard
         </button>
     </div>
     <div class="mm-difficulty mm-difficulty--{{ fixtures.EXPERT }}">
-        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" disabled="disabled"><span
+        <button type="button" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg"
+                onclick="views.levels(EXPERT)"
+                disabled="disabled"><span
                 class="glyphicon glyphicon-lock"></span>Expert
         </button>
     </div>

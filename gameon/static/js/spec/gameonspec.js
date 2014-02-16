@@ -275,6 +275,7 @@ describe("gameon", function () {
         expect(maths.numberBetween(1,2)).toBe(1);
         expect(maths.numberBetween(0,1)).toBe(0);
 
+
         var low = 0;
         var step = 0.1;
         var numline = new maths.NumberLine(low, 10, step);
@@ -285,12 +286,24 @@ describe("gameon", function () {
             expectedTotal += currNum;
             currNum+= step;
         }
-        expectedTotal = Math.round(expectedTotal)
+        expectedTotal = Math.round(expectedTotal);
         var total= 0;
         for (var i = 0; i < numline.length(); i++) {
             total += numline.shuffledGet(i);
         }
         expect(total).toBe(expectedTotal);
+
+
+        var got = gameon.math.precisionRound(1.11, 0.1);
+        expect(got).toBe(1.1);
+        var got = gameon.math.precisionRound(1.1111, 0.01);
+        expect(got).toBe(1.11);
+        var got = gameon.math.precisionRound(1.11, 0.0001);
+        expect(got).toBe(1.11);
+        var got = gameon.math.precisionRound(1, 0.1);
+        expect(got).toBe(1);
+        var got = gameon.math.precisionRound(1.11, 1);
+        expect(got).toBe(1);
         done();
     });
 

@@ -128,7 +128,7 @@ var views = new (function () {
             for (var j = 0; j < equation.length; j++) {
                 var term = equation[j];
                 if (term[0] == 'x') {
-                    pluggedEquation += params[pIdx++];
+                    pluggedEquation += '(' + params[pIdx++] + ')';
                 }
                 else {
                     pluggedEquation += term;
@@ -312,7 +312,8 @@ var views = new (function () {
 
         var MainTile = function (n) {
             var self = this;
-            self.number = n;//gameon.math.numberBetween(1, 9);
+
+            self.number = gameon.math.precisionRound(n, level.precision);//gameon.math.numberBetween(1, 9);
             self.selected = false;
 
             self.click = function () {
@@ -460,7 +461,7 @@ var views = new (function () {
                         formula += tile.getOperator();
                     }
                     else {
-                        formula += tile.number;
+                        formula += '(' + tile.number + ')';
                     }
                 }
                 return formula;

@@ -98,114 +98,114 @@ MEDIUM_LEVELS = [
 
     # .1 - .1
     Level(MEDIUM, 0, 1.1, 0.1, 5, 0, MINUS_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, 0, 1.6, 0.1, 10, 0, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 1.6, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 2.1, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 2.6, 0.1, 15, 0, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(MEDIUM, 0, 1.6, 0.1, 10, 0, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, 0, 1.6, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, 0, 2.1, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, 0, 2.6, 0.1, 15, 0, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
 
     # 1*1
-    Level(EASY, 1, 10, 1, 5, 0, TIMES_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, 1, 20, 1, 10, 0, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 1, 20, 1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 30, 1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 45, 1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(MEDIUM, 1, 10, 1, 5, 0, TIMES_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(MEDIUM, 1, 20, 1, 10, 0, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, 1, 20, 1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, 0, 30, 1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, 0, 45, 1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
 
     # -0.1 + -0.1
-    Level(EASY, -1, 1.1, 0.1, 5, 0, starrating=[15, 20, 25, 30]),
-    Level(EASY, -1, 1.6, 0.1, 10, 0, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1, 1.6, 0.1, 0, 60 * 5, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1.5, 2.1, 0.1, 0, 60 * 5, starrating=[32, 40, 50, 60]),
-    Level(EASY, -2, 2.1, 0.1, 15, 0, starrating=[48, 65, 80, 90]),
+    Level(MEDIUM, -1, 1.1, 0.1, 5, 0, starrating=[15, 20, 25, 30]),
+    Level(MEDIUM, -1, 1.6, 0.1, 10, 0, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, -1, 1.6, 0.1, 0, 60 * 5, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, -1.5, 2.1, 0.1, 0, 60 * 5, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, -2, 2.1, 0.1, 15, 0, starrating=[48, 65, 80, 90]),
 
     # -0.1 - -0.1
-    Level(EASY, -1, 1.1, 0.1, 5, 0, MINUS_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, -1, 1.6, 0.1, 10, 0, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1, 1.6, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1.5, 2.1, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -2, 2.1, 0.1, 15, 0, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(MEDIUM, -1, 1.1, 0.1, 5, 0, MINUS_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(MEDIUM, -1, 1.6, 0.1, 10, 0, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, -1, 1.6, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, -1.5, 2.1, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(MEDIUM, -2, 2.1, 0.1, 15, 0, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
 
     # recap
-    Level(EASY, 0, 35, 1, 15, 0, starrating=[48, 65, 80, 90]),
+    Level(MEDIUM, 0, 35, 1, 15, 0, starrating=[48, 65, 80, 90]),
 
-    Level(EASY, 0, 2.6, 0.1, 15, 0, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(EASY, 0, 50, 1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(EASY, -2, 2.6, 0.1, 15, 0, starrating=[48, 65, 80, 90]),
-    Level(EASY, -2, 2.6, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(MEDIUM, 0, 2.6, 0.1, 15, 0, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(MEDIUM, 0, 50, 1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(MEDIUM, -2, 2.6, 0.1, 15, 0, starrating=[48, 65, 80, 90]),
+    Level(MEDIUM, -2, 2.6, 0.1, 0, 60 * 5, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
 ]
 
 HARD_LEVELS = [
     # 0.1*0.1
-    Level(EASY, 0, 1.1, 0.1, 5, 0, TIMES_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, 0, 2.6, 0.1, 10, 0, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 2.6, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 3.1, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 3.6, 0.1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(HARD, 0, 1.1, 0.1, 5, 0, TIMES_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(HARD, 0, 2.6, 0.1, 10, 0, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, 0, 2.6, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, 0, 3.1, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, 0, 3.6, 0.1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
 
     # 1/1
-    Level(EASY, 1, 10, 1, 5, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, 1, 20, 1, 10, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 1, 20, 1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 30, 1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 45, 1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(HARD, 1, 10, 1, 5, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(HARD, 1, 20, 1, 10, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, 1, 20, 1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, 0, 30, 1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, 0, 45, 1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
 
     # -1*-1
-    Level(EASY, -1, 1.1, 0.1, 5, 0, TIMES_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, -1, 1.6, 0.1, 10, 0, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1, 1.6, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1.5, 2.1, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -2, 2.1, 0.1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(HARD, -1, 1.1, 0.1, 5, 0, TIMES_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(HARD, -1, 1.6, 0.1, 10, 0, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, -1, 1.6, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, -1.5, 2.1, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, -2, 2.1, 0.1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
 
     # 0.1/0.1
-    Level(EASY, 0, 1.1, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, 0, 1.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 1.6, 0.1, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 2.1, 0.1, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 2.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(HARD, 0, 1.1, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(HARD, 0, 1.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, 0, 1.6, 0.1, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, 0, 2.1, 0.1, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(HARD, 0, 2.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
 
     #recap
-    Level(EASY, 0, 45, 1, 15, 0, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(HARD, 0, 45, 1, 15, 0, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
 
-    Level(EASY, 0, 3.1, 0.1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(EASY, 0, 50, 1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(EASY, 0, 3.1, 0.1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(EASY, 0, 3.1, 0.1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(HARD, 0, 3.1, 0.1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(HARD, 0, 50, 1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(HARD, 0, 3.1, 0.1, 15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(HARD, 0, 3.1, 0.1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
 
 ]
 
 EXPERT_LEVELS=[
     # -0.1*-0.1
-    # Level(EASY, -1, 1.1, 0.1,   5, 0, TIMES_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, -1, 2.6, 0.1,   10, 0, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1, 3.6, 0.1,   0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1.5, 4.1, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -2, 4.6, 0.1,   15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
+    # Level(EXPERT, -1, 1.1, 0.1,   5, 0, TIMES_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(EXPERT, -1, 2.6, 0.1,   10, 0, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, -1, 3.6, 0.1,   0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, -1.5, 4.1, 0.1, 0, 60 * 5, TIMES_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, -2, 4.6, 0.1,   15, 0, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
 
     # -1/-1
-    # Level(EASY, -10, 10, 1, 5, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, -20, 20, 1, 10, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -30, 30, 1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -40, 40, 1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -50, 50, 1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
+    # Level(EXPERT, -10, 10, 1, 5, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(EXPERT, -20, 20, 1, 10, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, -30, 30, 1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, -40, 40, 1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, -50, 50, 1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
 
     # -0.1/-0.1
-    # Level(EASY, -1, 1.1, 0.1,  5, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, -1, 1.6, 0.1,  10, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1, 1.6, 0.1,  0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -1.5, 2.1, 0.1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, -2, 2.1, 0.1,  15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
+    # Level(EXPERT, -1, 1.1, 0.1,  5, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(EXPERT, -1, 1.6, 0.1,  10, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, -1, 1.6, 0.1,  0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, -1.5, 2.1, 0.1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, -2, 2.1, 0.1,  15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
 
-    # Level(EASY, 0, 1.1, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
-    Level(EASY, 0, 1.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 1.6, 0.1, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 2.1, 0.1, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
-    Level(EASY, 0, 2.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
+    # Level(EXPERT, 0, 1.1, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
+    Level(EXPERT, 0, 1.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, 0, 1.6, 0.1, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, 0, 2.1, 0.1, 60 * 5, DIVIDE_FORMULA, starrating=[32, 40, 50, 60]),
+    Level(EXPERT, 0, 2.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
 
     #recap
-    Level(EASY, -99, 99, 1, 0, 60 * 5, starrating=[48, 65, 80, 90]),
-    Level(EASY, -99, 99, 1, 0, 60 * 5, MINUS_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(EASY, -99, 99, 1, 0, 60 * 5, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(EASY, -99, 99, 1, 0, 60 * 5, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(EASY, -99, 99, 0.01, 0, 60 * 5, TIMES_FORMULA, starrating=[48, 65, 80, 90]),
+    Level(EXPERT, -99, 99, 1, 0, 60 * 5),
+    Level(EXPERT, -99, 99, 1, 0, 60 * 5, MINUS_FORMULA),
+    Level(EXPERT, -99, 99, 1, 0, 60 * 5, TIMES_FORMULA),
+    Level(EXPERT, -99, 99, 1, 0, 60 * 5, DIVIDE_FORMULA),
+    Level(EXPERT, 0, 999, 1, 99, 0, TIMES_FORMULA, starrating=[600, 750, 900, 1000]),
 ]
 LEVELS = EASY_LEVELS + MEDIUM_LEVELS + HARD_LEVELS + EXPERT_LEVELS
 

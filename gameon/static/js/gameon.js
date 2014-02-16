@@ -685,6 +685,25 @@ var gameon = new (function () {
             return lineSelf;
         }
 
+        mathSelf.round = function (num, numDecimalPlaces) {
+            var tx = Math.pow(10, numDecimalPlaces);
+            return Math.round((num + 0.00001) * tx) / tx;
+        }
+
+        /**
+         * a bit hack
+         * @param x
+         * @param precision eg .1 .01 or .001 depending on the number of decimal places you want
+         */
+        mathSelf.precisionRound = function (x, precision) {
+            var str = '' + precision;
+            var numDecimalPlaces = 0;
+            if(str.length >= 3) {
+                numDecimalPlaces = str.length -2;
+            }
+            return mathSelf.round(x, numDecimalPlaces)
+        }
+
     })();
 
 
