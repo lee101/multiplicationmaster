@@ -388,7 +388,10 @@ var views = new (function () {
                 self.board.render('.mm-equation');
             };
 
-
+            self.getScore = function(num) {
+                var str = '' + num;
+                return Math.abs(+ str.replace('.', ''));
+            }
 
             self.addTile = function (y, x, tile) {
                 var success = false;
@@ -420,7 +423,7 @@ var views = new (function () {
                         for (var i = 0; i < tiles.length; i++) {
                             var tile = tiles[i];
                             if (typeof tile['getOperator'] === 'undefined') {
-                                totalScore += Math.abs(tile.number);
+                                totalScore += self.getScore(tile.number);
                                 gameState.setTileDeleted(tile.oldY, tile.oldX);
                                 totalNumTilesDeleted++;
                             }
