@@ -175,7 +175,7 @@ var views = new (function () {
                             generatedNumbers.push(x);
                             generatedNumbers.push(y);
                             generatedNumbers.push(z);
-                            if (generatedNumbers.length > numTilesNeeded) {
+                            if (generatedNumbers.length >= numTilesNeeded) {
                                 break numberFinder;
                             }
                             else {
@@ -204,14 +204,21 @@ var views = new (function () {
             //search number line for matches.
             //TODO make this support arbitrarily long formula
 
-            var generatedNumbers = [];
+            var currentNumbers = gameState.board.viewOfWhere(function (tile) {
+                return tile.number;
+            }, function (tile) {
+                return tile.isTile();
+            });
 
-            var numTiles = gameState.board.tiles.length;
+            var numTiles = currentNumbers.length();
+
+            var generatedNumbers = [];
             numberFinder:
                 for (var i = 0; i < numTiles; i++) {
-                    var x = gameState.numberLine.shuffledGet(i);
+
+                    var x = currentNumbers.shuffledGet(i);
                     for (var j = 0; j < numTiles; j++) {
-                        var y = gameState.numberLine.shuffledGet(j);
+                        var y = currentNumbers.shuffledGet(j);
 
                         var foundMatch = false;
                         var z = 0;
@@ -233,11 +240,11 @@ var views = new (function () {
                             generatedNumbers.push(x);
                             generatedNumbers.push(y);
                             generatedNumbers.push(z);
-                            if (generatedNumbers.length > numTilesNeeded) {
+                            if (generatedNumbers.length >= numTilesNeeded) {
                                 break numberFinder;
                             }
                             else {
-                                gameState.numberLine.shuffle();
+                                currentNumbers.shuffle();
                                 i = 0;
                                 j = 0;
                                 continue numberFinder;

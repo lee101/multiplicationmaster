@@ -400,6 +400,10 @@ var gameon = new (function () {
                 var container = renderedTile.parent();
                 container.html(tile.tileRender());
             };
+
+            tile.isTile = function() {
+                return typeof this['render'] === 'function';
+            }
         };
 
         boardSelf.getY = function (i) {
@@ -571,19 +575,78 @@ var gameon = new (function () {
 
             setTimeout(callback, maxNumDeletedPerColumn * falltime)
         };
+
+        boardSelf.view = function() {
+            //todo custom tileview with a proper contains method?
+            return new self.ArrayView(boardSelf.tiles);
+        }
+        boardSelf.viewWhere = function(where) {
+            var tiles = []
+            for (var i = 0; i < boardSelf.tiles.length; i++) {
+                var tile = boardSelf.tiles[i];
+                if(where(tile)) {
+                    tiles.push(tile);
+                }
+            }
+            return new self.ArrayView(tiles);
+        }
+        boardSelf.viewOfWhere = function(of, where) {
+            var tiles = []
+            for (var i = 0; i < boardSelf.tiles.length; i++) {
+                var tile = boardSelf.tiles[i];
+                if (where(tile)) {
+                    tiles.push(of(tile));
+                }
+            }
+            return new self.ArrayView(tiles);
+        }
         construct(width, height, tiles);
         return boardSelf;
     };
 
+    self.ArrayView = function (arr) {
+        var viewSelf = this;
+
+        function construc() {
+            viewSelf.arr = arr;
+            viewSelf.primes = [4177, 4201, 4259, 4261, 4349, 4357, 4447, 4451, 4519, 4523,
+                4621, 4637, 7907, 7919, 6529, 6547, 6551, 6553, 6563, 6569];
+            viewSelf.shuffle();
+        }
+
+        viewSelf.get = function (i) {
+            return arr[i];
+        };
+        viewSelf.shuffledGet = function (i) {
+            var idx = viewSelf.hash(i);
+            return viewSelf.get(idx);
+        };
+        viewSelf.hash = function (i) {
+            return (i + 7907) * viewSelf.primes[viewSelf.primeIdx] % viewSelf.length();
+        };
+        viewSelf.length = function () {
+            return arr.length;
+        };
+        viewSelf.shuffle = function () {
+            viewSelf.primeIdx = self.math.numberBetween(0, viewSelf.primes.length);
+        };
+        viewSelf.contains = function (x) {
+            return arr.indexOf(x) === -1;
+        };
+        construc();
+        return viewSelf;
+    }
+
 
     self.math = new (function () {
-        var self = this;
-        self.numberBetween = function (a, b) {
+        var mathSelf = this;
+        mathSelf.numberBetween = function (a, b) {
             return Math.floor(Math.random() * (b - a) + a);
         };
 
-        self.NumberLine = function (low, high, step) {
+        mathSelf.NumberLine = function (low, high, step) {
             var lineSelf = this;
+//            $.extend(true, lineSelf, new self.ArrayView());
             //TODO support capping the number of digits?
 
             function construc() {
@@ -599,8 +662,8 @@ var gameon = new (function () {
                 return lineSelf.low + (lineSelf.step * i);
             };
             lineSelf.shuffledGet = function (i) {
-                var i = lineSelf.hash(i);
-                return lineSelf.get(i);
+                var idx = lineSelf.hash(i);
+                return lineSelf.get(idx);
             };
             lineSelf.hash = function (i) {
                 return (i + 7907) * lineSelf.primes[lineSelf.primeIdx] % lineSelf.length();
@@ -609,7 +672,7 @@ var gameon = new (function () {
                 return +((lineSelf.high - lineSelf.low) / step);
             };
             lineSelf.shuffle = function () {
-                lineSelf.primeIdx = self.numberBetween(0, lineSelf.primes.length);
+                lineSelf.primeIdx = mathSelf.numberBetween(0, lineSelf.primes.length);
             };
             lineSelf.contains = function (x) {
                 function fromFP(y) {
