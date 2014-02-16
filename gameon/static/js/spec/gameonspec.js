@@ -172,9 +172,10 @@ describe("gameon", function () {
             clock.unpause();
             done();
         });
-        it("it should go down + gameover should be called when the clock runs out", function (done) {
+        it("it should go down + gameover should be called ONCE when the clock runs out", function (done) {
+            var times = 0;
             function gameOver() {
-                done();
+                times ++;
             }
 
             var clock2 = new gameon.clock(gameOver, seconds);
@@ -183,6 +184,9 @@ describe("gameon", function () {
             jasmine.clock().tick(1001);
             expect(clock2.seconds).toEqual(seconds - 1);
             jasmine.clock().tick(1001);
+            jasmine.clock().tick(99999);
+            expect(times).toEqual(1);
+            done();
 
         });
     });

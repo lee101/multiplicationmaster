@@ -289,7 +289,7 @@ var views = new (function () {
                         if (user.levels_unlocked < level.id) {
                             user.saveLevelsUnlocked(level.id);
                             var numLevels = DIFFICULTY_TO_LEVELS_MAP[level.difficulty].length;
-                            if (user.levels_unlocked % numLevels == 0) {
+                            if (user.levels_unlocked % numLevels === 0) {
                                 user.saveDifficultiesUnlocked(user.difficulties_unlocked + 1);
                             }
                         }
@@ -298,8 +298,9 @@ var views = new (function () {
                 gameState.destruct();
                 views.donelevel(gameState.starBar, level);
             };
-            if (level.numMoves) {
+            if (!level.numMoves) {
                 gameState.clock = gameon.clock(endSelf.gameOver, level.clock);
+                gameState.clock.start();
             }
         };
 
@@ -476,7 +477,6 @@ var views = new (function () {
         construct();
         return gameState;
     };
-
     self.donelevel = function (starBar, level) {
 
         $('.mm-background').html($('#donelevel').html());

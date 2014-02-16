@@ -79,6 +79,27 @@
                     ['x0','+','x1'],
                 ]
             }
+            else if (hack_equals(level.formula, ['x0,-,x1,=,x2'])) {
+                level.solutions = [
+                    ['x2', '+', 'x1'],
+                    ['x0', '-', 'x2'],
+                    ['x0', '-', 'x1'],
+                ]
+            }
+            else if (hack_equals(level.formula, ['x0,*,x1,=,x2'])) {
+                level.solutions = [
+                    ['x2', '/', 'x1'],
+                    ['x2', '/', 'x0'],
+                    ['x0', '*', 'x1'],
+                ]
+            }
+            else if (hack_equals(level.formula, ['x0,/,x1,=,x2'])) {
+                level.solutions = [
+                    ['x2', '*', 'x1'],
+                    ['x0', '/', 'x2'],
+                    ['x0', '/', 'x1'],
+                ]
+            }
         }
     </script>
 {%- endmacro %}

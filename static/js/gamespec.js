@@ -94,5 +94,39 @@ describe("game", function () {
         currLevel.endHandler.setMoves(0);
         done();
     });
+    it('THEN you can try level 2 and replay', function (done) {
+        currLevel = views.level(2);
+        expect(currLevel.starBar.numStars).toBe(0);
+        var one = currLevel.starBar.one;
+        currLevel.starBar.setScore(one);
+        currLevel.endHandler.setMoves(0);
 
+//        $('.mm-replay').click();
+        currLevel = views.level(2);
+
+        expect(currLevel.starBar.numStars).toBe(0);
+        currLevel.endHandler.setMoves(0);
+
+//
+//        currLevel = views.level(1);
+//        var two = currLevel.starBar.two;
+//        currLevel.starBar.setScore(two);
+//        currLevel.endHandler.setMoves(0);
+//
+//        currLevel = views.level(1);
+//
+//        expect(currLevel.solve(0, [1, 2])).toBe(-1);
+//
+//        var threestar = currLevel.starBar.end;
+//        currLevel.starBar.setScore(threestar);
+//        currLevel.endHandler.setMoves(0);
+        done();
+    });
+    it('THEN you get to unlock everything!', function (done) {
+        gameon.getUser(function (user) {
+            user.saveDifficultiesUnlocked(999);
+            user.saveLevelsUnlocked(999);
+        });
+        done();
+    });
 });
