@@ -390,7 +390,7 @@ var gameon = new (function () {
                 else {
                     renderedData = $('<div></div>');
                 }
-                renderedData.attr('onclick', 'gameon.' + boardSelf.name + '.click(this)');
+                renderedData.attr('onmousedown', 'gameon.' + boardSelf.name + '.click(this)');
                 renderedData.attr('data-yx', boardSelf.name + '-' + this.yPos + '-' + this.xPos);
                 renderedData.css({position: 'relative'});
                 return renderedData[0].outerHTML;
