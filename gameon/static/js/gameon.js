@@ -652,7 +652,7 @@ var gameon = new (function () {
         };
 
         mathSelf.NumberLine = function (low, high, step) {
-            var lineSelf = this;
+            var lineSelf = new self.ArrayView();
 //            $.extend(true, lineSelf, new self.ArrayView());
             //TODO support capping the number of digits?
 
@@ -660,26 +660,13 @@ var gameon = new (function () {
                 lineSelf.low = low;
                 lineSelf.high = high;
                 lineSelf.step = step;
-                lineSelf.primes = [4177, 4201, 4259, 4261, 4349, 4357, 4447, 4451, 4519, 4523,
-                    4621, 4637, 7907, 7919, 6529, 6547, 6551, 6553, 6563, 6569];
-                lineSelf.shuffle();
             }
 
             lineSelf.get = function (i) {
                 return lineSelf.low + (lineSelf.step * i);
             };
-            lineSelf.shuffledGet = function (i) {
-                var idx = lineSelf.hash(i);
-                return lineSelf.get(idx);
-            };
-            lineSelf.hash = function (i) {
-                return (i + 7907) * lineSelf.primes[lineSelf.primeIdx] % lineSelf.length();
-            };
             lineSelf.length = function () {
                 return +((lineSelf.high - lineSelf.low) / step);
-            };
-            lineSelf.shuffle = function () {
-                lineSelf.primeIdx = mathSelf.numberBetween(0, lineSelf.primes.length);
             };
             lineSelf.contains = function (x) {
                 function fromFP(y) {
