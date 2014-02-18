@@ -287,15 +287,22 @@ var gameon = new (function () {
 
     // ===================       Clock       ===============================
 
-    self.clock = function (gameOver, startSeconds) {
+    self.clock = new (function () {
         var self = this;
-        if (!startSeconds) {
-            self.startSeconds = 5 * 60;
-        }
-        else {
-            self.startSeconds = startSeconds;
-        }
 
+        self.init = function(gameOver, startSeconds) {
+            if (!startSeconds) {
+                self.startSeconds = 5 * 60;
+            }
+            else {
+                self.startSeconds = startSeconds;
+            }
+            self.reset();
+            self.gameOver = gameOver;
+            return self;
+        };
+        self.gameOver = function(){};
+        self.startSeconds = 5 * 60;
         self.started = false;
 
         self.reset = function () {
@@ -326,7 +333,7 @@ var gameon = new (function () {
         self._updateFormattedTime = function () {
             var separator = ':';
             if (self.seconds % 60 <= 9) {
-                separator = ':0'
+                separator = ':0';
             }
             self._formattedTime = Math.floor(self.seconds / 60) + separator + self.seconds % 60;
         };
@@ -340,13 +347,13 @@ var gameon = new (function () {
                 $('.gameon-clock').html(self.getTime());
                 if (self.seconds <= 0) {
                     self.reset();
-                    gameOver();
+                    self.gameOver();
                 }
             }
         }, 1000);
 
-        return self;
-    };
+        return self.init;
+    })();
 
     // =====================       Board            ===========================
     var numBoards = 0;
