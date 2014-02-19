@@ -362,6 +362,9 @@ var views = new (function () {
                     if (self.operator === '*') {
                         return '<span class="mm-equation__operator-icon glyphicon glyphicon-remove"></span>';
                     }
+                    if (self.operator === '/') {
+                        return '÷';
+                    }
                     return self.operator;
                 }
                 self.render = function () {
