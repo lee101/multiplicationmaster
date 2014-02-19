@@ -107,6 +107,10 @@ and (min-height: 750px) {
     color: #ffffff;
 }
 
+.mm-equation__operator-icon {
+    margin-top: 13px;
+}
+
 @media (min-width: 961px) and (max-width: 1280px)
 and (min-height: 750px) {
     .mm-equation__operator {

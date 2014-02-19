@@ -357,8 +357,15 @@ var views = new (function () {
             var OperatorTile = function (op) {
                 var self = this;
                 self.operator = op;
+
+                self.formatOperator = function () {
+                    if (self.operator === '*') {
+                        return '<span class="mm-equation__operator-icon glyphicon glyphicon-remove"></span>';
+                    }
+                    return self.operator;
+                }
                 self.render = function () {
-                    return '<p class="mm-equation__operator">' + self.operator + '</button>';
+                    return '<p class="mm-equation__operator">' + self.formatOperator() + '</button>';
                 };
 
                 self.getOperator = function () {

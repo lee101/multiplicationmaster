@@ -613,11 +613,12 @@ var gameon = new (function () {
 
     self.ArrayView = function (arr) {
         var viewSelf = this;
-
+        if (typeof arr === 'undefined') {
+            arr = []
+        }
         function construc() {
             viewSelf.arr = arr;
-            viewSelf.primes = [4177, 4201, 4259, 4261, 4349, 4357, 4447, 4451, 4519, 4523,
-                4621, 4637, 7907, 7919, 6529, 6547, 6551, 6553, 6563, 6569];
+            viewSelf.largePrimes = [1298809, 1298951, 1299059, 1299203, 1299299, 1299379, 1299541, 1299689, 1299827];
             viewSelf.shuffle();
         }
 
@@ -629,13 +630,16 @@ var gameon = new (function () {
             return viewSelf.get(idx);
         };
         viewSelf.hash = function (i) {
-            return (i + 7907) * viewSelf.primes[viewSelf.primeIdx] % viewSelf.length();
+            return (viewSelf.hashstart + (i * viewSelf.hashstep))
+                % viewSelf.length();
         };
         viewSelf.length = function () {
             return arr.length;
         };
         viewSelf.shuffle = function () {
-            viewSelf.primeIdx = self.math.numberBetween(0, viewSelf.primes.length);
+            viewSelf.primeIdx = self.math.numberBetween(0, viewSelf.largePrimes.length);
+            viewSelf.hashstep = viewSelf.largePrimes[viewSelf.primeIdx] % viewSelf.length();
+            viewSelf.hashstart = self.math.numberBetween(0, viewSelf.length());
         };
         viewSelf.contains = function (x) {
             return arr.indexOf(x) === -1;
@@ -660,6 +664,7 @@ var gameon = new (function () {
                 lineSelf.low = low;
                 lineSelf.high = high;
                 lineSelf.step = step;
+                lineSelf.shuffle();
             }
 
             lineSelf.get = function (i) {
