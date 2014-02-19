@@ -33,7 +33,7 @@ easier ----------------------------> harder
     number = []
 
     def __init__(self, difficulty, low, high, precision, numMoves, time, formula=['x0', '+', 'x1', '=', 'x2'], height=5,
-                 width=5, starrating=[160, 170, 190, 200]):
+                 width=5, starrating=[300, 350, 400, 450]):
         '''
         difficulty array of (x,y) pairs
                 '''
@@ -217,7 +217,7 @@ EXPERT_LEVELS=[
     Level(EXPERT, -99, 99, 1, 0, 60 * 4, MINUS_FORMULA),
     Level(EXPERT, -99, 99, 1, 0, 60 * 4, TIMES_FORMULA),
     Level(EXPERT, -99, 99, 1, 0, 60 * 4, DIVIDE_FORMULA),
-    Level(EXPERT, 0, 999, 1, 99, 0, TIMES_FORMULA, starrating=[600, 750, 900, 1000]),
+    Level(EXPERT, 11, 999, 1, 99, 0, TIMES_FORMULA, starrating=[10000, 10200, 10600, 11000]),
 ]
 LEVELS = EASY_LEVELS + MEDIUM_LEVELS + HARD_LEVELS + EXPERT_LEVELS
 
