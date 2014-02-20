@@ -4,7 +4,7 @@ EASY = 1
 MEDIUM = 2
 HARD = 3
 EXPERT = 4
-DIFFICULTIES = set([EASY, MEDIUM, HARD, EXPERT])
+DIFFICULTIES = {EASY, MEDIUM, HARD, EXPERT}
 
 MINUS_FORMULA = ['x0', '-', 'x1', '=', 'x2']
 TIMES_FORMULA = ['x0', '*', 'x1', '=', 'x2']
