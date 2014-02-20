@@ -102,8 +102,6 @@ var views = new (function () {
 
             gameState.board.render('.mm-level');
             gameState.destruct = function () {
-                //TODO gameon to handle this awkwardness
-                $('.mm-volume .gameon-volume').detach().appendTo('.gameon-volume-template');
                 gameon.pauseSound(mainTheme);
             };
             $('.back-btn').click(function () {
@@ -113,7 +111,7 @@ var views = new (function () {
             gameState.starBar = new gameon.StarBar(level.starrating);
             gameState.starBar.setScore(0);
 
-            $('.gameon-volume-template .gameon-volume').detach().appendTo('.mm-volume');
+            gameon.renderVolumeTo('.mm-volume');
             gameState.starBar.render('.mm-starbar');
 
             gameState.equation = new gameState.Equation();

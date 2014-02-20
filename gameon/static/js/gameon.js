@@ -259,6 +259,15 @@ var gameon = new (function () {
         self.unmute();
     };
 
+    self.renderVolumeTo = function(target) {
+        var $volumeControl = $('.gameon-volume-template .gameon-volume').detach();
+        $volumeControl.appendTo(target);
+
+        $(target).bind('destroyed', function () {
+            $(target + ' .gameon-volume').detach().appendTo('.gameon-volume-template');
+        });
+    }
+
 
     self.getUser(function (user) {
         //render volume control
