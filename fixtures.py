@@ -159,8 +159,8 @@ HARD_LEVELS = [
     # 0.1/0.1
     Level(HARD, 0, 1.1, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
     Level(HARD, 0, 1.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(HARD, 0, 1.6, 0.1, 60 * 4, DIVIDE_FORMULA, starrating=[192, 232, 272, 312]),
-    Level(HARD, 0, 2.1, 0.1, 60 * 4, DIVIDE_FORMULA, starrating=[192, 232, 272, 312]),
+    Level(HARD, 0, 1.6, 0.1, 0, 60 * 4, DIVIDE_FORMULA, starrating=[192, 232, 272, 312]),
+    Level(HARD, 0, 2.1, 0.1, 0, 60 * 4, DIVIDE_FORMULA, starrating=[192, 232, 272, 312]),
     Level(HARD, 0, 2.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[170, 200, 240, 260]),
 
     #recap
@@ -208,8 +208,8 @@ EXPERT_LEVELS=[
 
     # Level(EXPERT, 0, 1.1, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[15, 20, 25, 30]),
     Level(EXPERT, 0, 1.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[48, 65, 80, 90]),
-    Level(EXPERT, 0, 1.6, 0.1, 60 * 4, DIVIDE_FORMULA, starrating=[192, 232, 272, 312]),
-    Level(EXPERT, 0, 2.1, 0.1, 60 * 4, DIVIDE_FORMULA, starrating=[192, 232, 272, 312]),
+    Level(EXPERT, 0, 1.6, 0.1, 0, 60 * 4, DIVIDE_FORMULA, starrating=[192, 232, 272, 312]),
+    Level(EXPERT, 0, 2.1, 0.1, 0, 60 * 4, DIVIDE_FORMULA, starrating=[192, 232, 272, 312]),
     Level(EXPERT, 0, 2.6, 0.1, 15, 0, DIVIDE_FORMULA, starrating=[190, 220, 260, 280]),
 
     #recap

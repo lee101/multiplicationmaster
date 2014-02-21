@@ -129,4 +129,10 @@ describe("game", function () {
         });
         done();
     });
+    it('THEN you clock the game!', function (done) {
+        views.difficulties();
+        views.levels(EXPERT)
+
+        done();
+    });
 });

@@ -372,6 +372,12 @@ var gameon = new (function () {
      * @param width
      * @param height
      */
+    self.boards = {};
+    self.cleanBoards = function() {
+        self.boards = {};
+        numBoards = 0;
+    };
+
     self.board = function (width, height, tiles) {
         var boardSelf = this;
 
@@ -380,7 +386,7 @@ var gameon = new (function () {
             boardSelf.id = numBoards;
             boardSelf.name = 'board' + numBoards;
             //TODO need to delete/garbage collect these boards
-            self[boardSelf.name] = boardSelf;
+            self.boards[boardSelf.name] = boardSelf;
 
             boardSelf.width = width;
             boardSelf.height = height;
@@ -406,7 +412,7 @@ var gameon = new (function () {
                 else {
                     renderedData = $('<div></div>');
                 }
-                renderedData.attr('onmousedown', 'gameon.' + boardSelf.name + '.click(this)');
+                renderedData.attr('onmousedown', 'gameon.boards.' + boardSelf.name + '.click(this)');
                 renderedData.attr('data-yx', boardSelf.name + '-' + this.yPos + '-' + this.xPos);
                 renderedData.css({position: 'relative'});
                 return renderedData[0].outerHTML;
@@ -576,7 +582,7 @@ var gameon = new (function () {
                     var fallDistance = numDeleted * tiledist;
 
                     var renderedData = $(currNewTile.render());
-                    renderedData.attr('onclick', 'gameon.' + boardSelf.name + '.click(this)');
+                    renderedData.attr('onclick', 'gameon.boards' + boardSelf.name + '.click(this)');
                     renderedData.attr('data-yx', boardSelf.name + '-' + h + '-' + w);
                     renderedData.css({position: 'relative'});
                     renderedData.css({top: -fallDistance});
