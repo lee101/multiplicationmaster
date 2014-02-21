@@ -497,13 +497,17 @@ var views = new (function () {
 
         $('.mm-background').html($('#donelevel').html());
         starBar.render('.mm-starbar');
+
+        var $button = $('#mm-next-level');
         if (starBar.hasWon()) {
-            var $button = $('#mm-next-level');
             $button.removeAttr('disabled');
             $button.find('.glyphicon-lock').remove();
             $button.click(function () {
                 self.nextLevel(level);
             });
+        }
+        if (self.isLastLevel(level)) {
+            $button.hide();
         }
         $('#mm-replay').click(function () {
             self.level(level.id);
@@ -517,7 +521,14 @@ var views = new (function () {
         else if (starBar.numStars == 2) {
             $('.mm-end-message p').html('Great!');
         }
+        if (starBar.numStars >= 1 && self.isLastLevel(level)) {
+            $('.mm-end-message p').append(' <br /> Congratulations You have Won The Game!!!');
+        }
         $('.mm-responsivead-bottom').show();
+    };
+
+    self.isLastLevel = function(lvl) {
+        return lvl.id === LEVELS[LEVELS.length - 1].id;
     };
     self.nextLevel = function (level) {
         self.level(level.id + 1);

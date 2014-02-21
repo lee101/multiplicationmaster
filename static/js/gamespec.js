@@ -131,8 +131,13 @@ describe("game", function () {
     });
     it('THEN you clock the game!', function (done) {
         views.difficulties();
-        views.levels(EXPERT)
+        views.levels(EXPERT);
+        currLevel = views.level(LEVELS[LEVELS.length - 1].id);
+        currLevel.starBar.setScore(9999999999999);
+        currLevel.endHandler.setMoves(0);
 
+        var isNextButtonVisible = $('#mm-next-level').is(':visible');
+        expect(isNextButtonVisible).toBe(false);
         done();
     });
 });
