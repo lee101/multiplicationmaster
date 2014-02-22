@@ -128,7 +128,7 @@ var views = new (function () {
             var pluggedEquation = '';
             for (var j = 0; j < equation.length; j++) {
                 var term = equation[j];
-                if (term[0] == 'x') {
+                if (term[0] === 'x') {
                     pluggedEquation += '(' + params[pIdx++] + ')';
                 }
                 else {
