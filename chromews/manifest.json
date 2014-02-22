@@ -1,7 +1,7 @@
 {
     "name": "Multiplication Master",
-    "description": "Word search puzzle with a twist",
-    "version": "4",
+    "description": "Find numbers which work! Multiplication Master makes math fun! Beat the clock in this battle of the brains or create crazy combos! Multiplication Master Means Maths Madness!",
+    "version": "1",
     "manifest_version": 2,
     "app": {
         "urls": [
@@ -12,6 +12,7 @@
         }
     },
     "icons": {
+        "64": "cross-icon-multiplication-master-no-bg64.png",
         "128": "icon_128.png"
     },
     "permissions": [
