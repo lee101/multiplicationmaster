@@ -1,6 +1,7 @@
 var mainTheme = 'mm-theme';
 gameon.loadSound(mainTheme, '/gameon/static/music/multiplication-master-theme1.mp3');
 gameon.loadSound('score', '/gameon/static/music/star.mp3');
+gameon.loadSound('win', '/gameon/static/music/winning-level.mp3');
 
 
 var views = new (function () {
@@ -89,6 +90,7 @@ var views = new (function () {
 
     self.level = function (id) {
         self.name = 'level';
+        gameon.pauseAll();
         gameon.loopSound(mainTheme);
 
         var level = LEVELS[id - 1];
@@ -523,6 +525,9 @@ var views = new (function () {
         }
         if (starBar.numStars >= 1 && self.isLastLevel(level)) {
             $('.mm-end-message p').append(' <br /> Congratulations You have Won The Game!!!');
+        }
+        if(starBar.numStars >= 1){
+            gameon.loopSound('win');
         }
         $('.mm-responsivead-bottom').show();
     };

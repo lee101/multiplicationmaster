@@ -425,7 +425,7 @@ var gameon = new (function () {
 
             tile.isTile = function() {
                 return typeof this['render'] === 'function';
-            }
+            };
         };
 
         boardSelf.getY = function (i) {
@@ -582,7 +582,7 @@ var gameon = new (function () {
                     var fallDistance = numDeleted * tiledist;
 
                     var renderedData = $(currNewTile.render());
-                    renderedData.attr('onclick', 'gameon.boards' + boardSelf.name + '.click(this)');
+                    renderedData.attr('onclick', 'gameon.boards.' + boardSelf.name + '.click(this)');
                     renderedData.attr('data-yx', boardSelf.name + '-' + h + '-' + w);
                     renderedData.css({position: 'relative'});
                     renderedData.css({top: -fallDistance});
