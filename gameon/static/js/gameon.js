@@ -29,7 +29,40 @@ var GameOnUser = function (userJSON) {
                 }
             }
         });
-        userJSON.scores.push({game_mode: game_mode, score: score});
+        userJSON.scores.push({'game_mode': game_mode, 'score': score});
+        reorderScores();
+    };
+
+    var reorderScores = function () {
+        userJSON.scores.sort(function (a, b) {
+            return a.game_mode - b.game_mode;
+        });
+    }
+    reorderScores();
+
+    userJSON.getHighScores = function() {
+        var highScores = [];
+        var scores = userJSON.scores;
+
+        for (var groupNum = 0; groupNum < scores.length;) {
+
+            var highScore = scores[groupNum].score;
+            var highScoreIdx = groupNum;
+
+            var groupLength = 1;
+            //find max high score in group
+            for (var i = groupNum + 1; i < scores.length && scores[i].game_mode === scores[i - 1].game_mode; i++) {
+                if (highScore < scores[i].score) {
+                    highScore = scores[i].score;
+                    highScoreIdx = i;
+                }
+                groupLength++;
+            }
+            highScores.push(scores[highScoreIdx]);
+            groupNum += groupLength;
+        }
+
+        return highScores;
     };
 
     userJSON.saveAchievement = function (achievementNumber, callback) {
@@ -259,7 +292,7 @@ var gameon = new (function () {
         self.unmute();
     };
 
-    self.renderVolumeTo = function(target) {
+    self.renderVolumeTo = function (target) {
         var $volumeControl = $('.gameon-volume-template .gameon-volume').detach();
         $volumeControl.appendTo(target);
 
@@ -299,7 +332,7 @@ var gameon = new (function () {
     self.clock = new (function () {
         var self = this;
 
-        self.init = function(gameOver, startSeconds) {
+        self.init = function (gameOver, startSeconds) {
             if (!startSeconds) {
                 self.startSeconds = 5 * 60;
             }
@@ -310,7 +343,8 @@ var gameon = new (function () {
             self.gameOver = gameOver;
             return self;
         };
-        self.gameOver = function(){};
+        self.gameOver = function () {
+        };
         self.startSeconds = 5 * 60;
         self.started = false;
 
@@ -373,7 +407,7 @@ var gameon = new (function () {
      * @param height
      */
     self.boards = {};
-    self.cleanBoards = function() {
+    self.cleanBoards = function () {
         self.boards = {};
         numBoards = 0;
     };
@@ -423,7 +457,7 @@ var gameon = new (function () {
                 container.html(tile.tileRender());
             };
 
-            tile.isTile = function() {
+            tile.isTile = function () {
                 return typeof this['render'] === 'function';
             };
         };
@@ -598,21 +632,21 @@ var gameon = new (function () {
             setTimeout(callback, maxNumDeletedPerColumn * falltime)
         };
 
-        boardSelf.view = function() {
+        boardSelf.view = function () {
             //todo custom tileview with a proper contains method?
             return new self.ArrayView(boardSelf.tiles);
         }
-        boardSelf.viewWhere = function(where) {
+        boardSelf.viewWhere = function (where) {
             var tiles = []
             for (var i = 0; i < boardSelf.tiles.length; i++) {
                 var tile = boardSelf.tiles[i];
-                if(where(tile)) {
+                if (where(tile)) {
                     tiles.push(tile);
                 }
             }
             return new self.ArrayView(tiles);
         }
-        boardSelf.viewOfWhere = function(of, where) {
+        boardSelf.viewOfWhere = function (of, where) {
             var tiles = []
             for (var i = 0; i < boardSelf.tiles.length; i++) {
                 var tile = boardSelf.tiles[i];
@@ -690,8 +724,9 @@ var gameon = new (function () {
             };
             lineSelf.contains = function (x) {
                 function fromFP(y) {
-                    return Math.round(y*100000);
+                    return Math.round(y * 100000);
                 }
+
                 return x >= lineSelf.low && x < lineSelf.high &&
                     fromFP(x) % fromFP(lineSelf.step) == 0;
             };
@@ -712,8 +747,8 @@ var gameon = new (function () {
         mathSelf.precisionRound = function (x, precision) {
             var str = '' + precision;
             var numDecimalPlaces = 0;
-            if(str.length >= 3) {
-                numDecimalPlaces = str.length -2;
+            if (str.length >= 3) {
+                numDecimalPlaces = str.length - 2;
             }
             return mathSelf.round(x, numDecimalPlaces)
         }
@@ -797,7 +832,7 @@ var gameon = new (function () {
             var $starBar = $('.gameon-starbar-template .gameon-starbar').detach();
             $starBar.appendTo(starSelf.target);
             $(starSelf.target).bind('destroyed', function () {
-                $(target+' .gameon-starbar').detach().appendTo('.gameon-starbar-template');
+                $(target + ' .gameon-starbar').detach().appendTo('.gameon-starbar-template');
                 $('.gameon-starbar__star').removeClass('gameon-star--shiny');
                 starSelf.update();
             });
@@ -828,3 +863,17 @@ var gameon = new (function () {
 
     return self;
 })();
+
+// Add things to default namespace D:
+Object.keys = Object.keys || function (o) {
+    var result = [];
+    for (var name in o) {
+        if (o.hasOwnProperty(name))
+            result.push(name);
+    }
+    return result;
+};
+
+String.prototype.reverse = function () {
+    return this.split("").reverse().join("");
+}

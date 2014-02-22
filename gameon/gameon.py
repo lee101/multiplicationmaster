@@ -170,7 +170,8 @@ class ScoresHandler(BaseHandler):
         userscore.game_mode = int(self.request.get('game_mode'))
 
         currentUser = self.current_user
-        currentUser.updateScores(userscore)
+        currentUser.scores.append(userscore)
+        currentUser.put()
 
         self.response.out.write('success')
 

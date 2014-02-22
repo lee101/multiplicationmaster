@@ -23,26 +23,61 @@ describe("gameon", function () {
     describe("when highscores have been added", function () {
         beforeEach(function (done) {
             gameon.getUser(function (user) {
-                user.saveHighScore(1, 123, function (data) {
-                    done();
-                })
-            })
+                var times = 0;
+
+                function saveCallback(data) {
+                    times++;
+                    if (times === 3) {
+                        done();
+                    }
+                }
+
+                user.saveHighScore(-1, 123, saveCallback);
+                user.saveHighScore(-3, 123, saveCallback);
+                user.saveHighScore(-2, 123, saveCallback);
+            });
         });
 
-        it("should be able to get a user with a score and highscore", function (done) {
+        it("should be able to get a user with scores", function (done) {
             gameon.getUser(function (user) {
                 expect(user.scores[0].score).toEqual(123);
-                expect(user.scores[0].game_mode).toEqual(1);
+                expect(user.scores[0].game_mode).toEqual(-3);
+                expect(user.scores[1].score).toEqual(123);
+                expect(user.scores[1].game_mode).toEqual(-2);
+                expect(user.scores[3].score).toEqual(123);
+                expect(user.scores[3].game_mode).toEqual(-1);
                 done();
             })
         });
-        it("should be able to get a fresh user with a score and highscore", function (done) {
+        it("should be able to get a fresh user with scores", function (done) {
             delete gameon.user;
             gameon.getUser(function (user) {
                 expect(user.scores[0].score).toEqual(123);
-                expect(user.scores[0].game_mode).toEqual(1);
+                expect(user.scores[0].game_mode).toEqual(-3);
+                expect(user.scores[1].score).toEqual(123);
+                expect(user.scores[1].game_mode).toEqual(-2);
+                expect(user.scores[3].score).toEqual(123);
+                expect(user.scores[3].game_mode).toEqual(-1);
                 done();
-            })
+            });
+        });
+        it("should be able to get highscores", function (done) {
+            gameon.getUser(function (user) {
+                user.scores = [
+                    {'game_mode': 1, 'score': 1},
+                    {'game_mode': 1, 'score': 2},
+                    {'game_mode': 1, 'score': 1},
+                    {'game_mode': 2, 'score': 2},
+                    {'game_mode': 2, 'score': 1},
+                    {'game_mode': 3, 'score': 3}
+                ];
+                var scores = user.getHighScores();
+                expect(scores.length).toEqual(3);
+                expect(scores[0].score).toEqual(2);
+                expect(scores[1].score).toEqual(2);
+                expect(scores[2].score).toEqual(3);
+                done();
+            });
         });
     });
 
@@ -253,13 +288,14 @@ describe("gameon", function () {
                 };
                 newTiles.push(tile);
             }
-            board.falldown(newTiles, function(){})
+            board.falldown(newTiles, function () {
+            })
         });
         done();
     });
 
     it("should be able to create a star bar", function (done) {
-        var starBar = new gameon.StarBar([20,40,60,100]);
+        var starBar = new gameon.StarBar([20, 40, 60, 100]);
         starBar.setScore(10);
         expect(starBar.numStars).toBe(0);
         starBar.setScore(21);
@@ -273,8 +309,8 @@ describe("gameon", function () {
     });
     it("should have a correct math package", function (done) {
         var maths = gameon.math;
-        expect(maths.numberBetween(1,2)).toBe(1);
-        expect(maths.numberBetween(0,1)).toBe(0);
+        expect(maths.numberBetween(1, 2)).toBe(1);
+        expect(maths.numberBetween(0, 1)).toBe(0);
 
 
         var low = 0;
@@ -285,10 +321,10 @@ describe("gameon", function () {
         var currNum = low;
         for (var i = 0; i < numline.length(); i++) {
             expectedTotal += currNum;
-            currNum+= step;
+            currNum += step;
         }
         expectedTotal = Math.round(expectedTotal);
-        var total= 0;
+        var total = 0;
         for (var i = 0; i < numline.length(); i++) {
             total += numline.shuffledGet(i);
         }
