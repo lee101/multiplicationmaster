@@ -207,3 +207,22 @@ and (min-height: 750px) {
         display: none;
     }
 }
+
+.mm-like {
+    position: fixed;
+    left:0;
+    right: 0;
+    top: 4px;
+    margin: 0 auto;
+    text-align: center;
+
+}
+.fb-like {
+    background-color: aliceblue;
+}
+
+@media (max-width: 481px) {
+    .mm-like {
+        display: none;
+    }
+}
