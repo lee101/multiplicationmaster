@@ -21,7 +21,16 @@ describe("gameon", function () {
     });
 
     describe("when highscores have been added", function () {
+        specHelpers.deleteCookie('wsuser');
+        delete gameon.user;
+
+        var once = 0;
         beforeEach(function (done) {
+            if (once === 1) {
+                done();
+                return;
+            }
+            once = 1;
             gameon.getUser(function (user) {
                 var times = 0;
 
@@ -44,10 +53,10 @@ describe("gameon", function () {
                 expect(user.scores[0].game_mode).toEqual(-3);
                 expect(user.scores[1].score).toEqual(123);
                 expect(user.scores[1].game_mode).toEqual(-2);
-                expect(user.scores[3].score).toEqual(123);
-                expect(user.scores[3].game_mode).toEqual(-1);
+                expect(user.scores[2].score).toEqual(123);
+                expect(user.scores[2].game_mode).toEqual(-1);
                 done();
-            })
+            });
         });
         it("should be able to get a fresh user with scores", function (done) {
             delete gameon.user;
@@ -56,8 +65,8 @@ describe("gameon", function () {
                 expect(user.scores[0].game_mode).toEqual(-3);
                 expect(user.scores[1].score).toEqual(123);
                 expect(user.scores[1].game_mode).toEqual(-2);
-                expect(user.scores[3].score).toEqual(123);
-                expect(user.scores[3].game_mode).toEqual(-1);
+                expect(user.scores[2].score).toEqual(123);
+                expect(user.scores[2].game_mode).toEqual(-1);
                 done();
             });
         });

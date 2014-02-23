@@ -40,7 +40,7 @@ var GameOnUser = function (userJSON) {
     }
     reorderScores();
 
-    userJSON.getHighScores = function() {
+    userJSON.getHighScores = function () {
         var highScores = [];
         var scores = userJSON.scores;
 

@@ -181,8 +181,8 @@ var views = new (function () {
                             }
                             else {
                                 gameState.numberLine.shuffle();
-                                i=0;
-                                j=0;
+                                i = 0;
+                                j = 0;
                                 continue numberFinder;
                             }
                         }
@@ -198,7 +198,7 @@ var views = new (function () {
             return gameon.shuffle(tiles);
         };
 
-        gameState.newBoardTiles = function(numTilesNeeded) {
+        gameState.newBoardTiles = function (numTilesNeeded) {
 
             gameState.numberLine = new gameon.math.NumberLine(level.low, level.high, level.precision);
 
@@ -367,7 +367,7 @@ var views = new (function () {
                         return '÷';
                     }
                     return self.operator;
-                }
+                };
                 self.render = function () {
                     return '<p class="mm-equation__operator">' + self.formatOperator() + '</button>';
                 };
@@ -380,7 +380,7 @@ var views = new (function () {
                 };
             };
 
-            self.construct = function() {
+            self.construct = function () {
                 self.numOperatorTiles = 0;
                 var tiles = [];
 
@@ -399,10 +399,10 @@ var views = new (function () {
                 self.board.render('.mm-equation');
             };
 
-            self.getScore = function(num) {
+            self.getScore = function (num) {
                 var str = '' + num;
-                return Math.abs(+ str.replace('.', ''));
-            }
+                return Math.abs(+str.replace('.', ''));
+            };
 
             self.addTile = function (y, x, tile) {
                 var success = false;
@@ -451,7 +451,7 @@ var views = new (function () {
                         gameState.starBar.setScore(totalScore);
                         gameState.board.render();
                         gameState.board.falldown(newTiles);
-                        if(! level.time) {
+                        if (!level.time) {
                             gameState.endHandler.setMoves(gameState.endHandler.moves - 1);
 
                         }
@@ -461,7 +461,7 @@ var views = new (function () {
                 return success;
             };
 
-            self.isFull = function() {
+            self.isFull = function () {
                 return self.board.isFull();
             };
 
@@ -526,13 +526,13 @@ var views = new (function () {
         if (starBar.numStars >= 1 && self.isLastLevel(level)) {
             $('.mm-end-message p').append(' <br /> Congratulations You have Won The Game!!!');
         }
-        if(starBar.numStars >= 1){
+        if (starBar.numStars >= 1) {
             gameon.loopSound('win');
         }
         $('.mm-responsivead-bottom').show();
     };
 
-    self.isLastLevel = function(lvl) {
+    self.isLastLevel = function (lvl) {
         return lvl.id === LEVELS[LEVELS.length - 1].id;
     };
     self.nextLevel = function (level) {

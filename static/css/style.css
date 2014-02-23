@@ -210,13 +210,14 @@ and (min-height: 750px) {
 
 .mm-like {
     position: fixed;
-    left:0;
+    left: 0;
     right: 0;
     top: 4px;
     margin: 0 auto;
     text-align: center;
 
 }
+
 .fb-like {
     background-color: aliceblue;
 }
