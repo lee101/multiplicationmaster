@@ -20,9 +20,8 @@ describe("gameon", function () {
         })
     });
 
-    describe("when highscores have been added", function () {
-        specHelpers.deleteCookie('wsuser');
-        delete gameon.user;
+    describe("when scores have been added", function () {
+
 
         var once = 0;
         beforeEach(function (done) {
@@ -36,14 +35,15 @@ describe("gameon", function () {
 
                 function saveCallback(data) {
                     times++;
-                    if (times === 3) {
+                    if (times === 4) {
                         done();
                     }
                 }
 
-                user.saveHighScore(-1, 123, saveCallback);
-                user.saveHighScore(-3, 123, saveCallback);
-                user.saveHighScore(-2, 123, saveCallback);
+                user.deleteAllScores(saveCallback);
+                user.saveScore(-1, 123, saveCallback);
+                user.saveScore(-3, 123, saveCallback);
+                user.saveScore(-2, 123, saveCallback);
             });
         });
 

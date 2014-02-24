@@ -11,7 +11,7 @@
 
 var GameOnUser = function (userJSON) {
 
-    userJSON.saveHighScore = function (game_mode, score, callback) {
+    userJSON.saveScore = function (game_mode, score, callback) {
         if (typeof callback == 'undefined') {
             callback = function (data) {
             }
@@ -31,6 +31,26 @@ var GameOnUser = function (userJSON) {
         });
         userJSON.scores.push({'game_mode': game_mode, 'score': score});
         reorderScores();
+    };
+    userJSON.deleteAllScores = function(callback) {
+        if (typeof callback == 'undefined') {
+            callback = function (data) {
+            }
+        }
+        $.ajax({
+            "url": "/gameon/deleteallscores",
+            "data": {},
+            "success": function (data) {
+                callback(data)
+            },
+            "type": "GET",
+            "cache": false,
+            "error": function (xhr, error, thrown) {
+                if (error == "parsererror") {
+                }
+            }
+        });
+        userJSON.scores = [];
     };
 
     var reorderScores = function () {

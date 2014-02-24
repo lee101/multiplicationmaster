@@ -64,12 +64,12 @@ pagespeed:
   - http://www.multiplicationmaster.com/sitemap
   - http://www.multiplicationmaster.com/manifest.webapp
   - https://multiplicationmaster.appspot.com/buy
-  # enabled_rewriters:
-  # - CollapseWhitespace
-  # - CombineHeads
+  enabled_rewriters:
+  - CollapseWhitespace
+  - CombineHeads
   # - ElideAttributes
-  # - RemoveComments
-  # - MinifyCss
+  - RemoveComments
+  - MinifyCss
   # - InlineJs
   # - LeftTrimUrls
 

@@ -91,7 +91,7 @@ class BaseHandler(webapp2.RequestHandler):
                     access_token=user.access_token
                 )
                 return user
-            #======== use session cookie user
+                #======== use session cookie user
         anonymous_cookie = self.request.cookies.get('wsuser', None)
         if anonymous_cookie is None:
             cookie_value = utils.random_string()
@@ -112,7 +112,8 @@ class BaseHandler(webapp2.RequestHandler):
             anon_user.id = cookie_value
             anon_user.put()
             return anon_user
-    def render(self, view_name, extraParams = {}):
+
+    def render(self, view_name, extraParams={}):
 
         template_values = {
             # 'ws': ws,
@@ -171,6 +172,15 @@ class ScoresHandler(BaseHandler):
 
         currentUser = self.current_user
         currentUser.scores.append(userscore)
+        currentUser.put()
+
+        self.response.out.write('success')
+
+
+class DeleteAllScoresHandler(BaseHandler):
+    def get(self):
+        currentUser = self.current_user
+        currentUser.scores = []
         currentUser.put()
 
         self.response.out.write('success')
@@ -258,13 +268,13 @@ class SaveDifficultiesUnlockedHandler(BaseHandler):
         user.put()
         self.response.out.write('success')
 
+
 class TestsHandler(BaseHandler):
     def get(self):
         try:
             self.render('templates/tests.jinja2')
         except Exception as e:
             logging.error(e)
-
 
 
 class PostbackHandler(BaseHandler):
@@ -315,6 +325,7 @@ class PostbackHandler(BaseHandler):
 routes = [
     ('/gameon/getuser', GetUserHandler),
     ('/gameon/savescore', ScoresHandler),
+    ('/gameon/deleteallscores', DeleteAllScoresHandler),
     ('/gameon/saveachievement', AchievementsHandler),
     ('/gameon/logout', LogoutHandler),
     ('/gameon/postback', PostbackHandler),

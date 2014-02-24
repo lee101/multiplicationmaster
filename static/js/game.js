@@ -285,7 +285,7 @@ var views = new (function () {
             };
             endSelf.gameOver = function () {
                 gameon.getUser(function (user) {
-                    user.saveHighScore(level.id, gameState.starBar.getScore());
+                    user.saveScore(level.id, gameState.starBar.getScore());
                     if (gameState.starBar.hasWon()) {
                         if (user.levels_unlocked < level.id) {
                             user.saveLevelsUnlocked(level.id);
