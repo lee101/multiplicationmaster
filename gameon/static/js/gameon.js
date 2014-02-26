@@ -57,7 +57,7 @@ var GameOnUser = function (userJSON) {
         userJSON.scores.sort(function (a, b) {
             return a.game_mode - b.game_mode;
         });
-    }
+    };
     reorderScores();
 
     userJSON.getHighScores = function () {
@@ -319,7 +319,7 @@ var gameon = new (function () {
         $(target).bind('destroyed', function () {
             $(target + ' .gameon-volume').detach().appendTo('.gameon-volume-template');
         });
-    }
+    };
 
 
     self.getUser(function (user) {
@@ -585,7 +585,6 @@ var gameon = new (function () {
             var falltime = 0.20;
             var maxNumDeletedPerColumn = 0;
             var newTileNum = 0;
-            var numDeletedPerColumn = [];
             for (var w = 0; w < boardSelf.width; w++) {
 
                 var numDeleted = 0;
@@ -645,7 +644,6 @@ var gameon = new (function () {
                     var renderedTile = boardSelf.getRenderedTile(h, w);
                     renderedTile.animate({top: '+=' + fallDistance}, tiledist / (falltime / numDeleted));
                 }
-//                numDeletedPerColumn.push(numDeleted);
 
             }
 
@@ -655,7 +653,7 @@ var gameon = new (function () {
         boardSelf.view = function () {
             //todo custom tileview with a proper contains method?
             return new self.ArrayView(boardSelf.tiles);
-        }
+        };
         boardSelf.viewWhere = function (where) {
             var tiles = []
             for (var i = 0; i < boardSelf.tiles.length; i++) {
@@ -665,7 +663,7 @@ var gameon = new (function () {
                 }
             }
             return new self.ArrayView(tiles);
-        }
+        };
         boardSelf.viewOfWhere = function (of, where) {
             var tiles = []
             for (var i = 0; i < boardSelf.tiles.length; i++) {
@@ -675,7 +673,7 @@ var gameon = new (function () {
                 }
             }
             return new self.ArrayView(tiles);
-        }
+        };
         construct(width, height, tiles);
         return boardSelf;
     };
@@ -715,7 +713,7 @@ var gameon = new (function () {
         };
         construc();
         return viewSelf;
-    }
+    };
 
 
     self.math = new (function () {
@@ -752,12 +750,12 @@ var gameon = new (function () {
             };
             construc();
             return lineSelf;
-        }
+        };
 
         mathSelf.round = function (num, numDecimalPlaces) {
             var tx = Math.pow(10, numDecimalPlaces);
             return Math.round((num + 0.00001) * tx) / tx;
-        }
+        };
 
         /**
          * a bit hack
@@ -896,4 +894,4 @@ Object.keys = Object.keys || function (o) {
 
 String.prototype.reverse = function () {
     return this.split("").reverse().join("");
-}
+};
