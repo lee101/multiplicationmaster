@@ -1,4 +1,7 @@
 multiplicationmaster
 ====================
 
-MultiplicationMaster.com an educational puzzle game
+[Multiplication Master](https://www.multiplicationmaster.com "Multiplication Master Maths Game") an educational puzzle game!
+
+
+
