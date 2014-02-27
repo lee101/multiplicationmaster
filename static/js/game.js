@@ -53,6 +53,11 @@ var views = new (function () {
 
             self.locked = locked;
             self.id = id;
+            self.stars = {
+                render: function () {
+                    return '';
+                }
+            };
 
             self.click = function () {
                 views.level(self.id);
@@ -62,18 +67,29 @@ var views = new (function () {
                 if (self.locked) {
                     return '<button type="button" class="btn btn-danger btn-lg" disabled="disabled"><span class="glyphicon glyphicon-lock"></span></button>';
                 }
-                return '<button type="button" class="btn btn-danger btn-lg">' + self.id + '</button>';
+                var output =  ['<button type="button" class="btn btn-danger btn-lg">' + self.id];
+                if (typeof self.stars !== 'undefined') {
+                    output.push(' ' + self.stars.render());
+                }
+                output.push('</button>');
+                return output.join('');
             }
         };
         var tiles = [];
         var levels = DIFFICULTY_TO_LEVELS_MAP[difficulty];
         gameon.getUser(function (user) {
+            var highScores = user.getHighScores();
+
             for (var i = 0; i < levels.length; i++) {
                 var locked = true;
                 if (user.levels_unlocked + 1 >= levels[i].id) {
                     locked = false;
                 }
+
                 var tile = new LevelLink(levels[i].id, locked);
+                if (i < highScores.length) {
+                    tile.stars = new gameon.Stars(levels[i].starrating, highScores[i].score);
+                }
                 tiles.push(tile);
             }
         });
@@ -300,7 +316,7 @@ var views = new (function () {
                 views.donelevel(gameState.starBar, level);
             };
             if (!level.numMoves) {
-                gameState.clock = gameon.clock(endSelf.gameOver, level.clock);
+                gameState.clock = gameon.clock(endSelf.gameOver, level.time);
                 gameState.clock.start();
             }
         };

@@ -32,7 +32,7 @@ var GameOnUser = function (userJSON) {
         userJSON.scores.push({'game_mode': game_mode, 'score': score});
         reorderScores();
     };
-    userJSON.deleteAllScores = function(callback) {
+    userJSON.deleteAllScores = function (callback) {
         if (typeof callback == 'undefined') {
             callback = function (data) {
             }
@@ -857,6 +857,27 @@ var gameon = new (function () {
 //            $starBar.appendTo('.gameon-starbar-template');
         }
     };
+
+    self.Stars = function (ratingScheme, score) {
+        var starSelf = this;
+        starSelf.ratingScheme = ratingScheme;
+        starSelf.score = score;
+
+        starSelf.render = function () {
+            var output = ['<div class="gameon-stars">'];
+            for (var i = 0; i < 3; i++) {
+                var thresh = starSelf.ratingScheme[i];
+                if (starSelf.score >= thresh) {
+                    output.push('<span class="gameon-star gameon-star--shiny gameon-star--' + i + '"></span>');
+                }
+                else {
+                    output.push('<span class="gameon-star gameon-star--' + i + '"></span>');
+                }
+            }
+            output.push('</div>');
+            return output.join('');
+        }
+    }
 
     self.unlock = function (target) {
         var button = $(target + ' button');
