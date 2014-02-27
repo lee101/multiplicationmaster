@@ -3,7 +3,7 @@
             class="glyphicon glyphicon-arrow-left"></span></button>
 {%- endmacro %}
 {% macro logo() -%}
-    <a href="/" title="Multiplication Master - Maths Madness!">
+    <a href="/" title="Multiplication Master - Maths Madness!" onclick="return gameon.gotoLink(this)" target="_blank">
         <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
              alt="Multiplication Master">
     </a>
@@ -131,12 +131,12 @@
         {{ logo() }}
     </div>
     <div class="mm-difficulty">
-        <a href="/terms" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg">
+        <a href="/terms" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" onclick="return gameon.gotoLink(this)" target="_blank">
             Terms
         </a>
     </div>
     <div class="mm-difficulty">
-        <a href="/privacy" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg">
+        <a href="/privacy" class="mm-difficulty__btn gameon-btn-hg btn btn-success btn-lg" onclick="return gameon.gotoLink(this)" target="_blank">
             Privacy
         </a>
     </div>
@@ -237,7 +237,7 @@
 
     <p style="margin-left:15px">
         Please also visit our Terms and Conditions section establishing the use, disclaimers,
-        and limitations of liability governing the use of our website at <a href="/terms">
+        and limitations of liability governing the use of our website at <a href="/terms" title="Multiplication Master Multiplication Game Terms">
         http://www.multiplicationmaster.com/terms</a><br></p>
     <br>
     <strong>Your Consent</strong>

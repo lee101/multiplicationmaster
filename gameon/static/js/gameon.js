@@ -900,6 +900,20 @@ var gameon = new (function () {
         return arr;
     };
 
+    self.gotoLink = function (link) {
+
+        if (!self.isInIFrame()) {
+            var url = $(link).attr('href');
+            window.location = url;
+            return false;
+        }
+        return true
+    };
+
+    self.isInIFrame = function() {
+        return window != window.top
+    }
+
     return self;
 })();
 
