@@ -18,7 +18,7 @@ from google.appengine.api import memcache
 ##
 
 from gameon.models.models import User
-from gameon.models.models import HighScore
+from gameon.models.models import Score
 
 
 class ModelsTest(unittest.TestCase):
@@ -42,37 +42,9 @@ class ModelsTest(unittest.TestCase):
     def tearDown(self):
         self.testbed.deactivate()
 
-    def testGetHighScores(self):
-        highscore1 = HighScore(game_mode=0, score=123)
-        highscore2 = HighScore(game_mode=0, score=1234)
-        highscore3 = HighScore(game_mode=0, score=12345)
-        highscore4 = HighScore(game_mode=1, score=123)
-        highscore5 = HighScore(game_mode=1, score=12345)
-        user = User()
-        user.high_scores = [highscore1, highscore4, highscore3, highscore2, highscore5]
-
-        self.assertEqual(user.getHighScores(), [highscore1, highscore2, highscore3, highscore4, highscore5])
-
-    def testUpdateHighScore(self):
-        highscore1 = HighScore(game_mode=0, score=123)
-        highscore2 = HighScore(game_mode=0, score=1234)
-        highscore3 = HighScore(game_mode=0, score=12345)
-        highscore4 = HighScore(game_mode=1, score=123)
-        highscore5 = HighScore(game_mode=1, score=12345)
-        user = User()
-        user.id = '1234'
-        user.high_scores = [highscore1, highscore4, highscore3, highscore2, highscore5]
-
-        self.assertEqual(user.updateHighScore(1,123456), True)
-        self.assertEqual(user.updateHighScore(2,12), True)
-        self.assertEqual(user.updateHighScore(1,1234), False)
-        self.assertEqual(len(user.high_scores), 7)
-        newuser = User.byId(user.id)
-        self.assertEqual(len(newuser.high_scores), 7)
-
     def testInsertEntity(self):
-        HighScore(game_mode=0, score=123).put()
-        self.assertEqual(1, len(HighScore.query().fetch(2)))
+        Score(game_mode=0, score=123).put()
+        self.assertEqual(1, len(Score.query().fetch(2)))
 
 
 if __name__ == '__main__':
