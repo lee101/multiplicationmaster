@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import json
+from google.appengine.ext import ndb
 
-from Models import *
 from gameon import gameon
 from ws import ws
 import os
@@ -25,9 +25,6 @@ class BaseHandler(webapp2.RequestHandler):
             'json': json,
             'GameOnUtils': GameOnUtils,
             # 'facebook_app_id': FACEBOOK_APP_ID,
-            # 'MEDIUM':MEDIUM,
-            # 'EASY':EASY,
-            # 'HARD':HARD,
             # 'glogin_url': users.create_login_url(self.request.uri),
             # 'glogout_url': users.create_logout_url(self.request.uri),
             # 'url':self.request.uri,

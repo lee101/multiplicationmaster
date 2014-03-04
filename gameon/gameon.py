@@ -10,7 +10,6 @@ from webapp2_extras import sessions
 import utils
 import jinja2
 
-from paypal import IPNHandler
 import json
 import jwt
 
