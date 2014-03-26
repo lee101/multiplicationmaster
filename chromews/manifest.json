@@ -1,6 +1,6 @@
 {
     "name": "Multiplication Master",
-    "description": "Find numbers which work! Multiplication Master makes math fun! Beat the clock in this battle of the brains or create crazy combos! Multiplication Master Means Maths Madness!",
+    "description": "Find numbers which work! Beat the clock or create crazy combos! Multiplication Master Means Maths Madness!",
     "version": "1",
     "manifest_version": 2,
     "app": {
@@ -13,7 +13,7 @@
     },
     "icons": {
         "64": "cross-icon-multiplication-master-no-bg64.png",
-        "128": "icon_128.png"
+        "128": "multiplication-master-icon-bg128.png"
     },
     "permissions": [
         "unlimitedStorage",
