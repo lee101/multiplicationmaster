@@ -696,8 +696,16 @@ var gameon = new (function () {
             var idx = viewSelf.hash(i);
             return viewSelf.get(idx);
         };
+        viewSelf.shuffledGet2 = function (i) {
+            var idx = viewSelf.hash2(i);
+            return viewSelf.get(idx);
+        };
         viewSelf.hash = function (i) {
             return (viewSelf.hashstart + (i * viewSelf.hashstep))
+                % viewSelf.length();
+        };
+        viewSelf.hash2 = function (i) {
+            return (viewSelf.hashstart2 + (i * viewSelf.hashstep2))
                 % viewSelf.length();
         };
         viewSelf.length = function () {
@@ -707,6 +715,10 @@ var gameon = new (function () {
             viewSelf.primeIdx = self.math.numberBetween(0, viewSelf.largePrimes.length);
             viewSelf.hashstep = viewSelf.largePrimes[viewSelf.primeIdx] % viewSelf.length();
             viewSelf.hashstart = self.math.numberBetween(0, viewSelf.length());
+
+            viewSelf.primeIdx2 = self.math.numberBetween(0, viewSelf.largePrimes.length);
+            viewSelf.hashstep2 = viewSelf.largePrimes[viewSelf.primeIdx2] % viewSelf.length();
+            viewSelf.hashstart2 = self.math.numberBetween(0, viewSelf.length());
         };
         viewSelf.contains = function (x) {
             return arr.indexOf(x) === -1;

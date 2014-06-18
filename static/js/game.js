@@ -170,7 +170,7 @@ var views = new (function () {
                 for (var i = 0; i < numPossibleNumbers; i++) {
                     var x = gameState.numberLine.shuffledGet(i);
                     for (var j = 0; j < numPossibleNumbers; j++) {
-                        var y = gameState.numberLine.shuffledGet(j);
+                        var y = gameState.numberLine.shuffledGet2(j);
 
                         var foundMatch = false;
                         var z = 0;
@@ -235,7 +235,7 @@ var views = new (function () {
 
                     var x = currentNumbers.shuffledGet(i);
                     for (var j = 0; j < numTiles; j++) {
-                        var y = currentNumbers.shuffledGet(j);
+                        var y = currentNumbers.shuffledGet2(j);
 
                         var foundMatch = false;
                         var z = 0;
@@ -254,8 +254,6 @@ var views = new (function () {
                         }
 
                         if (foundMatch) {
-                            generatedNumbers.push(x);
-                            generatedNumbers.push(y);
                             generatedNumbers.push(z);
                             if (generatedNumbers.length >= numTilesNeeded) {
                                 break numberFinder;
@@ -417,7 +415,11 @@ var views = new (function () {
 
             self.getScore = function (num) {
                 var str = '' + num;
-                return Math.abs(+str.replace('.', ''));
+                var number = +str.replace('.', '');
+                if(!number) {
+                    return 1;
+                }
+                return Math.abs(number);
             };
 
             self.addTile = function (y, x, tile) {
