@@ -922,7 +922,7 @@ var gameon = new (function () {
         return true
     };
 
-    self.isInIFrame = function() {
+    self.isInIFrame = function () {
         return window != window.top
     }
 

@@ -67,7 +67,7 @@ var views = new (function () {
                 if (self.locked) {
                     return '<button type="button" class="btn btn-danger btn-lg" disabled="disabled"><span class="glyphicon glyphicon-lock"></span></button>';
                 }
-                var output =  ['<button type="button" class="btn btn-danger btn-lg">' + self.id];
+                var output = ['<button type="button" class="btn btn-danger btn-lg">' + self.id];
                 if (typeof self.stars !== 'undefined') {
                     output.push(' ' + self.stars.render());
                 }
@@ -416,7 +416,7 @@ var views = new (function () {
             self.getScore = function (num) {
                 var str = '' + num;
                 var number = +str.replace('.', '');
-                if(!number) {
+                if (!number) {
                     return 1;
                 }
                 return Math.abs(number);
