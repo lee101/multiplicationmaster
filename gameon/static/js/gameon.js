@@ -655,7 +655,7 @@ var gameon = new (function () {
             return new self.ArrayView(boardSelf.tiles);
         };
         boardSelf.viewWhere = function (where) {
-            var tiles = []
+            var tiles = [];
             for (var i = 0; i < boardSelf.tiles.length; i++) {
                 var tile = boardSelf.tiles[i];
                 if (where(tile)) {
@@ -665,7 +665,7 @@ var gameon = new (function () {
             return new self.ArrayView(tiles);
         };
         boardSelf.viewOfWhere = function (of, where) {
-            var tiles = []
+            var tiles = [];
             for (var i = 0; i < boardSelf.tiles.length; i++) {
                 var tile = boardSelf.tiles[i];
                 if (where(tile)) {
@@ -804,18 +804,52 @@ var gameon = new (function () {
         $('.gameon-starbar__star--two').css({left: startwoPos});
         $('.gameon-starbar__star--three').css({left: starthreePos});
 
-        starSelf.numStars = 0;
+        starSelf.movesScores = [];
+        starSelf.movesBonus = null;
+        starSelf.timeBonus = null;
 
+        starSelf.numStars = 0;
         starSelf._score = 0;
+
         starSelf.setScore = function (score) {
             starSelf._score = score;
-            starSelf.update()
+            starSelf.update();
+        };
+        starSelf.addMoveScoring = function (score) {
+            starSelf.movesScores.push(score);
+            starSelf._score += score;
+            starSelf.update();
+        };
+        starSelf.addMovesBonus= function (moves) {
+            var averageScorePerMove = Math.ceil(starSelf.movesScores.average());
+            var bonus = moves * averageScorePerMove * 2;
+            starSelf.movesBonus = {
+                moves: moves,
+                averageScorePerMove: averageScorePerMove,
+                bonus: bonus
+            };
+            starSelf._score += bonus;
         };
         starSelf.getScore = function () {
             return starSelf._score;
         };
+        starSelf.addTimeBonus = function(totalTime, timeLeft) {
+            var averageScorePerMove = Math.ceil(starSelf.movesScores.average());
+            var averageNumMovesPerSecond = starSelf.movesScores.length / totalTime;
+            var bonus = Math.ceil(averageNumMovesPerSecond * averageScorePerMove * timeLeft * 2);
+            starSelf.timeBonus = {
+                timeLeft: timeLeft,
+                averageScorePerMove: averageScorePerMove,
+                averageNumMovesPerSecond: averageNumMovesPerSecond,
+                bonus: bonus
+            };
+            starSelf._score += bonus;
+        };
         starSelf.hasWon = function () {
             return starSelf._score >= starSelf.one;
+        };
+        starSelf.hasFullScore = function () {
+            return starSelf._score >= starSelf.end;
         };
 
         starSelf.update = function () {
@@ -889,7 +923,7 @@ var gameon = new (function () {
             output.push('</div>');
             return output.join('');
         }
-    }
+    };
 
     self.unlock = function (target) {
         var button = $(target + ' button');
@@ -924,7 +958,7 @@ var gameon = new (function () {
 
     self.isInIFrame = function () {
         return window != window.top
-    }
+    };
 
     return self;
 })();
@@ -941,4 +975,20 @@ Object.keys = Object.keys || function (o) {
 
 String.prototype.reverse = function () {
     return this.split("").reverse().join("");
+};
+
+Array.prototype.sum = function(selector) {
+    if (typeof selector !== 'function') {
+        selector = function(item) {
+            return item;
+        }
+    }
+    var sum = 0;
+    for (var i = 0; i < this.length; i++) {
+        sum += selector(this[i]);
+    }
+    return sum;
+};
+Array.prototype.average = function(selector) {
+    return this.sum(selector) / this.length;
 };

@@ -447,17 +447,14 @@ var views = new (function () {
                     success = eval(self.getFormula());
                     if (success) {
 
-                        var totalScore = gameState.starBar.getScore();
+                        var currentMovesScore = 0;
                         var totalNumTilesDeleted = 0;
                         for (var i = 0; i < tiles.length; i++) {
                             var tile = tiles[i];
                             if (typeof tile['getOperator'] === 'undefined') {
-                                totalScore += self.getScore(tile.number);
+                                currentMovesScore += self.getScore(tile.number);
                                 gameState.setTileDeleted(tile.oldY, tile.oldX);
                                 totalNumTilesDeleted++;
-                            }
-                            else {
-
                             }
                         }
                         var newTiles = gameState.newBoardTiles(totalNumTilesDeleted);
@@ -466,14 +463,22 @@ var views = new (function () {
                             return typeof tile['getOperator'] === 'undefined';
                         });
 
-                        gameState.starBar.setScore(totalScore);
+                        gameState.starBar.addMoveScoring(currentMovesScore);
                         gameState.board.render();
                         gameState.board.falldown(newTiles);
                         if (!level.time) {
                             gameState.endHandler.setMoves(gameState.endHandler.moves - 1);
-
                         }
                         gameon.playSound('score');
+                        if (gameState.starBar.hasFullScore()) {
+                            if (!level.time) {
+                                gameState.starBar.addMovesBonus(gameState.endHandler.moves);
+                            }
+                            else {
+                                gameState.starBar.addTimeBonus(level.time, gameState.clock.seconds);
+                            }
+                            gameState.endHandler.gameOver();
+                        }
                     }
                 }
                 return success;
@@ -540,6 +545,28 @@ var views = new (function () {
         }
         else if (starBar.numStars == 2) {
             $('.mm-end-message p').html('Great!');
+        }
+        if (starBar.movesBonus) {
+            $('.mm-bonus-message').append(
+                    starBar.movesBonus.moves + ' Moves left! <br /> ' +
+                    starBar.movesBonus.averageScorePerMove + ' Points per move! <br />' +
+                    'Moves Bonus: ' + starBar.movesBonus.moves + ' <i class="fa fa-times"></i> ' +
+                    starBar.movesBonus.averageScorePerMove + ' <i class="fa fa-times"></i> 2 = ' + starBar.movesBonus.bonus +
+                    ' Points!'
+            );
+
+        }
+        else if (starBar.timeBonus) {
+            $('.mm-bonus-message').append(
+                    starBar.timeBonus.averageScorePerMove + ' Points per move! <br/>' +
+                    starBar.timeBonus.averageNumMovesPerSecond + ' Moves per second! <br />' +
+                    starBar.timeBonus.timeLeft + ' Seconds left! <br />' +
+                    'Time Bonus: ' +
+                    starBar.timeBonus.averageScorePerMove + ' <i class="fa fa-times"></i> ' +
+                    starBar.timeBonus.averageNumMovesPerSecond + ' <i class="fa fa-times"></i> ' +
+                    starBar.timeBonus.timeLeft + ' <i class="fa fa-times"></i> 2 = ' + starBar.timeBonus.bonus +
+                    ' Points!'
+            );
         }
         if (starBar.numStars >= 1 && self.isLastLevel(level)) {
             $('.mm-end-message p').append(' <br /> Congratulations You have Won The Game!!!');
