@@ -12,7 +12,6 @@ DIVIDE_FORMULA = ['x0', '/', 'x1', '=', 'x2']
 
 
 class Fixture(object):
-    """docstring for Fixture"""
     def __init__(self):
         super(Fixture, self).__init__()
 
