@@ -94,7 +94,7 @@ var views = new (function () {
             }
         });
         levelsSelf.levelsList = levels;
-        levelsSelf.board = new gameon.board(5, 5, tiles);
+        levelsSelf.board = new gameon.Board(5, 5, tiles);
         $('.mm-background').html($('#levels').html());
         levelsSelf.board.render('.mm-levels');
         $('.back-btn').click(function () {
@@ -115,7 +115,7 @@ var views = new (function () {
         function construct() {
 
             var tiles = gameState.initialBoardTiles();
-            gameState.board = new gameon.board(level.width, level.height, tiles);
+            gameState.board = new gameon.Board(level.width, level.height, tiles);
             $('.mm-background').html($('#level').html());
 
             gameState.board.render('.mm-level');
@@ -408,7 +408,7 @@ var views = new (function () {
                     }
                 }
 
-                self.board = new gameon.board(5, 1, tiles);
+                self.board = new gameon.Board(5, 1, tiles);
 
                 self.board.render('.mm-equation');
             };
