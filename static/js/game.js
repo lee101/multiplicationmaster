@@ -128,7 +128,6 @@ var views = new (function () {
                 views.levels(level.difficulty);
             });
             gameState.starBar = new gameon.StarBar(level.starrating);
-            gameState.starBar.setScore(0);
 
             gameon.renderVolumeTo('.mm-volume');
             gameState.starBar.render('.mm-starbar');
