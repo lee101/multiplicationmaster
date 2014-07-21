@@ -437,7 +437,6 @@ var views = new (function () {
 
                 tileCopy.oldY = y;
                 tileCopy.oldX = x;
-                self.board.newTile(0, newTilePos, tileCopy);
                 self.board.setTile(0, newTilePos, tileCopy);
                 tileCopy.reRender();
 //                var boardTile = self.board.getTile(0, newTilePos)
