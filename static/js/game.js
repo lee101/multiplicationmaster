@@ -135,6 +135,17 @@ var views = new (function () {
             gameState.equation = new gameState.Equation();
             gameState.endHandler = new gameState.EndHandler();
             gameState.endHandler.render();
+
+            if (typeof GAMESAPI === 'object') {
+                GAMESAPI.beginGameSession(
+                    function (response) {
+                        // success callback.  response.statusCode == 200
+                    },
+                    function (response) {
+                        // error handler callback.  response.statusCode != 200
+                    }
+                );
+            }
         }
 
         gameState.solve = function (i, params) {
@@ -297,8 +308,9 @@ var views = new (function () {
                 endSelf.render();
             };
             endSelf.gameOver = function () {
+                var score = gameState.starBar.getScore();
                 gameon.getUser(function (user) {
-                    user.saveScore(level.id, gameState.starBar.getScore());
+                    user.saveScore(level.id, score);
                     if (gameState.starBar.hasWon()) {
                         if (user.levels_unlocked < level.id) {
                             user.saveLevelsUnlocked(level.id);
@@ -311,6 +323,19 @@ var views = new (function () {
                 });
                 gameState.destruct();
                 views.donelevel(gameState.starBar, level);
+                if (typeof GAMESAPI === 'object') {
+                    GAMESAPI.postScore(game.score, function () {
+                    }, function () {
+                    });
+                    GAMESAPI.endGameSession(
+                        function (response) {
+                            // success callback.  response.statusCode == 200
+                        },
+                        function (response) {
+                            // error handler callback.  response.statusCode != 200
+                        }
+                    );
+                }
             };
             if (!level.numMoves) {
                 gameState.clock = gameon.clock(endSelf.gameOver, level.time);
