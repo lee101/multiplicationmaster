@@ -464,44 +464,40 @@ var views = new (function () {
                 tileCopy.oldX = x;
                 self.board.setTile(0, newTilePos, tileCopy);
                 tileCopy.reRender();
-//                var boardTile = self.board.getTile(0, newTilePos)
-                if (newTilePos == tiles.length - 1) {
-//                    if(level.solutions[])
-                    success = eval(self.getFormula());
-                    if (success) {
+                success = eval(self.getFormula());
+                if (success) {
 
-                        var currentMovesScore = 0;
-                        var totalNumTilesDeleted = 0;
-                        for (var i = 0; i < tiles.length; i++) {
-                            var tile = tiles[i];
-                            if (typeof tile['getOperator'] === 'undefined') {
-                                currentMovesScore += self.getScore(tile.number);
-                                gameState.setTileDeleted(tile.oldY, tile.oldX);
-                                totalNumTilesDeleted++;
-                            }
+                    var currentMovesScore = 0;
+                    var totalNumTilesDeleted = 0;
+                    for (var i = 0; i < tiles.length; i++) {
+                        var tile = tiles[i];
+                        if (typeof tile['getOperator'] === 'undefined') {
+                            currentMovesScore += self.getScore(tile.number);
+                            gameState.setTileDeleted(tile.oldY, tile.oldX);
+                            totalNumTilesDeleted++;
                         }
-                        var newTiles = gameState.newBoardTiles(totalNumTilesDeleted);
+                    }
+                    var newTiles = gameState.newBoardTiles(totalNumTilesDeleted);
 
-                        self.board.removeWhere(function (tile) {
-                            return typeof tile['getOperator'] === 'undefined';
-                        });
+                    self.board.removeWhere(function (tile) {
+                        return typeof tile['getOperator'] === 'undefined';
+                    });
 
-                        gameState.starBar.addMoveScoring(currentMovesScore);
-                        gameState.board.render();
-                        gameState.board.falldown(newTiles);
+                    gameState.starBar.addMoveScoring(currentMovesScore);
+                    gameState.board.render();
+                    gameState.board.falldown(newTiles);
+                    if (!level.time) {
+                        gameState.endHandler.setMoves(gameState.endHandler.moves - 1);
+                    }
+                    gameon.playSound('score');
+                    if (gameState.starBar.hasFullScore()) {
                         if (!level.time) {
-                            gameState.endHandler.setMoves(gameState.endHandler.moves - 1);
+                            gameState.starBar.addMovesBonus(gameState.endHandler.moves);
                         }
-                        gameon.playSound('score');
-                        if (gameState.starBar.hasFullScore()) {
-                            if (!level.time) {
-                                gameState.starBar.addMovesBonus(gameState.endHandler.moves);
-                            }
-                            else {
-                                gameState.starBar.addTimeBonus(level.time, gameState.clock.seconds);
-                            }
-                            gameState.endHandler.gameOver();
+                        else {
+                            gameState.starBar.addTimeBonus(level.time, gameState.clock.seconds);
                         }
+                        gameState.endHandler.gameOver();
                     }
                 }
                 return success;
