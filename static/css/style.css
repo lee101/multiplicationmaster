@@ -8,9 +8,16 @@ body {
 }
 
 .mm-background {
-    padding-top: 60px;
-    padding-bottom: 90px;
+    padding-top: 26px;
+    padding-bottom: 0px;
     text-align: center;
+}
+
+@media (min-width: 400px) {
+    .mm-background {
+        padding-top: 60px;
+        padding-bottom: 90px;
+    }
 }
 
 .mm-logo {
@@ -27,7 +34,16 @@ body {
     width: auto;
     display: block;
     text-align: center;
-    padding: 40px 0;
+    padding: 10px 0;
+}
+
+@media (min-width: 560px) {
+    .mm-play-btn {
+        width: auto;
+        display: block;
+        text-align: center;
+        padding: 40px 0;
+    }
 }
 
 .mm-difficulty__btn {
@@ -37,8 +53,19 @@ body {
 
 .back-btn {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 0px;
+    left: 0px;
+    font-size: 13px;
+}
+
+@media (min-width: 560px) {
+
+    .back-btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 22px;
+    }
 }
 
 @media (min-width: 961px) {
@@ -50,7 +77,13 @@ body {
 }
 
 .mm-starbar {
-    margin: 20px 0 20px -5px;
+    margin: -7px 0 -17px 0px;
+}
+
+@media (min-width: 560px) {
+    .mm-starbar {
+        margin: 20px 0 20px -5px;
+    }
 }
 
 .mm-starbar--center {
@@ -63,7 +96,7 @@ body {
 }
 
 .mm-equation {
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 
 .mm-equation .even {
@@ -101,10 +134,12 @@ and (min-height: 750px) {
 .mm-end-condition {
     float: left;
     font-size: 16px;
+    margin-top: 12px;
     font-weight: bold;
 }
 
 .mm-end-condition p {
+    margin: 0;
     background-color: aliceblue;
 }
 
@@ -180,7 +215,7 @@ and (min-height: 750px) {
     position: relative;
     left: 0;
     right: 0;
-    top: -45px;
+    top: 0px;
 }
 
 @media (min-width: 481px) {
