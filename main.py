@@ -52,6 +52,11 @@ class PrivacyHandler(BaseHandler):
         self.render('templates/privacy.jinja2')
 
 
+class ContactHandler(BaseHandler):
+    def get(self):
+        self.render('templates/contact.jinja2')
+
+
 class TermsHandler(BaseHandler):
     def get(self):
         self.render('templates/terms.jinja2')
@@ -72,7 +77,7 @@ app = ndb.toplevel(webapp2.WSGIApplication([
                                                ('/privacy', PrivacyHandler),
                                                ('/terms', TermsHandler),
                                                # ('/about', AboutHandler),
-                                               # ('/contact', ContactHandler),
+                                               ('/contact', ContactHandler),
                                                ('/sitemap', SitemapHandler),
 
                                            ] + gameon.routes, debug=ws.debug, config=config))
