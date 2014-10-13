@@ -12,13 +12,10 @@ Options:
 
 '''
 import unittest
-import webapp2
 import os
-import webtest
+
 from google.appengine.ext import testbed
 
-from mock import Mock
-from mock import patch
 
 # import boilerplate
 # from boilerplate import models
@@ -28,8 +25,9 @@ from mock import patch
 # from boilerplate.lib import utils
 # from boilerplate.lib import captcha
 # from boilerplate.lib import i18n
-from tests import test_helpers
+import yaml
 import main
+import webtest
 
 # setting HTTP_HOST in extra_environ parameter for TestApp is not enough for taskqueue stub
 os.environ['HTTP_HOST'] = 'localhost'
@@ -37,9 +35,9 @@ os.environ['HTTP_HOST'] = 'localhost'
 # globals
 network = False
 
-class AppTest(unittest.TestCase, test_helpers.HandlerHelpers):
-    def setUp(self):
 
+class AppTest(unittest.TestCase):
+    def setUp(self):
         # webapp2_config = boilerplate_config.config
 
         # # create a WSGI application.
@@ -47,7 +45,7 @@ class AppTest(unittest.TestCase, test_helpers.HandlerHelpers):
         # routes.add_routes(self.app)
         # boilerplate_routes.add_routes(self.app)
         # self.testapp = webtest.TestApp(self.app, extra_environ={'REMOTE_ADDR' : '127.0.0.1'})
-        
+
         # activate GAE stubs
         self.testbed = testbed.Testbed()
         self.testbed.activate()
@@ -60,18 +58,34 @@ class AppTest(unittest.TestCase, test_helpers.HandlerHelpers):
         self.taskqueue_stub = self.testbed.get_stub(testbed.TASKQUEUE_SERVICE_NAME)
         self.testbed.init_user_stub()
 
-        self.headers = {'User-Agent' : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) Version/6.0 Safari/536.25',
-                        'Accept-Language' : 'en_US'}
+        self.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) Version/6.0 Safari/536.25',
+                        'Accept-Language': 'en_US'}
+        self.app = webtest.TestApp(main.app)
 
         # fix configuration if this is still a raw boilerplate code - required by test with mails
         # if not utils.is_email_valid(self.app.config.get('contact_sender')):
-        #     self.app.config['contact_sender'] = "noreply-testapp@example.com"
+        # self.app.config['contact_sender'] = "noreply-testapp@example.com"
         # if not utils.is_email_valid(self.app.config.get('contact_recipient')):
         #     self.app.config['contact_recipient'] = "support-testapp@example.com"
 
     def tearDown(self):
         self.testbed.deactivate()
 
+
+class WebsiteUnitTest(AppTest):
+    def test_contact(self):
+        response = self.app.get('/contact')
+        self.assertEqual(response.status_int, 200)
+        self.assertTrue(response.html())
+
+    # def test_robots(self):
+    #     response = self.app.get('/robots.txt')
+    #     self.assertEqual(response.status_int, 200)
+    #     robots = yaml.load(response.unicode_normal_body())
+    #     self.assertEqual(robots['User-agent'], '*')
+    #     self.assertTrue(isinstance(robots['Sitemap'], str))
+
     def test_homepage(self):
-        response = self.get('/')
-        self.assertIn('Congratulations on your Google App Engine Boilerplate powered page.', response)
+        response = self.app.get('/')
+        self.assertEqual(response.status_int, 200)
+        self.assertTrue(response.html())
