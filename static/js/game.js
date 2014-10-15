@@ -120,6 +120,9 @@ var views = new (function () {
 
             gameState.board.render('.mm-level');
             gameState.destruct = function () {
+                if (gameState.clock) {
+                    gameState.clock.reset();
+                }
                 gameon.cleanBoards();
                 gameon.pauseSound(mainTheme);
             };
