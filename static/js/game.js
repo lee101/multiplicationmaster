@@ -415,7 +415,9 @@ var views = new (function () {
 
                 self.getOperator = function () {
                     if (self.operator === '=') {
-                        return '==';
+                        // floating point equality hack,
+                        // will need to do something to support > and <= operators instead of just ==
+                        return '-';
                     }
                     return self.operator;
                 };
@@ -467,7 +469,8 @@ var views = new (function () {
                 tileCopy.oldX = x;
                 self.board.setTile(0, newTilePos, tileCopy);
                 tileCopy.reRender();
-                success = eval(self.getFormula());
+                var tolerance = 0.00001;
+                success = Math.abs(eval(self.getFormula())) < tolerance;
                 if (success) {
 
                     var currentMovesScore = 0;
