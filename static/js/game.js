@@ -125,6 +125,7 @@ var views = new (function () {
                 }
                 gameon.cleanBoards();
                 gameon.pauseSound(mainTheme);
+                gameState.destructed = true;
             };
             $('.back-btn').click(function () {
                 gameState.destruct();
@@ -495,7 +496,15 @@ var views = new (function () {
                     if (!level.time) {
                         gameState.endHandler.setMoves(gameState.endHandler.moves - 1);
                     }
-                    gameon.playSound('score');
+                    var oldMainThemePos = gameon.getSoundPosition(mainTheme);
+                    gameon.playSound('score', function () {
+                        //TODO only resume if its appropriate!
+                        // mobiles can only play one sound at once?
+                        if (!gameState.destructed && !gameon.isPlaying(mainTheme)) {
+                            gameon.loopSoundAtPosition(mainTheme, oldMainThemePos);
+                        }
+                    });
+
                     if (gameState.starBar.hasFullScore()) {
                         if (!level.time) {
                             gameState.starBar.addMovesBonus(gameState.endHandler.moves);
