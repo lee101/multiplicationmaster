@@ -6,7 +6,7 @@ gameon.loadSound('win', '/gameon/static/music/winning-level.mp3');
 
 var views = new (function () {
     'use strict';
-    var self = this;
+    var self = {};
     self.name = 'start';
 
     self.start = function () {
@@ -46,10 +46,10 @@ var views = new (function () {
 
     self.levels = function (difficulty) {
         self.name = 'levels';
-        var levelsSelf = this;
+        var levelsSelf = {};
 
         var LevelLink = function (id, locked) {
-            var self = this;
+            var self = {};
 
             self.locked = locked;
             self.id = id;
@@ -153,6 +153,7 @@ var views = new (function () {
         }
 
         gameState.solve = function (i, params) {
+            //TODO improve performance by using a function table instead of eval
             var pIdx = 0;
             var equation = level.solutions[i];
             var pluggedEquation = '';
@@ -395,10 +396,10 @@ var views = new (function () {
         };
 
         gameState.Equation = function () {
-            var self = this;
+            var self = {};
 
             var OperatorTile = function (op) {
-                var self = this;
+                var self = {};
                 self.operator = op;
 
                 self.formatOperator = function () {
