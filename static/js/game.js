@@ -498,8 +498,7 @@ var views = new (function () {
                     }
                     var oldMainThemePos = gameon.getSoundPosition(mainTheme);
                     gameon.playSound('score', function () {
-                        //TODO only resume if its appropriate!
-                        // mobiles can only play one sound at once?
+                        // some mobiles can only play one sound at once
                         if (!gameState.destructed && !gameon.isPlaying(mainTheme)) {
                             gameon.loopSoundAtPosition(mainTheme, oldMainThemePos);
                         }
