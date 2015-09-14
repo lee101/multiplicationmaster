@@ -571,7 +571,7 @@ var views = new (function () {
             self.level(level.id);
         });
         if (starBar.numStars == 0) {
-            $('.mm-end-message p').html('Try Again!');
+            $('.mm-end-message p').html('Play Again!');
         }
         else if (starBar.numStars == 1) {
             $('.mm-end-message p').html('Good!');
