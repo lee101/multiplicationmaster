@@ -140,16 +140,6 @@ var views = new (function () {
             gameState.endHandler = new gameState.EndHandler();
             gameState.endHandler.render();
 
-            if (typeof GAMESAPI === 'object') {
-                GAMESAPI.beginGameSession(
-                    function (response) {
-                        // success callback.  response.statusCode == 200
-                    },
-                    function (response) {
-                        // error handler callback.  response.statusCode != 200
-                    }
-                );
-            }
         }
 
         gameState.solve = function (i, params) {
@@ -327,19 +317,6 @@ var views = new (function () {
                 });
                 gameState.destruct();
                 views.donelevel(gameState.starBar, level);
-                if (typeof GAMESAPI === 'object') {
-                    GAMESAPI.postScore(game.score, function () {
-                    }, function () {
-                    });
-                    GAMESAPI.endGameSession(
-                        function (response) {
-                            // success callback.  response.statusCode == 200
-                        },
-                        function (response) {
-                            // error handler callback.  response.statusCode != 200
-                        }
-                    );
-                }
             };
             if (!level.numMoves) {
                 gameState.clock = gameon.clock(endSelf.gameOver, level.time);
