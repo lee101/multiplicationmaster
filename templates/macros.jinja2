@@ -12,7 +12,6 @@
 {%- endmacro %}
 
 {% macro cssheaders() -%}
-    <link rel="stylesheet" href="/gameon/static/css/social-likes.css"/>
     <link type="text/css" rel="stylesheet" href="/static/css/style.css"/>
 {%- endmacro %}
 
@@ -111,21 +110,6 @@
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-{%- endmacro %}
-
-{%- macro shareBtnsHorizontal(differenturl) %}
-    {% if not differenturl %}
-        {% set differenturl = url %}
-    {% endif %}
-    <ul class="social-likes" data-url="{{ differenturl }}">
-        <li class="facebook" title="Share link on Facebook">Facebook</li>
-        <li class="twitter" data-via="multiplicationmaster"
-            data-related="multiplicationmaster:Multiplication Master Tweeting About Puzzles and Games"
-            title="Share link on Twitter">Twitter
-        </li>
-        <li class="plusone" title="Share link on Google+">Google+</li>
-        <li class="pinterest" title="Share image on Pinterest" data-media="{{ differenturl }}">Pinterest</li>
-    </ul>
 {%- endmacro %}
 
 {%- macro fbstuff() %}
