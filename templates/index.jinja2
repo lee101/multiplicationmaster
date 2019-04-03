@@ -54,22 +54,26 @@
 </head>
 <body>
 {{ gameon.templates() }}
-<div class="mm-like">
-    <div class="fb-like" data-href="http://www.multiplicationmaster.com" data-width="400px"
-         data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-</div>
 <div class="mm-background">
     {{ views.start() }}
 </div>
-{% if not noads %}
-    <div class="mm-responsivead-bottom navbar-fixed-bottom">
-        <button class="mm-hide-btn btn btn-info btn-lg">Hide</button>
-        {{ macros.responsiveAd() }}
+
+<div id="modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="fa fa-times close-modal"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+        </div>
     </div>
-    <div class="mm-responsivead-right navbar-fixed-bottom">
-        {{ macros.responsiveAd() }}
-    </div>
-{% endif %}
+</div>
 
 
 </body>
