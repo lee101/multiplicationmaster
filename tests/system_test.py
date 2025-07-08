@@ -89,3 +89,8 @@ class WebsiteUnitTest(AppTest):
         response = self.app.get('/')
         self.assertEqual(response.status_int, 200)
         self.assertTrue(response.html())
+
+    def test_ping(self):
+        response = self.app.get('/ping')
+        self.assertEqual(response.status_int, 200)
+        self.assertEqual(response.json, {'status': 'ok'})
