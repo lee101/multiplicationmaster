@@ -99,14 +99,18 @@
 
 {%- endmacro %}
 
-{%- macro responsiveAd() %}
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- responsiveAd -->
+{%- macro adsenseHeaders() %}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8598649123553748" crossorigin="anonymous"></script>
+    <script>window.adsbygoogle = window.adsbygoogle || [];</script>
+{%- endmacro %}
+
+{%- macro responsiveAd(slot="7003733604") %}
     <ins class="adsbygoogle"
          style="display:block"
-         data-ad-client="ca-pub-7026363262140448"
-         data-ad-slot="9824934150"
-         data-ad-format="auto"></ins>
+         data-ad-client="ca-pub-8598649123553748"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
