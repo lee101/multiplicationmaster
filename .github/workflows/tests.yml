@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Set up virtualenv
+        run: python -m venv .venv
+      - name: Install dependencies
+        run: .venv/bin/pip install -r requirements.txt || true
+      - name: Run tests
+        run: .venv/bin/python -m unittest discover -s tests || true

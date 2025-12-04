@@ -62,6 +62,14 @@ class TermsHandler(BaseHandler):
         self.render('templates/terms.jinja2')
 
 
+class PingHandler(webapp2.RequestHandler):
+    """Simple health check endpoint."""
+
+    def get(self):
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.write(json.dumps({'status': 'ok'}))
+
+
 class SitemapHandler(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/xml'
@@ -79,5 +87,6 @@ app = ndb.toplevel(webapp2.WSGIApplication([
                                                # ('/about', AboutHandler),
                                                ('/contact', ContactHandler),
                                                ('/sitemap', SitemapHandler),
+                                               ('/ping', PingHandler),
 
                                            ] + gameon.routes, debug=ws.debug, config=config))
