@@ -4,7 +4,7 @@
 {%- endmacro %}
 {% macro logo() -%}
     <a href="/" title="Multiplication Master - Maths Madness!" onclick="return gameon.gotoLink(this)" target="_blank">
-        <img src="/static/img/multiplication-master-logo.png" class="mm-logo__image img-responsive"
+        <img src="/static/img/multiplication-master-logo.png" width="503" height="176" class="mm-logo__image img-responsive"
              alt="Multiplication Master">
     </a>
 {%- endmacro %}
@@ -13,12 +13,16 @@
     <div class="mm-logo">
         {{ logo() }}
     </div>
+    <h1 class="mm-title">Free times tables game: build equations, beat the clock</h1>
+    <p class="mm-how"><strong>How to play:</strong> tap numbers on the board to fill in the equation, like 6 &times; 7 = 42. Every correct equation scores points; score enough to earn stars and unlock the next level.</p>
     <div class="mm-play-btn">
-        <button type="button" class="gameon-btn-hg btn btn-success btn-lg" onclick="views.difficulties()">Play Now!
+        <button type="button" class="gameon-btn-hg btn btn-success btn-lg" onclick="views.quickPlay()">Play Now!
         </button>
     </div>
     <div class="mm-options-btn">
-        <button type="button" class="gameon-btn-hg btn btn-info btn-lg" onclick="views.options()">Options</button>
+        <button type="button" class="btn btn-default btn-lg mm-secondary-btn" onclick="views.difficulties()">Choose level</button>
+        <button type="button" class="btn btn-default btn-lg mm-secondary-btn" onclick="views.options()">Options</button>
+        <button type="button" class="btn btn-default btn-lg mm-secondary-btn" data-share>Share</button>
     </div>
 {%- endmacro %}
 
@@ -120,6 +124,10 @@
                         onclick="views.difficulties()"
                         >Menu
                 </button>
+            </div>
+            <div class="mm-share-row">
+                <button type="button" class="btn btn-primary btn-lg" data-share>Share your score</button>
+                <button type="button" class="btn btn-default btn-lg" data-copy-link>Copy link</button>
             </div>
         </div>
     </div>

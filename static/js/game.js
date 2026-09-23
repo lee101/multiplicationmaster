@@ -22,6 +22,13 @@ var views = new (function () {
         $('.mm-background').html($('#start').html());
     };
 
+    self.quickPlay = function () {
+        gameon.getUser(function (user) {
+            var idx = Math.min(user.levels_unlocked || 0, LEVELS.length - 1);
+            self.level(LEVELS[idx].id);
+        });
+    };
+
     self.options = function () {
         self.name = 'options';
 
@@ -592,7 +599,12 @@ var views = new (function () {
         if (starBar.numStars >= 1) {
             gameon.loopSound('win');
         }
-        $('.mm-responsivead-bottom').show();
+        window.mmShare = {level: level.id, score: starBar.getScore(), stars: starBar.numStars};
+        var $ad = $('.mm-responsivead-bottom').show();
+        var ins = $ad.find('ins.adsbygoogle')[0];
+        if (ins && !ins.getAttribute('data-adsbygoogle-status') && ins.offsetWidth > 0) {
+            try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+        }
     };
 
     self.isLastLevel = function (lvl) {
