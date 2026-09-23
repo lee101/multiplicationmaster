@@ -1,21 +1,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>https://multiplicationmaster.v5games.com/</loc>
+		<loc>https://multiplicationmaster.com/</loc>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
 	<url>
-		<loc>https://multiplicationmaster.v5games.com/terms</loc>
+		<loc>https://multiplicationmaster.com/terms</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0</priority>
 	</url>
 	<url>
-		<loc>https://multiplicationmaster.v5games.com/privacy</loc>
+		<loc>https://multiplicationmaster.com/privacy</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0</priority>
 	</url>
 	<url>
-		<loc>https://multiplicationmaster.v5games.com/contact</loc>
+		<loc>https://multiplicationmaster.com/contact</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0</priority>
 	</url>
