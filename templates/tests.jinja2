@@ -19,14 +19,12 @@
     {{ gameon.cssheaders() }}
     {{ macros.cssheaders() }}
 
-    {{ gameon.jsheaders() }}
-
     {{ macros.jsvars() }}
     {{ macros.jsheaders() }}
 
 
-    <script type="text/javascript" src="/gameon/static/js/tests/SpecHelper.js"></script>
-    <script type="text/javascript" src="/static/js/gamespec.js"></script>
+    <script defer src="/gameon/static/js/tests/SpecHelper.js"></script>
+    <script defer src="/static/js/gamespec.js"></script>
 
     <script id="start" type="text/html">
         {{ views.start() }}

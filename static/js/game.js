@@ -126,6 +126,7 @@ var views = new (function () {
 
         var level = LEVELS[id - 1];
         var gameState = {};
+        th('track', 'game_started', {game: 'multiplicationmaster', level: level.id, difficulty: level.difficulty});
 
         function construct() {
 
@@ -318,6 +319,10 @@ var views = new (function () {
             };
             endSelf.gameOver = function () {
                 var score = gameState.starBar.getScore();
+                if (!gameState.tracked) {
+                    gameState.tracked = true;
+                    th('track', 'game_completed', {game: 'multiplicationmaster', level: level.id, difficulty: level.difficulty, score: score, stars: gameState.starBar.numStars, won: gameState.starBar.hasWon()});
+                }
                 gameon.getUser(function (user) {
                     user.saveScore(level.id, score);
                     if (gameState.starBar.hasWon()) {

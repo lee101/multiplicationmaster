@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    var SITE = 'https://multiplicationmaster.com/';
+    var SITE = 'https://multiplicationmaster.v5games.com/';
     function shareText() {
         var s = window.mmShare;
         return s ? 'I scored ' + s.score + ' points' + (s.stars ? ' and ' + s.stars + ' star' + (s.stars > 1 ? 's' : '') : '') +
