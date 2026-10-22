@@ -1,0 +1,15 @@
+{% extends "blog_base.jinja2" %}
+{% block title %}{{ post['title'] }}{% endblock %}
+{% block desc %}{{ post.description }}{% endblock %}
+{% block path %}/blog/{{ post.slug }}{% endblock %}
+{% block ogtype %}article{% endblock %}
+{% block ld %}<script type="application/ld+json">{{ json.dumps({"@context":"https://schema.org","@type":"Article","headline":post['title'],"description":post.description,"datePublished":post.date,"dateModified":post.modified,"image":base+"/static/img/og-multiplication-master.jpg","mainEntityOfPage":base+"/blog/"+post.slug,"author":{"@type":"Organization","name":"Multiplication Master","url":base},"publisher":{"@type":"Organization","name":"Multiplication Master","url":base,"logo":{"@type":"ImageObject","url":base+"/static/img/multiplication-master-icon-bg128.png"}}})|safe }}</script>{% endblock %}
+{% block body %}
+<article>
+<h1>{{ post['title'] }}</h1>
+<p class="meta">{{ post.date }}</p>
+{{ post.body|safe }}
+</article>
+<h2>More from the blog</h2>
+{% for p in others %}<p><a href="/blog/{{ p.slug }}">{{ p['title'] }}</a></p>{% endfor %}
+{% endblock %}

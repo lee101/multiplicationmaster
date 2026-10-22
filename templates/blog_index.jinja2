@@ -1,0 +1,16 @@
+{% extends "blog_base.jinja2" %}
+{% block title %}Multiplication Master Blog: Maths Practice Tips{% endblock %}
+{% block desc %}Friendly guides to mental maths, learning times tables and multiplication tricks, from the makers of Multiplication Master.{% endblock %}
+{% block path %}/blog{% endblock %}
+{% block ld %}<script type="application/ld+json">{{ ld|safe }}</script>{% endblock %}
+{% block body %}
+<h1>Multiplication Master Blog</h1>
+<p>Practical, friendly guides for building maths confidence.</p>
+{% for p in posts %}
+<article class="card">
+<h2><a href="/blog/{{ p.slug }}">{{ p['title'] }}</a></h2>
+<p class="meta">{{ p.date }}</p>
+<p>{{ p.description }}</p>
+</article>
+{% endfor %}
+{% endblock %}

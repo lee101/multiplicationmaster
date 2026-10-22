@@ -1,6 +1,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>https://multiplicationmaster.v5games.com/</loc>
+		<lastmod>2026-10-22</lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
@@ -18,5 +19,29 @@
 		<loc>https://multiplicationmaster.v5games.com/contact</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0</priority>
+	</url>
+	<url>
+		<loc>https://multiplicationmaster.v5games.com/blog</loc>
+		<lastmod>2026-10-22</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>0.7</priority>
+	</url>
+	<url>
+		<loc>https://multiplicationmaster.v5games.com/blog/mental-maths-practice</loc>
+		<lastmod>2026-10-22</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>0.7</priority>
+	</url>
+	<url>
+		<loc>https://multiplicationmaster.v5games.com/blog/learning-times-tables</loc>
+		<lastmod>2026-10-22</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>0.7</priority>
+	</url>
+	<url>
+		<loc>https://multiplicationmaster.v5games.com/blog/multiplication-tricks</loc>
+		<lastmod>2026-10-22</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>0.7</priority>
 	</url>
 </urlset>

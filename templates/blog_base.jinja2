@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %}</title>
+<meta name="description" content="{% block desc %}{% endblock %}">
+<link rel="canonical" href="{{ base }}{% block path %}{% endblock %}">
+<meta property="og:title" content="{{ self.title() }}">
+<meta property="og:description" content="{{ self.desc() }}">
+<meta property="og:url" content="{{ base }}{{ self.path() }}">
+<meta property="og:type" content="{% block ogtype %}website{% endblock %}">
+<meta property="og:site_name" content="Multiplication Master">
+<meta property="og:image" content="{{ base }}/static/img/og-multiplication-master.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{ base }}/static/img/og-multiplication-master.jpg">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="icon" sizes="128x128" href="/static/img/multiplication-master-icon-bg128.png">
+{% block ld %}{% endblock %}
+<style>
+:root{--bg:#fffdf6;--fg:#1d2433;--mut:#4a5468;--ac:#0b5cad;--card:#fff;--bd:#e3dfd0}
+@media (prefers-color-scheme:dark){:root{--bg:#141a26;--fg:#eef1f7;--mut:#b6bfd1;--ac:#7db8ff;--card:#1c2433;--bd:#2f3a50}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--ac)}
+header,main,footer{max-width:760px;margin:0 auto;padding:0 16px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding-top:14px;padding-bottom:14px}
+header img{display:block;height:auto}
+nav a{margin-right:16px;font-weight:600}
+h1{font-size:2rem;line-height:1.2;margin:.6em 0 .3em}
+h2{font-size:1.35rem;margin:1.6em 0 .4em}
+.meta{color:var(--mut);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px 18px;margin:16px 0}
+.card h2{margin:0 0 6px}
+.cta{display:inline-block;background:#1a7f37;color:#fff;font-weight:700;padding:12px 22px;border-radius:10px;text-decoration:none;margin:12px 0}
+footer{padding-top:24px;padding-bottom:40px;color:var(--mut);font-size:.9rem;border-top:1px solid var(--bd);margin-top:32px}
+</style>
+</head>
+<body>
+<header>
+<a href="/"><img src="/static/img/multiplication-master-icon-bg60.png" width="60" height="60" alt="Multiplication Master"></a>
+<nav aria-label="Main"><a href="/">Play</a><a href="/blog">Blog</a><a href="/contact">Contact</a></nav>
+</header>
+<main>
+{% block body %}{% endblock %}
+<p><a class="cta" href="/">Play Multiplication Master free</a></p>
+</main>
+<footer>
+<nav aria-label="Footer"><a href="/">Play</a> &middot; <a href="/blog">Blog</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a> &middot; <a href="https://v5games.com">V5 Games</a> &middot; <a href="https://wordsmashing.com">Word Smashing</a> &middot; <a href="https://rewordgame.com">reWord Game</a></nav>
+</footer>
+</body>
+</html>

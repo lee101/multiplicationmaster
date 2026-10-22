@@ -19,6 +19,9 @@ from gameon.models.models import User, Score, Achievement
 from gameon.gameon_utils import GameOnUtils
 
 app = FastAPI()
+
+from blog import router as blog_router
+app.include_router(blog_router)
 templates = Jinja2Templates(directory=".")
 templates.env.loader.searchpath.append("templates")
 
