@@ -33,3 +33,18 @@
         }
     });
 })();
+(function () {
+    function sweep() {
+        var chips = document.querySelectorAll('.google-anno-sc,.google-anno-skip');
+        for (var i = 0; i < chips.length; i++) chips[i].parentNode && chips[i].parentNode.removeChild(chips[i]);
+        var w = document.querySelectorAll('.google-anno,.google-anno-t,.google-anno-wrapper');
+        for (var j = 0; j < w.length; j++) {
+            var el = w[j], p = el.parentNode;
+            if (!p) continue;
+            while (el.firstChild) p.insertBefore(el.firstChild, el);
+            p.removeChild(el);
+        }
+    }
+    new MutationObserver(sweep).observe(document.documentElement, {childList: true, subtree: true});
+    sweep();
+})();
